@@ -643,17 +643,13 @@ int getCost(int cardNumber)
   return -1;
 }
 
-int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
+
+int playAdventurer(struct gameState *state)
 {
-  int i;
-  int j;
-  int k;
-  int x;
-  int index;
+
   int currentPlayer = whoseTurn(state);
   int nextPlayer = currentPlayer + 1;
 
-  int tributeRevealedCards[2] = {-1, -1};
   int temphand[MAX_HAND];// moved above the if statement
   int drawntreasure=0;
   int cardDrawn;
@@ -661,12 +657,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   if (nextPlayer > (state->numPlayers - 1)){
     nextPlayer = 0;
   }
-  
-	
-  //uses switch to select card and perform actions
-  switch( card ) 
-    {
-    case adventurer:
+
       while(drawntreasure<2){
 	if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
 	  shuffle(currentPlayer, state);
@@ -686,8 +677,21 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	z=z-1;
       }
       return 0;
-			
-    case council_room:
+    
+}	
+
+
+
+int playCouncilRoom(struct gameState *state, int handPos)
+{
+  int i;
+  int currentPlayer = whoseTurn(state);
+  int nextPlayer = currentPlayer + 1;
+
+  if (nextPlayer > (state->numPlayers - 1)){
+    nextPlayer = 0;
+  }
+
       //+4 Cards
       for (i = 0; i < 4; i++)
 	{
@@ -710,6 +714,35 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       discardCard(handPos, currentPlayer, state, 0);
 			
       return 0;
+}
+
+
+
+int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
+{
+  int i;
+  int j;
+  int k;
+  int x;
+  int index;
+  int currentPlayer = whoseTurn(state);
+  int nextPlayer = currentPlayer + 1;
+
+  int tributeRevealedCards[2] = {-1, -1};
+  int temphand[MAX_HAND];// moved above the if statement
+  if (nextPlayer > (state->numPlayers - 1)){
+    nextPlayer = 0;
+  }
+  
+	
+  //uses switch to select card and perform actions
+  switch( card ) 
+    {
+    case adventurer:
+	    return playAdventurer(state);
+			
+    case council_room:
+	    return playCouncilRoom(state, handPos);
 			
     case feast:
       //gain card with cost up to 5
