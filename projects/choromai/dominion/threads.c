@@ -29,25 +29,19 @@ void *CheckRace(void *args)
     //function to test goes here
     ptr->functionToTest();
 
-    int i;
-    for (i=1; i < 0; i++)
-    {
-        //nothing
-    }
-
     //never runs if stuck in infinite loop
     *(ptr->check) = 1;
     pthread_exit(NULL);
 }
   
-int main()
+int TestRace(void (*userFunction)())
 {
     pthread_t thread_timeout, thread_check;
 
     args_struct *args = malloc(sizeof *args);
     int check = 0;
     args->check = &check;
-    args->functionToTest = &testF;
+    args->functionToTest = userFunction;
 
     pthread_create(&thread_check, NULL, CheckRace, args);
     pthread_create(&thread_timeout, NULL, Timeout, NULL);
@@ -62,13 +56,12 @@ int main()
     {
         printf("Race Condition: PASS\n");
     }
-    exit(0);
+    //exit(0);
 
 }
 
-/*
 int main()
 {
-
+    TestRace(&testF);
+    exit(0);
 }
-*/
