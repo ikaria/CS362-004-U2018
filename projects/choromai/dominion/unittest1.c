@@ -19,9 +19,9 @@ int provinceCountZero_EndGame(struct gameState *state)
   }
 
   if(pass)
-    printf ("isGameOver: PROVINCES PASSED");
+    printf ("isGameOver: PROVINCES PASSED\n");
   else
-    printf ("isGameOver: PROVINCES FAILED");
+    printf ("isGameOver: PROVINCES FAILED\n");
 
   return pass;
 }
@@ -43,9 +43,9 @@ int threeTreasuresCountZero_EndGame(struct gameState *state)
   }
 
   if(pass)
-    printf ("isGameOver: 3 COUNTS PASSED");
+    printf ("isGameOver: 3 COUNTS PASSED\n");
   else
-    printf ("isGameOver: 3 COUNTS FAILED");
+    printf ("isGameOver: 3 COUNTS FAILED\n");
 
   return pass;
 }
@@ -67,9 +67,9 @@ int twoTreasuresCountZero_ContinueGame(struct gameState *state)
   }
 
   if(pass)
-    printf ("isGameOver: 2 COUNTS PASSED");
+    printf ("isGameOver: 2 COUNTS PASSED\n");
   else
-    printf ("isGameOver: 2 COUNTS FAILED");
+    printf ("isGameOver: 2 COUNTS FAILED\n");
 
   return pass;
 }
@@ -88,17 +88,22 @@ int main (int argc, char** argv) {
   int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
            sea_hag, tribute, smithy};
 
-  initializeGame(2, k, atoi(argv[1]), &G);
-
   int success = 0;
+  initializeGame(2, k, 2, &G);
   success += provinceCountZero_EndGame(&G);
+
+  initializeGame(2, k, 2, &G);
   success += twoTreasuresCountZero_ContinueGame(&G);
+
+  initializeGame(2, k, 2, &G);
   success += threeTreasuresCountZero_EndGame(&G);
+
+  initializeGame(2, k, 2, &G);
   success += raceCondition_NoneDetected(&G);
 
-  if(success == 4)
+  if(success == 0)
   {
-    printf ("isGameOver: ALL TESTS PASSED");
+    printf ("isGameOver: ALL TESTS PASSED\n");
   }
 
   return 0;
