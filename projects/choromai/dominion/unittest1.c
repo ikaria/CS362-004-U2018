@@ -109,7 +109,7 @@ int main (int argc, char** argv) {
 
   if(success == 0)
   {
-    printf ("isGameOver: ALL TESTS PASSED\n");
+    printf ("ALL TESTS PASSED\n");
   }
   printf ("\n");
 
