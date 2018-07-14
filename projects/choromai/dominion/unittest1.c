@@ -18,10 +18,11 @@ int provinceCountZero_EndGame(struct gameState *state)
     pass = 1;
   }
 
+  printf ("Test 1: Province Count = 0 | Expection: End Game | Result: ");
   if(pass)
-    printf ("isGameOver: PROVINCES PASSED\n");
+    printf ("PASSED\n");
   else
-    printf ("isGameOver: PROVINCES FAILED\n");
+    printf ("FAILED\n");
 
   return pass;
 }
@@ -42,10 +43,11 @@ int threeTreasuresCountZero_EndGame(struct gameState *state)
     pass = 1;
   }
 
+  printf ("Test 2: (3) Treasures Count = 0 | Expection: End Game | Result: ");
   if(pass)
-    printf ("isGameOver: 3 COUNTS PASSED\n");
+    printf ("PASSED\n");
   else
-    printf ("isGameOver: 3 COUNTS FAILED\n");
+    printf ("FAILED\n");
 
   return pass;
 }
@@ -66,10 +68,12 @@ int twoTreasuresCountZero_ContinueGame(struct gameState *state)
     pass = 1;
   }
 
+  printf ("Test 3: (2) Treasures Count = 0 | Expection: Continue Game | Result: ");
   if(pass)
-    printf ("isGameOver: 2 COUNTS PASSED\n");
+    printf ("PASSED\n");
   else
-    printf ("isGameOver: 2 COUNTS FAILED\n");
+    printf ("FAILED\n");
+
 
   return pass;
 }
@@ -88,6 +92,8 @@ int main (int argc, char** argv) {
   int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
            sea_hag, tribute, smithy};
 
+  printf("\n**************  isGameOver() ***********\n");
+
   int success = 0;
   initializeGame(2, k, 2, &G);
   success += provinceCountZero_EndGame(&G);
@@ -105,6 +111,7 @@ int main (int argc, char** argv) {
   {
     printf ("isGameOver: ALL TESTS PASSED\n");
   }
+  printf ("\n");
 
   return 0;
 }
