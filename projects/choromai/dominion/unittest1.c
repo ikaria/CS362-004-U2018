@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "rngs.h"
 #include <stdlib.h>
-
+#include "race.h"
 
 //game state with province count = 0, expected 1
 int provinceCountZero_EndGame(struct gameState *state)
@@ -78,14 +78,17 @@ int twoTreasuresCountZero_ContinueGame(struct gameState *state)
   return pass;
 }
 
-int raceCondition_NoneDetected(struct gameState *state)
+//function has race condition, expected: none 
+void raceCondition_NoneDetected()
 {
-  int pass = 0;
-  pass = 1;
-  return pass;
+  struct gameState G;
+  int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
+           sea_hag, tribute, smithy};
+  initializeGame(2, k, 2, &G);
+
+  isGameOver(&G);
 }
 
-//function doesn't have any race conditions
 
 int main (int argc, char** argv) {
   struct gameState G;
@@ -95,6 +98,9 @@ int main (int argc, char** argv) {
   printf("\n**************  isGameOver() ***********\n");
 
   int success = 0;
+
+  success += TestRace(&raceCondition_NoneDetected);
+
   initializeGame(2, k, 2, &G);
   success += provinceCountZero_EndGame(&G);
 
@@ -104,10 +110,7 @@ int main (int argc, char** argv) {
   initializeGame(2, k, 2, &G);
   success += threeTreasuresCountZero_EndGame(&G);
 
-  initializeGame(2, k, 2, &G);
-  success += raceCondition_NoneDetected(&G);
-
-  if(success == 0)
+  if(success == 4)
   {
     printf ("ALL TESTS PASSED\n");
   }
