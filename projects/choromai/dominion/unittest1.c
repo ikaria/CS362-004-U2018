@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include "race.h"
 
+//TESTING: isGameOver()
+
 //game state with province count = 0, expected 1
 int provinceCountZero_EndGame(struct gameState *state)
 {
@@ -100,6 +102,12 @@ int main (int argc, char** argv) {
   int success = 0;
 
   success += TestRace(&raceCondition_NoneDetected);
+
+  printf("Test 0: Race Condition | Expectation: None Detected | Result: ");
+  if(success == 1)
+    printf("PASSED\n");
+  else
+    printf("FAILED\n");
 
   initializeGame(2, k, 2, &G);
   success += provinceCountZero_EndGame(&G);

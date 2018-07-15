@@ -46,12 +46,12 @@ int TestRace(void (*userFunction)())
 
     if(check == 0)
     {
-        printf("Race Condition: FAIL\n");
+        //printf("Race Condition: FAIL\n");
         pthread_cancel(thread_check);
     }
     else
     {
-        printf("Race Condition: PASS\n");
+        //printf("Race Condition: PASS\n");
     }
 
     return check;
