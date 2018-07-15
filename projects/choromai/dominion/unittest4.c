@@ -11,8 +11,41 @@
 //test if added to hand
 //check if supply pile reduced
 
-//test if province pile empty 
-int provincePileIsEmpty_True(struct gameState *state)
+//Test successful add of Province to deck
+int addToDeckProvince_Success(struct gameState *state)
+{
+  int pass = 0;
+  int player = 0;
+  state->supplyCount[province] = 1;
+
+  int deckCountBefore = state->deckCount[player];
+
+  gainCard(province,state, 1,player);
+
+  int deckCountAfter = state->deckCount[player];
+
+  if (deckCountBefore + 1 == deckCountAfter)
+  {
+      if(state->deck[player][state->deckCount[player]-1] == province)
+      {
+          if(state->supplyCount[province] == 0)
+          {
+            pass = 1;
+          }
+      }
+  }
+
+  printf ("Test 1: Add Province To Deck | Expection: Success | Result: ");
+  if(pass)
+    printf ("PASSED\n");
+  else
+    printf ("FAILED\n");
+
+  return pass;
+}
+
+//Test failed add of Province to deck when pile empty
+int addToDeckProvince_Fail(struct gameState *state)
 {
   int pass = 0;
   int result = 0; 
@@ -27,7 +60,7 @@ int provincePileIsEmpty_True(struct gameState *state)
       pass = 1;
   }
 
-  printf ("Test 1:  Province Pile is Empty  | Expection: True | Result: ");
+  printf ("Test 2: Try Add Province Pile Empty | Expection: Failure | Result: ");
   if(pass)
     printf ("PASSED\n");
   else
@@ -36,21 +69,80 @@ int provincePileIsEmpty_True(struct gameState *state)
   return pass;
 }
 
-//test if province pile empty 
-int provincePileIsEmpty_False(struct gameState *state)
+//Add province to hand
+int addToHandProvince_Success(struct gameState *state)
 {
   int pass = 0;
   int result = 0; 
   int player = 0;
 
-  result = gainCard(province,state,0,player);
+  state->hand[player][0] = village;
+  state->hand[player][1] = copper;
+  state->hand[player][2] = copper;
+  state->hand[player][3] = copper;
+  state->hand[player][4] = smithy;
 
-  if (result == -1)
+  state->supplyCount[province] = 1;
+
+  int handCountBefore = state->handCount[player];
+
+  gainCard(province,state, 2,player);
+
+  int handCountAfter = state->handCount[player];
+
+  if (handCountBefore + 1 == handCountAfter)
   {
-      pass = 1;
+      if(state->hand[player][state->handCount[player]-1] == province)
+      {
+          if(state->supplyCount[province] == 0)
+          {
+            pass = 1;
+          }
+      }
   }
 
-  printf ("Test 1:  Province Pile is Empty  | Expection: False | Result: ");
+  printf ("Test 2: Add Province To Hand | Expection: Success | Result: ");
+  if(pass)
+    printf ("PASSED\n");
+  else
+    printf ("FAILED\n");
+
+  return pass;
+}
+
+//Add province to discard pile 
+int discardProvince_Success(struct gameState *state)
+{
+  int pass = 0;
+  int result = 0; 
+  int player = 0;
+
+  state->hand[player][0] = province;
+  state->hand[player][1] = copper;
+  state->hand[player][2] = copper;
+  state->hand[player][3] = copper;
+  state->hand[player][4] = smithy;
+
+  state->supplyCount[province] = 1;
+
+  int discardCountBefore = state->discardCount[player];
+
+  gainCard(province,state, 0,player);
+
+  int discardCountAfter = state->discardCount[player];
+
+  if (discardCountBefore + 1 == discardCountAfter)
+  {
+      if(state->discard[player][state->discardCount[player]-1] == province)
+      {
+          if(state->supplyCount[province] == 0)
+          {
+            pass = 1;
+          }
+      }
+  }
+
+  printf ("Test 2: Add Province To Discard Pile | Expection: Success | Result: ");
   if(pass)
     printf ("PASSED\n");
   else
@@ -69,18 +161,18 @@ int main (int argc, char** argv) {
   int success = 0;
 
   initializeGame(2, k, 2, &G);
-  int player = whoseTurn(&G);
+  success += addToDeckProvince_Success(&G);
 
-  G.hand[player][0] = village;
-  G.hand[player][1] = copper;
-  G.hand[player][2] = copper;
-  G.hand[player][3] = copper;
-  G.hand[player][4] = smithy;
+  initializeGame(2, k, 2, &G);
+  success += addToDeckProvince_Fail(&G);
 
-  success += provincePileIsEmpty_True(&G);
-  success += provincePileIsEmpty_False(&G);
+  initializeGame(2, k, 2, &G);
+  success += addToHandProvince_Success(&G);
 
-  if(success == 2)
+  initializeGame(2, k, 2, &G);
+  success += discardProvince_Success(&G);
+
+  if(success == 4)
   {
     printf ("ALL TESTS PASSED\n");
   }
