@@ -6,11 +6,6 @@
 
 //TESTING: gainCard()
 
-//test if discarded
-//test if added to deck
-//test if added to hand
-//check if supply pile reduced
-
 //Test successful add of Province to deck
 int addToDeckProvince_Success(struct gameState *state)
 {
