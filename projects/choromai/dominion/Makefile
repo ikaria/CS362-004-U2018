@@ -38,6 +38,9 @@ unitTest1: dominion.o rngs.o utils.o unittest1.c
 unitTest2: dominion.o rngs.o utils.o unittest2.c 
 	gcc -o u2 unittest2.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
 
+unitTest3: dominion.o rngs.o utils.o unittest3.c 
+	gcc -o u3 unittest3.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
