@@ -8,72 +8,49 @@
 //Test Gold count
 int twoGoldCoins_Plus6(struct gameState *state)
 {
-  int pass = 0;
 
-  //state->coins = 0;
+  //setup state
   int player = 1;
   state->handCount[player] = 5;
 
-  //setup state
   state->hand[player][0] = village;
   state->hand[player][1] = village;
   state->hand[player][2] = village;
   state->hand[player][3] = gold;
   state->hand[player][4] = gold;
 
+  //run function
   updateCoins(player,state,0);
-   
-  if(state->coins == 6)
-  {
-    pass = 1;
-  }
 
-  printf ("Test 1: Gold Coins Added = 2 | Expection: Coins = 6 | Result: ");
-  if(pass)
-    printf ("PASSED\n");
-  else
-    printf ("FAILED\n");
-
-  return pass;
+  //return results, add fail msg if 0 
+  return AssertCondition("Gold coins failed.", state->coins == 6);
 }
 
 
 //Test Silver count
 int oneSilverCoin_Plus2(struct gameState *state)
 {
-  int pass = 0;
-
-  //state->coins = 0;
+ 
+  //setup state
   int player = 1;
   state->handCount[player] = 5;
 
-  //setup state
   state->hand[player][0] = village;
   state->hand[player][1] = village;
   state->hand[player][2] = village;
   state->hand[player][3] = village;
   state->hand[player][4] = silver;
 
+  //test function
   updateCoins(player,state,0);
    
-  if(state->coins == 2)
-  {
-    pass = 1;
-  }
-
-  printf ("Test 2: Silver Coins Added = 1 | Expection: Coins = 2 | Result: ");
-  if(pass)
-    printf ("PASSED\n");
-  else
-    printf ("FAILED\n");
-
-  return pass;
+   //return result
+  return AssertCondition("Silver coin value incorrect. ", state->coins == 2);
 }
 
 //Test Copper count
 int threeCopperCoins_Plus3(struct gameState *state)
 {
-  int pass = 0;
 
   //state->coins = 0;
   int player = 1;
@@ -88,42 +65,20 @@ int threeCopperCoins_Plus3(struct gameState *state)
 
   updateCoins(player,state,0);
    
-  if(state->coins == 3)
-  {
-    pass = 1;
-  }
 
-  printf ("Test 3: Copper Coins Added = 3 | Expection: Coins = 3 | Result: ");
-  if(pass)
-    printf ("PASSED\n");
-  else
-    printf ("FAILED\n");
-
-  return pass;
+  return AssertCondition("Copper coin value incorrect. ", state->coins == 3);
 }
 
 //Test Bonus Count
 int fiveBonusAdded_plus5(struct gameState *state)
 {
-  int pass = 0;
 
-  //state->coins = 0;
   int player = 1;
 
   updateCoins(player,state,5);
    
-  if(state->coins == 5)
-  {
-    pass = 1;
-  }
 
-  printf ("Test 4: Bonus Added = 5 | Expection: Coins = 5 | Result: ");
-  if(pass)
-    printf ("PASSED\n");
-  else
-    printf ("FAILED\n");
-
-  return pass;
+  return AssertCondition("Bonus value incorrect. ", state->coins == 5);
 }
 
 //function has race condition, expected: none 
@@ -147,28 +102,24 @@ int main (int argc, char** argv) {
 
   int success = 1;
 
-  success &= AssertTest ("Test 0: Race Condition | Expectation: None Detected ",
+  success &= AssertTest ("Test 0: Race Condition | Expected: None Detected ",
     TestRace(&raceCondition_NoneDetected));
 
-  /*
-  printf("Test 0: Race Condition | Expectation: None Detected | Result: ");
-  if(success == 1)
-    printf("PASSED\n");
-  else
-    printf("FAILED\n");
-  */
+  initializeGame(2, k, 2, &G);
+  success &= AssertTest ("Test 1: Gold Coins Added = 2 | Expected: Coins = 6",
+    twoGoldCoins_Plus6(&G));
 
   initializeGame(2, k, 2, &G);
-  success &= twoGoldCoins_Plus6(&G);
+  success &= AssertTest("Test 2: Silver Coins Added = 1 | Expected: Coins = 2", 
+    oneSilverCoin_Plus2(&G));
 
   initializeGame(2, k, 2, &G);
-  success &= oneSilverCoin_Plus2(&G);
+  success &= AssertTest("Test 3: Copper Coins Added = 3 | Expected: Coins = 3", 
+    threeCopperCoins_Plus3(&G));
 
   initializeGame(2, k, 2, &G);
-  success &= threeCopperCoins_Plus3(&G);
-
-  initializeGame(2, k, 2, &G);
-  success &= fiveBonusAdded_plus5(&G);
+  success &= AssertTest("Test 4: Bonus Added = 5 | Expected: Coins = 5",
+    fiveBonusAdded_plus5(&G));
 
   if(success)
   {
