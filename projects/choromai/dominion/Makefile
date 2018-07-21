@@ -29,11 +29,11 @@ runtests: testDrawCard
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
-race.o: race.h race.c
-	gcc -c race.c -lpthread $(CFLAGS)
+utils.o: utils.h utils.c
+	gcc -c utils.c -lpthread $(CFLAGS)
 
-unitTest: dominion.o rngs.o race.o unittest1.c 
-	gcc -o u1 unittest1.c -g dominion.o race.o rngs.o -lpthread $(CFLAGS)
+unitTest: dominion.o rngs.o utils.o unittest2.c 
+	gcc -o u1 unittest2.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)

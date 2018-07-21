@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "rngs.h"
 #include <stdlib.h>
-#include "race.h"
+#include "utils.h"
 
 
 //Test Gold count
@@ -145,29 +145,32 @@ int main (int argc, char** argv) {
 
   printf("\n**************  updateCoins() ***********\n");
 
-  int success = 0;
+  int success = 1;
 
-  success += TestRace(&raceCondition_NoneDetected);
+  success &= AssertTest ("Test 0: Race Condition | Expectation: None Detected ",
+    TestRace(&raceCondition_NoneDetected));
 
+  /*
   printf("Test 0: Race Condition | Expectation: None Detected | Result: ");
   if(success == 1)
     printf("PASSED\n");
   else
     printf("FAILED\n");
+  */
 
   initializeGame(2, k, 2, &G);
-  success += twoGoldCoins_Plus6(&G);
+  success &= twoGoldCoins_Plus6(&G);
 
   initializeGame(2, k, 2, &G);
-  success += oneSilverCoin_Plus2(&G);
+  success &= oneSilverCoin_Plus2(&G);
 
   initializeGame(2, k, 2, &G);
-  success += threeCopperCoins_Plus3(&G);
+  success &= threeCopperCoins_Plus3(&G);
 
   initializeGame(2, k, 2, &G);
-  success += fiveBonusAdded_plus5(&G);
+  success &= fiveBonusAdded_plus5(&G);
 
-  if(success == 5)
+  if(success)
   {
     printf ("ALL TESTS PASSED\n");
   }

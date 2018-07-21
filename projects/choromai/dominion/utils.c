@@ -62,11 +62,11 @@ int AssertTest(char* condition, int pass)
 {
     if(!pass)
     {
-        printf("%s | Result: FAILED\n\n", condition);
+        printf("%s | Result: FAILED\n", condition);
     }
     else
     {
-        printf("%s | Result: PASSED\n\n", condition);
+        printf("%s | Result: PASSED\n", condition);
     }
 
     return pass;
