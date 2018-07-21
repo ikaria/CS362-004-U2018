@@ -3,7 +3,7 @@
 #include "rngs.h"
 #include <stdlib.h>
 #include <string.h>
-#include "race.h"
+#include "utils.h"
 
 //TESTING: ADVENTURER CARD 
 
@@ -13,9 +13,7 @@
 //Deck has at least 3 cards, three coppers added, 7 cards total 
 int twoTreasureCardsInDeck_twoCardsDiscardedtwoTreasuresFound(struct gameState *state)
 {
-  int pass = 0;
 
-  //state->coins = 0;
   int player = 0;
   state->handCount[player] = 5;
 
@@ -31,7 +29,8 @@ int twoTreasureCardsInDeck_twoCardsDiscardedtwoTreasuresFound(struct gameState *
   int choice2 = 0;
   int choice3 = 0;
   int handPos = 4;
-  int *bonus;
+  int a = 0;
+  int *bonus = &a;
 
   //add 2 treasures and 2 other cards to deck
   state->supplyCount[copper] = 2;
@@ -49,6 +48,7 @@ int twoTreasureCardsInDeck_twoCardsDiscardedtwoTreasuresFound(struct gameState *
   int cardsInHand = state->handCount[player];
   int treasures = 0;
   int nextCard = 0;
+  int coppersAdded = 0;
 
   for(i=0; i < cardsInHand; i++)
   {
@@ -56,44 +56,42 @@ int twoTreasureCardsInDeck_twoCardsDiscardedtwoTreasuresFound(struct gameState *
       if(nextCard == silver || nextCard == gold || nextCard == copper)
       {
         treasures++;
+        if(nextCard == copper)
+        {
+          coppersAdded++;
+        }
       }
   }
 
   int totalDiscards = state->discardCount[player];
 
-  //did we add 1 treasure card and discard 4 cards from the deck in the process
-  if(treasures == 2 && totalDiscards == 2)
+  int j;
+  int discartedVillageCount = 0;
+  for(j=1; j <= 2; j++)
   {
-      int j;
-      int discartedVillageCount = 0;
-      for(j=1; j <= 2; j++)
-      {
-        //are the discarded cards really village
-        if(state->discard[player][totalDiscards-j] == village)
-        {
-            discartedVillageCount++;
-        }
-      }
-      if(discartedVillageCount == 2)
-      {
-          pass = 1;
-      }
+    if(state->discard[player][totalDiscards-j] == village)
+    {
+        discartedVillageCount++;
+    }
   }
 
-  printf ("Test 1: 2 Treasures in Deck | Expection: 2 coppers added to hand, 2 village cards discarded | Result: ");
-  if(pass)
-    printf ("PASSED\n");
-  else
-    printf ("FAILED\n");
+  int success = 1;
 
-  return pass;
+  //did we add 2 treasure card and discard 2 cards from the deck in the process
+  success &= AssertCondition("Don't have 2 treasures", treasures == 2);
+  //are the added treasures really coppers
+  success &= AssertCondition("Don't have 2 coppers", coppersAdded == 2);
+  //were 2 cards discarded
+  success &= AssertCondition("Number of discarded cards is not 2", totalDiscards == 2);
+  //are the discarded cards really village
+  success &= AssertCondition("Number of discarded village cards in not 2", discartedVillageCount == 2);
+
+  return success;
 }
 
 int oneTreasureCardInDeck_fourCardsDiscardedoneTreasureFound(struct gameState *state)
 {
-  int pass = 0;
 
-  //state->coins = 0;
   int player = 0;
   state->handCount[player] = 5;
 
@@ -109,7 +107,8 @@ int oneTreasureCardInDeck_fourCardsDiscardedoneTreasureFound(struct gameState *s
   int choice2 = 0;
   int choice3 = 0;
   int handPos = 4;
-  int *bonus;
+  int a = 0;
+  int *bonus = &a;
 
   //add 1 treasures and 2 other cards to deck
   state->supplyCount[copper] = 1;
@@ -127,6 +126,7 @@ int oneTreasureCardInDeck_fourCardsDiscardedoneTreasureFound(struct gameState *s
   int cardsInHand = state->handCount[player];
   int treasures = 0;
   int nextCard = 0;
+  int coppersAdded = 0;
 
   for(i=0; i < cardsInHand; i++)
   {
@@ -134,37 +134,38 @@ int oneTreasureCardInDeck_fourCardsDiscardedoneTreasureFound(struct gameState *s
       if(nextCard == silver || nextCard == gold || nextCard == copper)
       {
         treasures++;
+        if(nextCard == copper)
+        {
+          coppersAdded++;
+        }
       }
   }
 
   int totalDiscards = state->discardCount[player];
 
-  //did we add 1 treasure card and discard 4 cards from the deck in the process
-  if(treasures == 1 && totalDiscards == 4)
+  int j;
+  int discartedVillageCount = 0;
+  for(j=1; j <= 4; j++)
   {
-      int j;
-      int discartedVillageCount = 0;
-      for(j=1; j <= 4; j++)
-      {
-        //are the discarded cards really village
-        if(state->discard[player][totalDiscards-j] == village)
-        {
-            discartedVillageCount++;
-        }
-      }
-      if(discartedVillageCount == 4)
-      {
-          pass = 1;
-      }
+    if(state->discard[player][totalDiscards-j] == village)
+    {
+        discartedVillageCount++;
+    }
   }
+  //did we add 1 treasure card and discard 4 cards from the deck in the process
 
-  printf ("Test 1: 1 Treasures in Deck | Expection: 1 copper added to hand, 4 village cards discarded | Result: ");
-  if(pass)
-    printf ("PASSED\n");
-  else
-    printf ("FAILED\n");
+  int success = 1;
 
-  return pass;
+  //did we add 1 treasure card and discard 4 cards from the deck in the process
+  success &= AssertCondition("Don't have 1 treasure", treasures == 1);
+  //was one copper added
+  success &= AssertCondition("Don't have 1 copper", coppersAdded == 1);
+  //were 4 cards discarded
+  success &= AssertCondition("Number of discarded cards is not 4", totalDiscards == 4);
+  //are the discarded cards really village
+  success &= AssertCondition("Number of discarded village cards in not 4", discartedVillageCount == 4);
+
+  return success;
 }
 
 int main (int argc, char** argv) {
@@ -174,16 +175,18 @@ int main (int argc, char** argv) {
 
   printf("\n**************  cardtest2: Adventurer ***********\n");
 
-  int success = 0;
+  int success = 1;
 
   initializeGame(2, k, 2, &G);
-  success += twoTreasureCardsInDeck_twoCardsDiscardedtwoTreasuresFound(&G);
+  success &= AssertTest("Test 1: 2 Treasures in Deck | Expected: 2 coppers added to hand, 2 village cards discarded",
+    twoTreasureCardsInDeck_twoCardsDiscardedtwoTreasuresFound(&G));
 
   initializeGame(2, k, 2, &G);
   memcpy(&emptyG, &G, sizeof(struct gameState));
-  success += oneTreasureCardInDeck_fourCardsDiscardedoneTreasureFound(&G);
+  success &= AssertTest("Test 2: 1 Treasures in Deck | Expection: 1 copper added to hand, 4 village cards discarded",
+  oneTreasureCardInDeck_fourCardsDiscardedoneTreasureFound(&G));
 
-  if(success == 2)
+  if(success)
   {
     printf ("ALL TESTS PASSED\n");
   }

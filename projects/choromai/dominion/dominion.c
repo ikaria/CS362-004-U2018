@@ -659,7 +659,7 @@ int playAdventurer(struct gameState *state)
 	  shuffle(currentPlayer, state);
 	}
 	drawCard(currentPlayer, state);
-	cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
+	cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]];//top card of hand is most recently drawn card.
 	if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
 	  drawntreasure++;
 	else{
@@ -675,7 +675,6 @@ int playAdventurer(struct gameState *state)
       return 0;
     
 }	
-
 
 
 int playCouncilRoom(struct gameState *state, int handPos)
