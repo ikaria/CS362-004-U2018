@@ -2,37 +2,25 @@
 #include <stdio.h>
 #include "rngs.h"
 #include <stdlib.h>
-#include "race.h"
+#include "utils.h"
 
 //TESTING: isGameOver()
 
 //game state with province count = 0, expected 1
 int provinceCountZero_EndGame(struct gameState *state)
 {
-  int pass = 0;
-
   //setup state
   state->supplyCount[province] = 0;
 
   int result = isGameOver(state);
-  if(result == 1)
-  {
-    pass = 1;
-  }
 
-  printf ("Test 1: Province Count = 0 | Expection: End Game | Result: ");
-  if(pass)
-    printf ("PASSED\n");
-  else
-    printf ("FAILED\n");
 
-  return pass;
+  return AssertCondition("Failed to dected 0 provinces.", result);
 }
 
 //game state with (3) supply counts = 0, expected 1
 int threeTreasuresCountZero_EndGame(struct gameState *state)
 {
-  int pass = 0;
 
   //setup state
   state->supplyCount[0] = 0;
@@ -40,44 +28,23 @@ int threeTreasuresCountZero_EndGame(struct gameState *state)
   state->supplyCount[2] = 0;
 
   int result = isGameOver(state);
-  if(result == 1)
-  {
-    pass = 1;
-  }
 
-  printf ("Test 2: (3) Treasures Count = 0 | Expection: End Game | Result: ");
-  if(pass)
-    printf ("PASSED\n");
-  else
-    printf ("FAILED\n");
 
-  return pass;
+  return AssertCondition("Failed to dected 0 provinces.", result);
 }
 
 //game state with (2) supply counts = 0, expected: 0
 int twoTreasuresCountZero_ContinueGame(struct gameState *state)
 {
-  int pass = 0;
-
   //setup state
   state->supplyCount[0] = 0;
   state->supplyCount[1] = 0;
 
   int result = 0;
-  result = isGameOver(state);
-  if(result == 0)
-  {
-    pass = 1;
-  }
-
-  printf ("Test 3: (2) Treasures Count = 0 | Expection: Continue Game | Result: ");
-  if(pass)
-    printf ("PASSED\n");
-  else
-    printf ("FAILED\n");
+  result = !isGameOver(state);
 
 
-  return pass;
+  return AssertCondition("False positive. Game should not end", result); 
 }
 
 //function has race condition, expected: none 
@@ -99,26 +66,25 @@ int main (int argc, char** argv) {
 
   printf("\n**************  isGameOver() ***********\n");
 
-  int success = 0;
+  int success = 1;
 
-  success += TestRace(&raceCondition_NoneDetected);
+  success &= AssertTest ("Test 0: Race Condition | Expected: None Detected ",
+    TestRace(&raceCondition_NoneDetected));
 
-  printf("Test 0: Race Condition | Expectation: None Detected | Result: ");
-  if(success == 1)
-    printf("PASSED\n");
-  else
-    printf("FAILED\n");
 
   initializeGame(2, k, 2, &G);
-  success += provinceCountZero_EndGame(&G);
+  success &= AssertTest ("Test 1: Province Count = 0 | Expected: End Game",
+    provinceCountZero_EndGame(&G));
 
   initializeGame(2, k, 2, &G);
-  success += twoTreasuresCountZero_ContinueGame(&G);
+  success &= AssertTest("Test 3: (2) Treasures Count = 0 | Expection: Continue Game",
+    twoTreasuresCountZero_ContinueGame(&G));
 
   initializeGame(2, k, 2, &G);
-  success += threeTreasuresCountZero_EndGame(&G);
+  success &= AssertTest("Test 3: (3) Treasures Count = 0 | Expected: End Game",
+    threeTreasuresCountZero_EndGame(&G));
 
-  if(success == 4)
+  if(success)
   {
     printf ("ALL TESTS PASSED\n");
   }

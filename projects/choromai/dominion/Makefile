@@ -32,6 +32,9 @@ runtests: testDrawCard
 utils.o: utils.h utils.c
 	gcc -c utils.c -lpthread $(CFLAGS)
 
+unitTest1: dominion.o rngs.o utils.o unittest1.c 
+	gcc -o u1 unittest1.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
 unitTest2: dominion.o rngs.o utils.o unittest2.c 
 	gcc -o u2 unittest2.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
 
