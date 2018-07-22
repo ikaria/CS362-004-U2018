@@ -1,3 +1,238 @@
+
+**************  isGameOver() ***********
+Test 0: Race Condition | Expected: None Detected  | Result: PASSED
+Test 1: Province Count = 0 | Expected: End Game | Result: PASSED
+Test 3: (2) Treasures Count = 0 | Expection: Continue Game | Result: PASSED
+Test 3: (3) Treasures Count = 0 | Expected: End Game | Result: PASSED
+ALL TESTS PASSED
+
+
+**************  updateCoins() ***********
+Test 0: Race Condition | Expected: None Detected  | Result: PASSED
+Test 1: Gold Coins Added = 2 | Expected: Coins = 6 | Result: PASSED
+Test 2: Silver Coins Added = 1 | Expected: Coins = 2 | Result: PASSED
+Test 3: Copper Coins Added = 3 | Expected: Coins = 3 | Result: PASSED
+Test 4: Bonus Added = 5 | Expected: Coins = 5 | Result: PASSED
+ALL TESTS PASSED
+
+
+**************  handCard() ***********
+Test 1: Get card in position: 1 | Expected: Village | Result: PASSED
+Test 2: Get card in position: 5 | Expected: Smithy | Result: PASSED
+Out of range card has value, but shouldn't
+Test 3: Try card out of range | Expected: invalid enum | Result: FAILED
+
+
+**************  gainCard() ***********
+Test 1: Add Province To Deck | Expected: Deck+1, Supply-1, Card=Province | Result: PASSED
+Test 2: Try Add Province when none available | Expected: Deck & Supply unchanged, Gain returns -1 | Result: PASSED
+Test 3: Add Province To Hand | Expection: Hand Count + 1, Supply-1, Card=Province | Result: PASSED
+Test 4: Add Province To Discard Pile | Expected: Discard + 1, Supply-1; Card=Province | Result: PASSED
+ALL TESTS PASSED
+
+
+**************  cardtest1: Smithy ***********
+Test 0: Race Condition | Expected: None Detected  | Result: PASSED
+Cards added are not 3 coppers.
+Don't have 7 cards.
+Test 1: At least 3 Cards in Deck | Expection: Played = Smithy, 3 Coppers added, total 7 cards | Result: FAILED
+Cards added are not 3 coppers.
+Don't have 7 cards
+Test 2: Less than 3 Cards in Deck | Expection: Played = Smithy, 3 Coppers added, total 7 cards | Result: FAILED
+Cards added are 2 coppers.
+Don't have 6 cards
+Test 3: Less than 3 Cards in Deck, none in Discard Pile | Expection: Played = Smithy, 3 Coppers added, total 7 cards | Result: FAILED
+
+
+**************  cardtest2: Adventurer ***********
+Don't have 2 treasures
+Don't have 2 coppers
+Number of discarded cards is not 2
+Number of discarded village cards in not 2
+Test 1: 2 Treasures in Deck | Expected: 2 coppers added to hand, 2 village cards discarded | Result: FAILED
+Don't have 1 treasure
+Don't have 1 copper
+Number of discarded cards is not 4
+Number of discarded village cards in not 4
+Test 2: 1 Treasures in Deck | Expection: 1 copper added to hand, 4 village cards discarded | Result: FAILED
+
+
+**************  cardtest3: Village ***********
+Incorrect number of discards
+Discarded card not village
+Test 1: Play Action, Normal Deck | Expection: 2 actions added, Smithy in hand, village discarded, # of cards in hand unchanged | Result: FAILED
+Incorrect number of discards
+Discarded card not village
+Test 2: Play Action, DeckEmpty | Expection: 2 actions added, 4 cards in hand, village discarded | Result: FAILED
+
+
+**************  cardtest4: Council Room ***********
+got hereTest 1: Play Action, Normal Deck | Expected: 4 Coppers in Hand, Buy Added, 1 copper for each opponent, council_room discarded | Result: PASSED
+got hereTest 2: Play Action, 2 Cards in Deck | Expected: 2 Coppers in Hand, Buy Added, 1 copper for each opponent, council_room discarded | Result: PASSED
+ALL TESTS PASSED
+
+Function 'updateCoins'
+Lines executed:100.00% of 11
+Branches executed:100.00% of 8
+Taken at least once:100.00% of 8
+No calls
+
+Function 'gainCard'
+Lines executed:100.00% of 13
+Branches executed:100.00% of 6
+Taken at least once:100.00% of 6
+Calls executed:100.00% of 1
+
+Function 'discardCard'
+Lines executed:84.62% of 13
+Branches executed:100.00% of 6
+Taken at least once:66.67% of 6
+No calls
+
+Function 'cardEffect'
+Lines executed:6.39% of 219
+Branches executed:13.29% of 173
+Taken at least once:2.89% of 173
+Calls executed:9.09% of 55
+
+Function 'playRemodel'
+Lines executed:0.00% of 12
+Branches executed:0.00% of 6
+Taken at least once:0.00% of 6
+Calls executed:0.00% of 6
+
+Function 'playVillage'
+Lines executed:100.00% of 6
+No branches
+Calls executed:100.00% of 3
+
+Function 'playSmithy'
+Lines executed:83.33% of 6
+Branches executed:100.00% of 2
+Taken at least once:50.00% of 2
+Calls executed:66.67% of 3
+
+Function 'playCouncilRoom'
+Lines executed:100.00% of 11
+Branches executed:100.00% of 6
+Taken at least once:100.00% of 6
+Calls executed:100.00% of 5
+
+Function 'playAdventurer'
+Lines executed:100.00% of 18
+Branches executed:100.00% of 12
+Taken at least once:83.33% of 12
+Calls executed:100.00% of 3
+
+Function 'getCost'
+Lines executed:0.00% of 57
+Branches executed:0.00% of 28
+Taken at least once:0.00% of 28
+No calls
+
+Function 'drawCard'
+Lines executed:77.27% of 22
+Branches executed:100.00% of 6
+Taken at least once:66.67% of 6
+Calls executed:100.00% of 1
+
+Function 'getWinners'
+Lines executed:0.00% of 24
+Branches executed:0.00% of 22
+Taken at least once:0.00% of 22
+Calls executed:0.00% of 2
+
+Function 'scoreFor'
+Lines executed:0.00% of 24
+Branches executed:0.00% of 42
+Taken at least once:0.00% of 42
+Calls executed:0.00% of 3
+
+Function 'isGameOver'
+Lines executed:100.00% of 10
+Branches executed:100.00% of 8
+Taken at least once:100.00% of 8
+No calls
+
+Function 'endTurn'
+Lines executed:0.00% of 20
+Branches executed:0.00% of 6
+Taken at least once:0.00% of 6
+Calls executed:0.00% of 3
+
+Function 'whoseTurn'
+Lines executed:100.00% of 2
+No branches
+No calls
+
+Function 'fullDeckCount'
+Lines executed:0.00% of 9
+Branches executed:0.00% of 12
+Taken at least once:0.00% of 12
+No calls
+
+Function 'supplyCount'
+Lines executed:100.00% of 2
+No branches
+No calls
+
+Function 'handCard'
+Lines executed:100.00% of 3
+No branches
+Calls executed:100.00% of 1
+
+Function 'numHandCards'
+Lines executed:0.00% of 2
+No branches
+Calls executed:0.00% of 1
+
+Function 'buyCard'
+Lines executed:0.00% of 13
+Branches executed:0.00% of 6
+Taken at least once:0.00% of 6
+Calls executed:0.00% of 4
+
+Function 'playCard'
+Lines executed:0.00% of 14
+Branches executed:0.00% of 10
+Taken at least once:0.00% of 10
+Calls executed:0.00% of 3
+
+Function 'shuffle'
+Lines executed:100.00% of 16
+Branches executed:100.00% of 8
+Taken at least once:100.00% of 8
+Calls executed:100.00% of 2
+
+Function 'initializeGame'
+Lines executed:83.87% of 62
+Branches executed:95.65% of 46
+Taken at least once:78.26% of 46
+Calls executed:100.00% of 5
+
+Function 'kingdomCards'
+Lines executed:0.00% of 13
+No branches
+No calls
+
+Function 'newGame'
+Lines executed:0.00% of 3
+No branches
+No calls
+
+Function 'compare'
+Lines executed:83.33% of 6
+Branches executed:100.00% of 4
+Taken at least once:75.00% of 4
+No calls
+
+File 'dominion.c'
+Lines executed:32.08% of 611
+Branches executed:31.89% of 417
+Taken at least once:23.74% of 417
+Calls executed:27.72% of 101
+Creating 'dominion.c.gcov'
+
         -:    0:Source:dominion.c
         -:    0:Graph:dominion.gcno
         -:    0:Data:dominion.gcda

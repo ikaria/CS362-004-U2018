@@ -47,7 +47,7 @@ int main (int argc, char** argv) {
   G.hand[player][3] = copper;
   G.hand[player][4] = smithy;
 
-  G.handCount->player = 5;
+  G.handCount[player] = 5;
 
   success &= AssertTest("Test 1: Get card in position: 1 | Expected: Village",
     getFirstCard_village(0,&G));
