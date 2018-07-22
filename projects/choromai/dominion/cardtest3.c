@@ -3,14 +3,13 @@
 #include "rngs.h"
 #include <stdlib.h>
 #include <string.h>
-#include "race.h"
+#include "utils.h"
 
 //TESTING: VILLAGE CARD 
 
 //Village Played, Smithy Gained, Two Actions Gained, Village Discarded
 int playAction_SmithyInHandTwoActionsAddedDiscardedVillage(struct gameState *state)
 {
-  int pass = 0;
 
   int player = 0;
   state->handCount[player] = 5;
@@ -27,7 +26,8 @@ int playAction_SmithyInHandTwoActionsAddedDiscardedVillage(struct gameState *sta
   int choice2 = 0;
   int choice3 = 0;
   int handPos = 3;
-  int *bonus;
+  int a = 0;
+  int *bonus = &a;
 
   state->deck[player][0] = copper; 
   state->deck[player][1] = copper; 
@@ -37,33 +37,24 @@ int playAction_SmithyInHandTwoActionsAddedDiscardedVillage(struct gameState *sta
 
   int actionsBefore = state->numActions;
   int discardsBefore = state->playedCardCount;
+  int cardsInHandBefore = state->handCount[player];
 
   cardEffect(card, choice1, choice2, choice3, state, handPos, bonus);
-
-  int i=0;
-  int cardsInHand = state->handCount[player];
-  int nextCard = 0;
 
   int totalDiscards = state->playedCardCount - discardsBefore;
   int discardedCard = state->playedCards[state->playedCardCount-1];
   int actionsAdded = state->numActions - actionsBefore;
 
   //assertions
-  if(totalDiscards == 1 && discardedCard == village && actionsAdded == 2)
-  {
-      if(state->hand[player][3] == smithy)
-      {
-        pass = 1;
-      }
-  }
+  int success = 1;
 
-  printf ("Test 1: Play Action, Normal Deck | Expection: 2 actions added, Smithy in hand, village discarded | Result: ");
-  if(pass)
-    printf ("PASSED\n");
-  else
-    printf ("FAILED\n");
+  success &= AssertCondition("Incorrect number of discards", totalDiscards == 1);
+  success &= AssertCondition("Discarded card not village", discardedCard == village);
+  success &= AssertCondition("Number of actions added not 2", actionsAdded == 2);
+  success &= AssertCondition("Card added to hand is not smithy", state->hand[player][3] == smithy);
+  success &= AssertCondition("Number of cards in hand incorrect", cardsInHandBefore == state->handCount[player]);
 
-  return pass;
+  return success;
 }
 
 
@@ -74,12 +65,13 @@ int main (int argc, char** argv) {
 
   printf("\n**************  cardtest3: Village ***********\n");
 
-  int success = 0;
+  int success = 1;
 
   initializeGame(2, k, 2, &G);
-  success += playAction_SmithyInHandTwoActionsAddedDiscardedVillage(&G);
+  success &= AssertTest("Test 1: Play Action, Normal Deck | Expection: 2 actions added, Smithy in hand, village discarded, # of cards in hand unchanged",
+    playAction_SmithyInHandTwoActionsAddedDiscardedVillage(&G));
 
-  if(success == 2)
+  if(success)
   {
     printf ("ALL TESTS PASSED\n");
   }

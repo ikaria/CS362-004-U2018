@@ -50,6 +50,9 @@ cardTest1: dominion.o rngs.o utils.o cardtest1.c
 cardTest2: dominion.o rngs.o utils.o cardtest2.c 
 	gcc -o c2 cardtest2.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
 
+cardTest3: dominion.o rngs.o utils.o cardtest3.c 
+	gcc -o c3 cardtest3.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
