@@ -696,6 +696,7 @@ int playCouncilRoom(struct gameState *state, int handPos)
 	{
 	  if ( i != currentPlayer )
 	    {
+        printf("got here");
 	      drawCard(i, state);
 	    }
 	}

@@ -57,7 +57,7 @@ int playAction_SmithyInHandTwoActionsAddedDiscardedVillage(struct gameState *sta
   return success;
 }
 
-//Village Played, Smithy Gained, Two Actions Gained, Village Discarded
+//Village Played, Nothing Gained (empty deck), Two Actions Gained, Village Discarded
 int playAction_4InHandTwoActionsAddedDiscardedVillage(struct gameState *state)
 {
 
