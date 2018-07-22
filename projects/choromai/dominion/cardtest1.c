@@ -206,15 +206,15 @@ int main (int argc, char** argv) {
   }
 
   initializeGame(2, k, 2, &G);
-  success &= AssertTest("Test 1: At least 3 Cards in Deck | Expection: Played = Smithy, 3 Coppers added, total 7 cards",
+  success &= AssertTest("Test 1: At least 3 Cards in Deck | Expected: Played = Smithy, 3 Coppers added, total 7 cards",
     atLeastThreeCardsInDeck(&G));
 
   initializeGame(2, k, 2, &G);
-  success &= AssertTest("Test 2: Less than 3 Cards in Deck | Expection: Played = Smithy, 3 Coppers added, total 7 cards",
+  success &= AssertTest("Test 2: Less than 3 Cards in Deck | Expected: Played = Smithy, 3 Coppers added, total 7 cards",
     lessThanThreeCardsInDeck(&G));
     
   initializeGame(2, k, 2, &G);
-  success &= AssertTest("Test 3: Less than 3 Cards in Deck, none in Discard Pile | Expection: Played = Smithy, 3 Coppers added, total 7 cards",
+  success &= AssertTest("Test 3: Less than 3 Cards in Deck, none in Discard Pile | Expected: Played = Smithy, 3 Coppers added, total 7 cards",
     lessThanThreeInDeckNoneInDiscard(&G));
     
   if(success)

@@ -242,6 +242,49 @@ int playAction_2cardsAdded_opponentsGot1_buyAdded_Only2CardDecks(struct gameStat
   return success;
 }
 
+//function has race condition, expected: none 
+void raceCondition_NoneDetected()
+{
+  struct gameState G;
+  int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
+           sea_hag, tribute, smithy};
+  initializeGame(2, k, 2, &G);
+  
+  //setup state
+  int player = 0;
+  G.handCount[player] = 5;
+
+  int j;
+
+  //setup all players
+  for(j=0; j<G.numPlayers; j++)
+  {
+
+    G.hand[j][0] = smithy;
+    G.hand[j][1] = village;
+    G.hand[j][2] = village;
+    G.hand[j][3] = village;
+    G.hand[j][4] = council_room;
+
+    G.deck[j][0] = copper; 
+    G.deck[j][1] = copper; 
+    G.deck[j][2] = copper; 
+    G.deck[j][3] = copper; 
+    G.deck[j][4] = copper; 
+
+  }
+
+  int card = council_room;
+  int choice1 = 0; 
+  int choice2 = 0;
+  int choice3 = 0;
+  int handPos = 4;
+  int a = 0;
+  int *bonus = &a;
+
+  cardEffect(card, choice1, choice2, choice3, &G, handPos, bonus);
+
+}
 
 int main (int argc, char** argv) {
   struct gameState G;
@@ -251,6 +294,10 @@ int main (int argc, char** argv) {
   printf("\n**************  cardtest4: Council Room ***********\n");
 
   int success = 1;
+
+  initializeGame(2, k, 2, &G);
+  success &= AssertTest ("Test 0: Race Condition | Expected: None Detected ",
+    TestRace(&raceCondition_NoneDetected));
 
   initializeGame(2, k, 2, &G);
   success &= AssertTest("Test 1: Play Action, Normal Deck | Expected: 4 Coppers in Hand, Buy Added, 1 copper for each opponent, council_room discarded",

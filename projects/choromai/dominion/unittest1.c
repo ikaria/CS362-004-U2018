@@ -68,16 +68,16 @@ int main (int argc, char** argv) {
 
   int success = 1;
 
+  initializeGame(2, k, 2, &G);
   success &= AssertTest ("Test 0: Race Condition | Expected: None Detected ",
     TestRace(&raceCondition_NoneDetected));
-
 
   initializeGame(2, k, 2, &G);
   success &= AssertTest ("Test 1: Province Count = 0 | Expected: End Game",
     provinceCountZero_EndGame(&G));
 
   initializeGame(2, k, 2, &G);
-  success &= AssertTest("Test 3: (2) Treasures Count = 0 | Expection: Continue Game",
+  success &= AssertTest("Test 2: (2) Treasures Count = 0 | Expected: Continue Game",
     twoTreasuresCountZero_ContinueGame(&G));
 
   initializeGame(2, k, 2, &G);

@@ -183,7 +183,7 @@ int main (int argc, char** argv) {
 
   initializeGame(2, k, 2, &G);
   memcpy(&emptyG, &G, sizeof(struct gameState));
-  success &= AssertTest("Test 2: 1 Treasures in Deck | Expection: 1 copper added to hand, 4 village cards discarded",
+  success &= AssertTest("Test 2: 1 Treasures in Deck | Expected: 1 copper added to hand, 4 village cards discarded",
   oneTreasureCardInDeck_fourCardsDiscardedoneTreasureFound(&G));
 
   if(success)
