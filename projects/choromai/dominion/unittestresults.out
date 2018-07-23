@@ -2,7 +2,7 @@
 **************  isGameOver() ***********
 Test 0: Race Condition | Expected: None Detected  | Result: PASSED
 Test 1: Province Count = 0 | Expected: End Game | Result: PASSED
-Test 3: (2) Treasures Count = 0 | Expection: Continue Game | Result: PASSED
+Test 2: (2) Treasures Count = 0 | Expected: Continue Game | Result: PASSED
 Test 3: (3) Treasures Count = 0 | Expected: End Game | Result: PASSED
 ALL TESTS PASSED
 
