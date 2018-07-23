@@ -7,9 +7,6 @@
 
 //TESTING: ADVENTURER CARD 
 
-//2 treasure cards added to hand / for i to cards in hand treature +2
-//revealed cards discarded / 2 other cards, followed by 2 treasure cards
-
 //Deck has at least 3 cards, three coppers added, 7 cards total 
 int twoTreasureCardsInDeck_twoCardsDiscardedtwoTreasuresFound(struct gameState *state)
 {
