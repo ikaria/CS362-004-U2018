@@ -85,12 +85,14 @@ protected void setUp() {
 	      //UrlValidator urlVal = new UrlValidator(null, allowAllSchemes);
       assertTrue(urlVal.isValid("http://www.google.com"));
       assertTrue(urlVal.isValid("http://www.google.com/"));
+      int counter = 0; //TESTING
       int statusPerLine = 60;
       int printed = 0;
       if (printIndex)  {
          statusPerLine = 6;
       }
       do {
+    	  counter++;
           StringBuilder testBuffer = new StringBuilder();
          boolean expected = true;
          for (int testPartsIndexIndex = 0; testPartsIndexIndex < testPartsIndex.length; ++testPartsIndexIndex) {
@@ -121,6 +123,7 @@ protected void setUp() {
             }
          }
       } while (incrementTestPartsIndex(testPartsIndex, testObjects));
+      System.out.println(counter); //TESTING
       if (printStatus) {
          System.out.println();
       }
