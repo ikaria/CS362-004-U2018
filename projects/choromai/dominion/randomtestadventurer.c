@@ -20,19 +20,16 @@ int pileSize(int size)
     return pile; 
 }
 
-int[] buildPiles()
+void buildPiles(int array[])
 {
-  int[]piles = {0,0,0};
 
-  handEmpty = isEmpty(5);
-  deckEmpty = isEmpty(5);
-  discardEmpty = isEmpty(5);
+  int handEmpty = isEmpty(5);
+  int deckEmpty = isEmpty(5);
+  int discardEmpty = isEmpty(5);
 
   int handSize = 0;
   int deckSize = 0;
   int discardSize = 0;
-
-  int cardsInPlay = MAX_HAND;
 
   if(handEmpty)
   {
@@ -85,20 +82,20 @@ int[] buildPiles()
     }
   }
 
-  piles[0] = handSize;
-  piles[1] = deckSize;
-  piles[2] = discardSize;
+  array[0] = handSize;
+  array[1] = deckSize;
+  array[2] = discardSize;
 
-  return piles; 
 }
 
 //Deck has at least 3 cards, three coppers added, 7 cards total 
 int randomTest(struct gameState *state)
 {
   
-  int [3] piles = buildPiles();
-  int sum = piles[1] + piles[2] + piles[3];
-  printf("%d + %d + %d = %d\n", piles[0], piles[1], piles[3], sum);
+  int piles[3];
+  buildPiles(piles);
+  int sum = piles[0] + piles[1] + piles[2];
+  printf("%d + %d + %d = %d\n", piles[0], piles[1], piles[2], sum);
 
   /*
   int player = 0;
@@ -174,7 +171,8 @@ int randomTest(struct gameState *state)
   success &= AssertCondition("Number of discarded village cards in not 2", discartedVillageCount == 2);
   */
 
-  return success;
+  //return success;
+  return 1;
 }
 
 
