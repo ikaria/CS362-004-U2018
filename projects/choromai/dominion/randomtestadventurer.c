@@ -14,15 +14,26 @@ int isEmpty(int pool)
     return !empty; 
 }
 
-int pileSize(int size)
+int randNum(int size)
 {
-    int pile = rand() % size;
-    return pile; 
+    int number = rand() % size;
+    return number; 
 }
 
-void buildPiles(int array[])
+int getRandomCard()
+{
+  //total number of different card types
+  int random = rand() % 26
+
+  //account for 0;
+  return random + 1;
+}
+
+void getPlayerDeckSizes(int array[])
 {
 
+  //plausible total cards
+  const int total = 100;
   int handEmpty = isEmpty(5);
   int deckEmpty = isEmpty(5);
   int discardEmpty = isEmpty(5);
@@ -37,7 +48,7 @@ void buildPiles(int array[])
     {
       if(!discardEmpty)
       {
-        discardSize = MAX_HAND;
+        discardSize = total;
       }
     }
     //deck NOT empty 
@@ -45,12 +56,12 @@ void buildPiles(int array[])
     {
       if(!discardEmpty)
       {
-        deckSize = pileSize(MAX_HAND);
-        discardSize = MAX_HAND - deckSize; 
+        deckSize = randNum(total);
+        discardSize = total - deckSize; 
       }
       else
       {
-        deckSize = MAX_HAND;
+        deckSize = total;
       }
     }
   }
@@ -60,24 +71,24 @@ void buildPiles(int array[])
     //hand && discard
     if(!discardEmpty)
     {
-      handSize = pileSize(MAX_HAND); 
+      handSize = randNum(total); 
       //hand && deck && discard
       if(!deckEmpty)
       {
-        deckSize = pileSize(MAX_HAND - handSize); 
-        discardSize = MAX_HAND - deckSize - handSize;
+        deckSize = randNum(total - handSize); 
+        discardSize = total - deckSize - handSize;
       }
       else
       {
-        discardSize = MAX_HAND - handSize;
+        discardSize = total - handSize;
       }
     }
     else
     {
       if(!deckEmpty)
       {
-        handSize = pileSize(MAX_HAND); 
-        deckSize = MAX_HAND - handSize;
+        handSize = randNum(total); 
+        deckSize = total - handSize;
       }
     }
   }
@@ -92,22 +103,69 @@ void buildPiles(int array[])
 int randomTest(struct gameState *state)
 {
   
-  int piles[3];
-  buildPiles(piles);
-  int sum = piles[0] + piles[1] + piles[2];
-  printf("%d + %d + %d = %d\n", piles[0], piles[1], piles[2], sum);
+  struct gameState state, before;
+  state.numPlayers 2 + randNum[3];
+  //these NEED an ARRAY!!!
+  int treasures[2] = {0};
+  int revealed[100] = {0};
+  int treasureCount = 0;
+  int revealCount = 0;
 
-  /*
+  int j;
+
+  for(j=0; j < state.numPlayers; j++)
+  {
+
+    int decks[3];
+    getPlayerDeckSizes(decks);
+
+    state.handCount = setup[0];
+    state.deckCount = setup[1];
+    state.discardCount = setup[2];
+    
+    int sum = decks[0] + decks[1] + decks[2];
+    printf("%d + %d + %d = %d\n", decks[0], decks[1], decks[2], sum);
+
+    int i;
+
+
+    //fill in reverse for easier counting of treasures
+    for(i=state.handCount - 1; i >= 0; i--)
+    {
+     /**************************************/ 
+     //need to ID treasures ALREADY IN HAND!!
+      state.hand[j][i] = getRandomCard();
+    }
+
+    for(i=state.deckCount - 1; i >= 0; i--)
+    {
+      state.deck[j][i] = getRandomCard();
+
+      if(treasures == 2)
+      {
+        continue;
+      }
+
+      if(state.deck[j][i] == gold || state.deck[j][i] == silver || state.deck[j][i])
+      {
+        treasures[treasureCount] = state.deck[j][i];
+        treasureCount++;
+      }
+      else
+      {
+        reveals[revealCount] = state.deck[j][i];
+        revealCount++;
+      }
+    }
+
+    for(i=state.discardCount - 1; i >= 0; i--)
+    {
+      state.discard[j][i] = getRandomCard();
+    }
+
+  }
+
   int player = 0;
-  state->handCount[player] = 5;
-
-  //setup state
-  state->hand[player][0] = smithy;
-  state->hand[player][1] = village;
-  state->hand[player][2] = village;
-  state->hand[player][3] = village;
-  state->hand[player][4] = adventurer;
-
   int card = adventurer;
   int choice1 = 0; 
   int choice2 = 0;
@@ -116,15 +174,8 @@ int randomTest(struct gameState *state)
   int a = 0;
   int *bonus = &a;
 
-  //add 2 treasures and 2 other cards to deck
-  state->supplyCount[copper] = 2;
-  state->supplyCount[village] = 2;
-
-  state->deck[player][0] = copper; 
-  state->deck[player][1] = copper; 
-  state->deck[player][2] = village; 
-  state->deck[player][3] = copper; 
-  state->deck[player][4] = village; 
+  //record state before function
+  memcpy[&before,&state, sizeof(struct gameState)];
 
   cardEffect(card, choice1, choice2, choice3, state, handPos, bonus);
 
@@ -134,6 +185,8 @@ int randomTest(struct gameState *state)
   int nextCard = 0;
   int coppersAdded = 0;
 
+  //ALSO grab top deck card from OTHER players before
+  //in hand before + after
   for(i=0; i < cardsInHand; i++)
   {
       nextCard = state->hand[player][i];
@@ -172,6 +225,10 @@ int randomTest(struct gameState *state)
   */
 
   //return success;
+  free(handPile);
+  free(deckPile);
+  free(discardPile);
+
   return 1;
 }
 
@@ -180,7 +237,6 @@ int main (int argc, char** argv) {
 
   srand(time(NULL));
 
-  struct gameState G, emptyG;
   int runs = 10;
   int i;
   for(i = 0; i < runs; i++)
