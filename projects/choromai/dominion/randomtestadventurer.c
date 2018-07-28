@@ -12,6 +12,48 @@ int const MAX_CARDS = 10;
 int const STATS = 1;
 int const RUNS = 1;
 
+struct testRun
+{
+  int treasures[MAX_PLAYERS][2];
+  int revealed[MAX_PLAYERS][10];
+  int treasureCount[MAX_PLAYERS];
+  int revealCount[MAX_PLAYERS];
+  int handPos;
+  int player;
+};
+
+void initRun(struct testRun *run)
+{
+  int i,j;
+
+  for(int=0; i < MAX_PLAYERS; i++)
+  {
+    for(int=0; i < MAX_TREASURES)
+    {
+      run->treasures[i][j] = 0;
+    }
+  }
+
+  for(int=0; i < MAX_PLAYERS; i++)
+  {
+    for(int=0; i < MAX_TREASURES)
+    {
+      run->revealed[i][j] = 0;
+    }
+  }
+
+  for(int=0; i < MAX_PLAYERS; i++)
+  {
+    run->treasureCount[i] = 0;
+  }
+
+  for(int=0; i < MAX_PLAYERS; i++)
+  {
+    run->revealCount[i] = 0;
+  }
+
+}
+
 //1 in pool chance of it being empty
 int isEmpty(int pool)
 {
@@ -92,10 +134,6 @@ int fillDecks(int treasures[][2], int revealed[][10], int treasureCount[], int r
   int player = randNum(state->numPlayers);
 
   int handPos = 0;
-  if(state->handCount[player] > 1)
-  {
-    handPos = randNum(state->handCount[player]);
-  }
   //state->hand[player][handPos] = adventurer;
 
   int i,j;
@@ -115,6 +153,15 @@ int fillDecks(int treasures[][2], int revealed[][10], int treasureCount[], int r
     state->deckCount[j] = decks[1];
     state->discardCount[j] = decks[2];
 
+    //set position of played card
+    if(j == player)
+    {
+      if(state->handCount[player] > 1)
+      {
+        handPos = randNum(state->handCount[player]);
+      }
+    }
+
     //fill in reverse for easier counting of treasures amidst reveals
     for(i=state->handCount[j] - 1; i >= 0; i--)
     {
@@ -124,6 +171,9 @@ int fillDecks(int treasures[][2], int revealed[][10], int treasureCount[], int r
     for(i=state->deckCount[j] - 1; i >= 0; i--)
     {
       state->deck[j][i] = getRandomCard();
+
+      if(treasureCount[j] == 2)
+        continue;
 
       //add particular card to treasures, augment count
       if(state->deck[j][i] == gold || state->deck[j][i] == silver || state->deck[j][i] == copper)
@@ -146,8 +196,8 @@ int fillDecks(int treasures[][2], int revealed[][10], int treasureCount[], int r
     }
   }
 
-  printf("treasure count: %d\n", revealCount[player]);
-  printf("reveal count: %d\n", treasureCount[player]);
+  printf("reveal count: %d\n", revealCount[player]);
+  printf("treasure count: %d\n", treasureCount[player]);
 
 
   if(!STATS)
@@ -185,6 +235,7 @@ int randomTest(int k[])
 {
 
   struct gameState state, before;
+  struct testRun run;
 
   initializeGame(2, k, 2, &state);
 
