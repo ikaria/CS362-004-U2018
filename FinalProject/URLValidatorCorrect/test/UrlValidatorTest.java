@@ -92,7 +92,7 @@ protected void setUp() {
          statusPerLine = 6;
       }
       do {
-    	  counter++;
+    	  counter++; //TESTING
           StringBuilder testBuffer = new StringBuilder();
          boolean expected = true;
          for (int testPartsIndexIndex = 0; testPartsIndexIndex < testPartsIndex.length; ++testPartsIndexIndex) {
@@ -203,17 +203,18 @@ protected void setUp() {
     * valid.
     */
    ResultPair[] testUrlScheme = {new ResultPair("http://", true),
-                               new ResultPair("ftp://", true),
+                               /*new ResultPair("ftp://", true),
                                new ResultPair("h3t://", true),
                                new ResultPair("3ht://", false),
                                new ResultPair("http:/", false),
                                new ResultPair("http:", false),
                                new ResultPair("http/", false),
                                new ResultPair("://", false),
-                               new ResultPair("", true)};
+                               new ResultPair("", true)*/
+                               };
 
    ResultPair[] testUrlAuthority = {new ResultPair("www.google.com", true),
-                                  new ResultPair("go.com", true),
+                                  /*new ResultPair("go.com", true),
                                   new ResultPair("go.au", true),
                                   new ResultPair("0.0.0.0", true),
                                   new ResultPair("255.255.255.255", true),
@@ -229,18 +230,18 @@ protected void setUp() {
                                   new ResultPair("aaa.", false),
                                   new ResultPair(".aaa", false),
                                   new ResultPair("aaa", false),
-                                  new ResultPair("", false)
+                                  new ResultPair("", false)*/
    };
    ResultPair[] testUrlPort = {new ResultPair(":80", true),
-                             new ResultPair(":65535", true),
+                             /*new ResultPair(":65535", true),
                              new ResultPair(":0", true),
                              new ResultPair("", true),
                              new ResultPair(":-1", false),
                             new ResultPair(":65636",false),
-                             new ResultPair(":65a", false)
+                             new ResultPair(":65a", false)*/
    };
    ResultPair[] testPath = {new ResultPair("/test1", true),
-                          new ResultPair("/t123", true),
+                         /* new ResultPair("/t123", true),
                           new ResultPair("/$23", true),
                           new ResultPair("/..", false),
                           new ResultPair("/../", false),
@@ -248,11 +249,11 @@ protected void setUp() {
                           new ResultPair("", true),
                           new ResultPair("/test1/file", true),
                           new ResultPair("/..//file", false),
-                          new ResultPair("/test1//file", false)
+                          new ResultPair("/test1//file", false)*/
    };
    //Test allow2slash, noFragment
    ResultPair[] testUrlPathOptions = {new ResultPair("/test1", true),
-                                    new ResultPair("/t123", true),
+                                    /*new ResultPair("/t123", true),
                                     new ResultPair("/$23", true),
                                     new ResultPair("/..", false),
                                     new ResultPair("/../", false),
@@ -266,6 +267,7 @@ protected void setUp() {
                                     new ResultPair("/..//file", false),
                                     new ResultPair("/test1//file", true),
                                     new ResultPair("/#/file", false)
+                                    */
    };
 
    ResultPair[] testUrlQuery = {new ResultPair("?action=view", true),
