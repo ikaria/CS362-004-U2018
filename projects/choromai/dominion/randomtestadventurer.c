@@ -23,7 +23,7 @@ int randNum(int size)
 int getRandomCard()
 {
   //total number of different card types
-  int random = rand() % 26
+  int random = rand() % 26;
 
   //account for 0;
   return random + 1;
@@ -100,16 +100,19 @@ void getPlayerDeckSizes(int array[])
 }
 
 //Deck has at least 3 cards, three coppers added, 7 cards total 
-int randomTest(struct gameState *state)
+int randomTest(int k[])
 {
   
+
   struct gameState state, before;
-  state.numPlayers 2 + randNum[3];
-  //these NEED an ARRAY!!!
-  int treasures[2] = {0};
-  int revealed[100] = {0};
-  int treasureCount = 0;
-  int revealCount = 0;
+  state.numPlayers = 2 + randNum(3);
+
+  initializeGame(2, k, 2, &state);
+
+  int treasures[MAX_PLAYERS][2] = {0};
+  int revealed[MAX_PLAYERS][100] = {0};
+  int treasureCount[MAX_PLAYERS] = {0};
+  int revealCount[MAX_PLAYERS] = {0};
 
   int j;
 
@@ -119,25 +122,23 @@ int randomTest(struct gameState *state)
     int decks[3];
     getPlayerDeckSizes(decks);
 
-    state.handCount = setup[0];
-    state.deckCount = setup[1];
-    state.discardCount = setup[2];
+    
+    state.handCount[j] = decks[0];
+    state.deckCount[j] = decks[1];
+    state.discardCount[j] = decks[2];
     
     int sum = decks[0] + decks[1] + decks[2];
     printf("%d + %d + %d = %d\n", decks[0], decks[1], decks[2], sum);
 
     int i;
 
-
     //fill in reverse for easier counting of treasures
-    for(i=state.handCount - 1; i >= 0; i--)
+    for(i=state.handCount[j] - 1; i >= 0; i--)
     {
-     /**************************************/ 
-     //need to ID treasures ALREADY IN HAND!!
       state.hand[j][i] = getRandomCard();
     }
 
-    for(i=state.deckCount - 1; i >= 0; i--)
+    for(i=state.deckCount[j] - 1; i >= 0; i--)
     {
       state.deck[j][i] = getRandomCard();
 
@@ -148,29 +149,29 @@ int randomTest(struct gameState *state)
 
       if(state.deck[j][i] == gold || state.deck[j][i] == silver || state.deck[j][i])
       {
-        treasures[treasureCount] = state.deck[j][i];
-        treasureCount++;
+        treasures[j][treasureCount] = state.deck[j][i];
+        treasureCount[j]++;
       }
       else
       {
-        reveals[revealCount] = state.deck[j][i];
-        revealCount++;
+        reveals[j][revealCount] = state.deck[j][i];
+        revealCount[j]++;
       }
     }
 
-    for(i=state.discardCount - 1; i >= 0; i--)
+    for(i=state.discardCount[j] - 1; i >= 0; i--)
     {
       state.discard[j][i] = getRandomCard();
     }
 
   }
 
-  int player = 0;
+  int player = randNum(3);
   int card = adventurer;
   int choice1 = 0; 
   int choice2 = 0;
   int choice3 = 0;
-  int handPos = 4;
+  int handPos = randNum(state.handCount[player]);
   int a = 0;
   int *bonus = &a;
 
@@ -185,35 +186,36 @@ int randomTest(struct gameState *state)
   int nextCard = 0;
   int coppersAdded = 0;
 
-  //ALSO grab top deck card from OTHER players before
+  int treasuresAfter = 0;
   //in hand before + after
-  for(i=0; i < cardsInHand; i++)
+  for(i=0; i < state->handCount[player]; i++)
   {
       nextCard = state->hand[player][i];
       if(nextCard == silver || nextCard == gold || nextCard == copper)
       {
-        treasures++;
-        if(nextCard == copper)
-        {
-          coppersAdded++;
-        }
+        treasuresAfter++;
       }
   }
 
   int totalDiscards = state->discardCount[player];
 
-  int j;
+  //THIS NEEDS TO COMPARE EVERY DISCARDED CARD, one by one, two arrays side by size
+  //
+  /*
+  int k;
   int discartedVillageCount = 0;
-  for(j=1; j <= 2; j++)
+  for(k=1; k <= 2; k++)
   {
-    if(state->discard[player][totalDiscards-j] == village)
+    if(state->discard[player][totalDiscards-k] == village)
     {
         discartedVillageCount++;
     }
   }
+  */
 
   int success = 1;
 
+  /*
   //did we add 2 treasure card and discard 2 cards from the deck in the process
   success &= AssertCondition("Don't have 2 treasures", treasures == 2);
   //are the added treasures really coppers
@@ -222,6 +224,13 @@ int randomTest(struct gameState *state)
   success &= AssertCondition("Number of discarded cards is not 2", totalDiscards == 2);
   //are the discarded cards really village
   success &= AssertCondition("Number of discarded village cards in not 2", discartedVillageCount == 2);
+  */
+
+  /*
+  Can write a very stellar and detailed reporting mechanism
+  Player = 1;
+  Player Hand Count = 37;
+  ..etc
   */
 
   //return success;
@@ -237,11 +246,14 @@ int main (int argc, char** argv) {
 
   srand(time(NULL));
 
+  int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
+           sea_hag, tribute, smithy};
+
   int runs = 10;
   int i;
   for(i = 0; i < runs; i++)
   {
-    randomTest(&G);
+    randomTest(k);
   }
 
   /*
