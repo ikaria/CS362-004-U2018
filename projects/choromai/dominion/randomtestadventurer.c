@@ -4,7 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include "utils.h"
+//#include "randomtestadventure.h"
 
+int const MAX_TREASURES = 2;
+int const MAX_CARDS = 10;
+int const STATS = 1;
+int const RUNS = 1;
 //RANDOM TESTING: ADVENTURER CARD 
 
 //1 in pool chance of it being empty
@@ -14,27 +19,28 @@ int isEmpty(int pool)
     return !empty; 
 }
 
+//generated random number within specified range
 int randNum(int size)
 {
     int number = rand() % size;
     return number; 
 }
 
+//picks card from available enums
 int getRandomCard()
 {
-  //total number of different card types
+  //MAX_CARDSnumber of different card types
   int random = rand() % 26;
 
-  //account for 0;
+  //account for enums starting with 1;
   return random + 1;
 }
 
+//generates random sizes of hand, deck and discard piles totalling 100
 void getPlayerDeckSizes(int array[])
 {
 
-  //plausible total cards
-  const int total = 100;
-  int handEmpty = isEmpty(5);
+  //plausible MAX_CARDS
   int deckEmpty = isEmpty(5);
   int discardEmpty = isEmpty(5);
 
@@ -42,162 +48,182 @@ void getPlayerDeckSizes(int array[])
   int deckSize = 0;
   int discardSize = 0;
 
-  if(handEmpty)
+  //at least 1, to account for card to be played
+  handSize = randNum(MAX_CARDS-1)+1; 
+
+  if(!discardEmpty)
   {
-    if(deckEmpty)
+    //hand && deck && discard
+    if(!deckEmpty)
     {
-      if(!discardEmpty)
+      if(MAX_CARDS - handSize > 0)
       {
-        discardSize = total;
-      }
-    }
-    //deck NOT empty 
-    else
-    {
-      if(!discardEmpty)
-      {
-        deckSize = randNum(total);
-        discardSize = total - deckSize; 
+        deckSize = randNum(MAX_CARDS - handSize); 
       }
       else
       {
-        deckSize = total;
+        deckSize = 0;
       }
+      discardSize = MAX_CARDS - deckSize - handSize;
+    }
+    else
+    {
+      discardSize = MAX_CARDS - handSize;
     }
   }
-  //hand
   else
   {
-    //hand && discard
-    if(!discardEmpty)
+    if(!deckEmpty)
     {
-      handSize = randNum(total); 
-      //hand && deck && discard
-      if(!deckEmpty)
-      {
-        deckSize = randNum(total - handSize); 
-        discardSize = total - deckSize - handSize;
-      }
-      else
-      {
-        discardSize = total - handSize;
-      }
-    }
-    else
-    {
-      if(!deckEmpty)
-      {
-        handSize = randNum(total); 
-        deckSize = total - handSize;
-      }
+      deckSize = MAX_CARDS - handSize;
     }
   }
-
+  
   array[0] = handSize;
   array[1] = deckSize;
   array[2] = discardSize;
 
 }
 
-//Deck has at least 3 cards, three coppers added, 7 cards total 
-int randomTest(int k[])
+
+void fillDecks(int treasures[][2], int revealed[][10], int treasureCount[], int revealCount[], struct gameState *state)
 {
-  
-
-  struct gameState state, before;
-  state.numPlayers = 2 + randNum(3);
-
-  initializeGame(2, k, 2, &state);
-
-  int treasures[MAX_PLAYERS][2] = {0};
-  int revealed[MAX_PLAYERS][100] = {0};
-  int treasureCount[MAX_PLAYERS] = {0};
-  int revealCount[MAX_PLAYERS] = {0};
-
-  int j;
-
-  for(j=0; j < state.numPlayers; j++)
+  int i,j;
+  for(j=0; j < state->numPlayers; j++)
   {
 
     int decks[3];
     getPlayerDeckSizes(decks);
 
-    
-    state.handCount[j] = decks[0];
-    state.deckCount[j] = decks[1];
-    state.discardCount[j] = decks[2];
-    
-    int sum = decks[0] + decks[1] + decks[2];
-    printf("%d + %d + %d = %d\n", decks[0], decks[1], decks[2], sum);
-
-    int i;
-
-    //fill in reverse for easier counting of treasures
-    for(i=state.handCount[j] - 1; i >= 0; i--)
+    if(STATS)
     {
-      state.hand[j][i] = getRandomCard();
+      int sum = decks[0] + decks[1] + decks[2];
+      printf("Player: %d -- %d + %d + %d = %d\n", j, decks[0], decks[1], decks[2], sum);
+    }
+    
+    state->handCount[j] = decks[0];
+    state->deckCount[j] = decks[1];
+    state->discardCount[j] = decks[2];
+
+    //fill in reverse for easier counting of treasures amidst reveals
+    for(i=state->handCount[j] - 1; i >= 0; i--)
+    {
+      state->hand[j][i] = getRandomCard();
     }
 
-    for(i=state.deckCount[j] - 1; i >= 0; i--)
+    for(i=state->deckCount[j] - 1; i >= 0; i--)
     {
-      state.deck[j][i] = getRandomCard();
+      state->deck[j][i] = getRandomCard();
 
-      if(treasures == 2)
+      if(treasureCount[j] == MAX_TREASURES)
       {
         continue;
       }
 
-      if(state.deck[j][i] == gold || state.deck[j][i] == silver || state.deck[j][i])
+      //add particular card to treasures, augment count
+      if(state->deck[j][i] == gold || state->deck[j][i] == silver || state->deck[j][i])
       {
-        treasures[j][treasureCount] = state.deck[j][i];
+        treasures[j][treasureCount[j]] = state->deck[j][i];
         treasureCount[j]++;
       }
+      //if not a treasure, then a reveal
       else
       {
-        reveals[j][revealCount] = state.deck[j][i];
+        revealed[j][revealCount[j]] = state->deck[j][i];
         revealCount[j]++;
       }
     }
 
-    for(i=state.discardCount[j] - 1; i >= 0; i--)
+    //fill up discards
+    for(i=state->discardCount[j] - 1; i >= 0; i--)
     {
-      state.discard[j][i] = getRandomCard();
+      state->discard[j][i] = getRandomCard();
     }
 
   }
+
+  if(!STATS)
+    return;
+
+  for(j=0; j<state->numPlayers; j++)
+  {
+    printf("\n****************************\n");
+    printf("Player: %d\n", j);
+
+    printf("Hand --\n");
+    for(i=0; i < state->handCount[j]; i++)
+    {
+      printf("%d: %d\n", i, state->hand[j][i]);
+    }
+
+    printf("Deck --\n");
+    for(i=0; i < state->deckCount[j]; i++)
+    {
+      printf("%d: %d\n", i, state->deck[j][i]);
+    }
+
+    printf("Discards --\n");
+    for(i=0; i < state->discardCount[j]; i++)
+    {
+      printf("%d: %d\n", i, state->discard[j][i]);
+    }
+  }
+}
+
+//executes single instance of test
+int randomTest(int k[])
+{
+
+  struct gameState state, before;
+
+  //random 2-4 players
+  state.numPlayers = 2 + randNum(3);
+
+  initializeGame(2, k, 2, &state);
+
+  int treasures[MAX_PLAYERS][2] = {0};
+  int revealed[MAX_PLAYERS][10] = {0};
+  int treasureCount[MAX_PLAYERS] = {0};
+  int revealCount[MAX_PLAYERS] = {0};
+
+  fillDecks(treasures, revealed, treasureCount, revealCount, &state);
 
   int player = randNum(3);
   int card = adventurer;
   int choice1 = 0; 
   int choice2 = 0;
   int choice3 = 0;
-  int handPos = randNum(state.handCount[player]);
+  int handPos = 0;
+  if(state.handCount[player] > 1)
+  {
+    handPos = randNum(state.handCount[player]);
+  }
+  state.hand[player][handPos] = adventurer;
   int a = 0;
   int *bonus = &a;
 
   //record state before function
-  memcpy[&before,&state, sizeof(struct gameState)];
+  memcpy(&before, &state, sizeof(struct gameState));
 
-  cardEffect(card, choice1, choice2, choice3, state, handPos, bonus);
+  cardEffect(card, choice1, choice2, choice3, &state, handPos, bonus);
 
   int i=0;
-  int cardsInHand = state->handCount[player];
-  int treasures = 0;
+  int cardsInHand = state.handCount[player];
   int nextCard = 0;
   int coppersAdded = 0;
 
   int treasuresAfter = 0;
   //in hand before + after
-  for(i=0; i < state->handCount[player]; i++)
+  for(i=0; i < state.handCount[player]; i++)
   {
-      nextCard = state->hand[player][i];
+      nextCard = state.hand[player][i];
       if(nextCard == silver || nextCard == gold || nextCard == copper)
       {
         treasuresAfter++;
       }
   }
 
-  int totalDiscards = state->discardCount[player];
+  int totalDiscards = state.discardCount[player];
 
   //THIS NEEDS TO COMPARE EVERY DISCARDED CARD, one by one, two arrays side by size
   //
@@ -234,9 +260,6 @@ int randomTest(int k[])
   */
 
   //return success;
-  free(handPile);
-  free(deckPile);
-  free(discardPile);
 
   return 1;
 }
@@ -249,10 +272,14 @@ int main (int argc, char** argv) {
   int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
            sea_hag, tribute, smithy};
 
-  int runs = 10;
   int i;
-  for(i = 0; i < runs; i++)
+  for(i = 0; i < RUNS; i++)
   {
+    if(STATS)
+    {
+      printf("************************\n");
+      printf("RUN: %d\n",i);
+    }
     randomTest(k);
   }
 
