@@ -20,37 +20,41 @@ struct testRun
   int revealCount[MAX_PLAYERS];
   int handPos;
   int player;
+  int card;
 };
 
 void initRun(struct testRun *run)
 {
   int i,j;
 
-  for(int=0; i < MAX_PLAYERS; i++)
+  for(i=0; i < MAX_PLAYERS; i++)
   {
-    for(int=0; i < MAX_TREASURES)
+    for(j=0; j < MAX_TREASURES; j++)
     {
       run->treasures[i][j] = 0;
     }
   }
 
-  for(int=0; i < MAX_PLAYERS; i++)
+  for(i=0; i < MAX_PLAYERS; i++)
   {
-    for(int=0; i < MAX_TREASURES)
+    for(j=0; j < MAX_CARDS; j++)
     {
       run->revealed[i][j] = 0;
     }
   }
 
-  for(int=0; i < MAX_PLAYERS; i++)
+  for(i=0; i < MAX_PLAYERS; i++)
   {
     run->treasureCount[i] = 0;
   }
 
-  for(int=0; i < MAX_PLAYERS; i++)
+  for(i=0; i < MAX_PLAYERS; i++)
   {
     run->revealCount[i] = 0;
   }
+
+  run->handPos = 0;
+  run->player = 0;
 
 }
 
@@ -127,13 +131,12 @@ void getPlayerDeckSizes(int array[])
 
 }
 
-int fillDecks(int treasures[][2], int revealed[][10], int treasureCount[], int revealCount[], struct gameState *state)
+void fillDecks(struct testRun *run, struct gameState *state)
 {
   //random 2-4 players
   state->numPlayers = 2 + randNum(3);
-  int player = randNum(state->numPlayers);
+  run->player = randNum(state->numPlayers);
 
-  int handPos = 0;
   //state->hand[player][handPos] = adventurer;
 
   int i,j;
@@ -153,39 +156,46 @@ int fillDecks(int treasures[][2], int revealed[][10], int treasureCount[], int r
     state->deckCount[j] = decks[1];
     state->discardCount[j] = decks[2];
 
-    //set position of played card
-    if(j == player)
+    //set position of played card, defaults to 0 otherwise
+    if(j == run->player)
     {
-      if(state->handCount[player] > 1)
+      if(state->handCount[run->player] > 1)
       {
-        handPos = randNum(state->handCount[player]);
+        run->handPos = randNum(state->handCount[run->player]);
       }
+      printf("HAND POS: %d\n", run->handPos);
     }
 
     //fill in reverse for easier counting of treasures amidst reveals
     for(i=state->handCount[j] - 1; i >= 0; i--)
     {
       state->hand[j][i] = getRandomCard();
+      printf("handPos: %d  i:%d\n", run->handPos, i);
+      if(run->handPos == i && j == run->player)
+      {
+        printf("**********got here*******\n");
+        state->hand[j][i] = run->card;
+      }
     }
 
     for(i=state->deckCount[j] - 1; i >= 0; i--)
     {
       state->deck[j][i] = getRandomCard();
 
-      if(treasureCount[j] == 2)
+      if(run->treasureCount[j] == 2)
         continue;
 
       //add particular card to treasures, augment count
       if(state->deck[j][i] == gold || state->deck[j][i] == silver || state->deck[j][i] == copper)
       {
-        treasures[j][treasureCount[j]] = state->deck[j][i];
-        treasureCount[j]++;
+        run->treasures[j][run->treasureCount[j]] = state->deck[j][i];
+        run->treasureCount[j]++;
       }
       //if not a treasure, then a reveal
       else
       {
-        revealed[j][revealCount[j]] = state->deck[j][i];
-        revealCount[j]++;
+        run->revealed[j][run->revealCount[j]] = state->deck[j][i];
+        run->revealCount[j]++;
       }
     }
 
@@ -196,38 +206,36 @@ int fillDecks(int treasures[][2], int revealed[][10], int treasureCount[], int r
     }
   }
 
-  printf("reveal count: %d\n", revealCount[player]);
-  printf("treasure count: %d\n", treasureCount[player]);
+  printf("reveal count: %d\n", run->revealCount[run->player]);
+  printf("treasure count: %d\n", run->treasureCount[run->player]);
 
-
-  if(!STATS)
-    return player;
-
-  for(j=0; j<state->numPlayers; j++)
+  if(STATS)
   {
-    printf("\n****************************\n");
-    printf("Player: %d\n", j);
-
-    printf("Hand --\n");
-    for(i=0; i < state->handCount[j]; i++)
+    for(j=0; j<state->numPlayers; j++)
     {
-      printf("%d: %d\n", i, state->hand[j][i]);
-    }
+      printf("\n****************************\n");
+      printf("Player: %d\n", j);
 
-    printf("Deck --\n");
-    for(i=0; i < state->deckCount[j]; i++)
-    {
-      printf("%d: %d\n", i, state->deck[j][i]);
-    }
+      printf("Hand --\n");
+      for(i=0; i < state->handCount[j]; i++)
+      {
+        printf("%d: %d\n", i, state->hand[j][i]);
+      }
 
-    printf("Discards --\n");
-    for(i=0; i < state->discardCount[j]; i++)
-    {
-      printf("%d: %d\n", i, state->discard[j][i]);
+      printf("Deck --\n");
+      for(i=0; i < state->deckCount[j]; i++)
+      {
+        printf("%d: %d\n", i, state->deck[j][i]);
+      }
+
+      printf("Discards --\n");
+      for(i=0; i < state->discardCount[j]; i++)
+      {
+        printf("%d: %d\n", i, state->discard[j][i]);
+      }
     }
   }
 
-  return player;
 }
 
 //executes single instance of test
@@ -238,20 +246,15 @@ int randomTest(int k[])
   struct testRun run;
 
   initializeGame(2, k, 2, &state);
+  initRun(&run);
+  run.card = adventurer;
 
-  int treasures[MAX_PLAYERS][2] = {0};
-  int revealed[MAX_PLAYERS][10] = {0};
-  int treasureCount[MAX_PLAYERS] = {0};
-  int revealCount[MAX_PLAYERS] = {0};
+  fillDecks(&run, &state);
 
-  int player = fillDecks(treasures, revealed, treasureCount, revealCount, &state);
-
-  printf("Current Player: %d\n",player);
-  int card = adventurer;
+  printf("Current Player: %d\n",run.player);
   int choice1 = 0; 
   int choice2 = 0;
   int choice3 = 0;
-  int handPos = 0;
   int a = 0;
   int *bonus = &a;
 
@@ -259,31 +262,31 @@ int randomTest(int k[])
   {
     int i;
     printf("Hand with Card --\n");
-    printf("HandPos:%d\n",handPos);
+    printf("HandPos:%d\n",run.handPos);
 
-    for(i=0; i < state.handCount[player]; i++)
+    for(i=0; i < state.handCount[run.player]; i++)
     {
-      printf("%d: %d\n", i, state.hand[player][i]);
+      printf("%d: %d\n", i, state.hand[run.player][i]);
     }
   }
 
   //record state before function
   memcpy(&before, &state, sizeof(struct gameState));
 
-  cardEffect(card, choice1, choice2, choice3, &state, handPos, bonus);
+  cardEffect(run.card, choice1, choice2, choice3, &state, run.handPos, bonus);
 
   int i=0;
-  int cardsInHand = state.handCount[player];
+  int cardsInHand = state.handCount[run.player];
   int coppersAdded = 0;
   int treasuresAfter = 0;
   int treasuresBefore = 0;
 
   int nextCard = 0;
-  printf("BEFORE Player: %d\n",player);
-  for(i=0; i < before.handCount[player]; i++)
+  printf("BEFORE Player: %d\n",run.player);
+  for(i=0; i < before.handCount[run.player]; i++)
   {
-      nextCard = before.hand[player][i];
-      printf("%d: %d\n",i,before.hand[player][i]);
+      nextCard = before.hand[run.player][i];
+      printf("%d: %d\n",i,before.hand[run.player][i]);
       if(nextCard == silver || nextCard == gold || nextCard == copper)
       {
         treasuresBefore++;
@@ -292,12 +295,12 @@ int randomTest(int k[])
 
   //in hand before + after
   nextCard = 0;
-  printf("AFTER Player: %d\n",player);
-  printf("count: %d\n",state.handCount[player]);
-  for(i=0; i < state.handCount[player]; i++)
+  printf("AFTER Player: %d\n",run.player);
+  printf("count: %d\n",state.handCount[run.player]);
+  for(i=0; i < state.handCount[run.player]; i++)
   {
-      nextCard = state.hand[player][i];
-      printf("%d: %d\n",i,before.hand[player][i]);
+      nextCard = state.hand[run.player][i];
+      printf("%d: %d\n",i,before.hand[run.player][i]);
       if(nextCard == silver || nextCard == gold || nextCard == copper)
       {
         treasuresAfter++;
@@ -307,10 +310,10 @@ int randomTest(int k[])
 
   if(STATS)
   {
-    printf("Before: %d + Added: %d = After: %d\n", treasuresBefore, treasureCount[player], treasuresAfter);
+    printf("Before: %d + Added: %d = After: %d\n", treasuresBefore, run.treasureCount[run.player], treasuresAfter);
   }
 
-  int totalDiscards = state.discardCount[player];
+  int totalDiscards = state.discardCount[run.player];
 
   //THIS NEEDS TO COMPARE EVERY DISCARDED CARD, one by one, two arrays side by size
   //
