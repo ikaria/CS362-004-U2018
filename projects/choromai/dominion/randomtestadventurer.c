@@ -123,6 +123,10 @@ void getPlayerDeckSizes(int array[])
     {
       deckSize = MAX_CARDS - handSize;
     }
+    else
+    {
+      handSize = 10;
+    }
   }
   
   array[0] = handSize;
@@ -134,7 +138,6 @@ void getPlayerDeckSizes(int array[])
 void fillDecks(struct testRun *run, struct gameState *state)
 {
   //random 2-4 players
-  state->numPlayers = 2 + randNum(3);
   run->player = randNum(state->numPlayers);
 
   //state->hand[player][handPos] = adventurer;
@@ -163,17 +166,14 @@ void fillDecks(struct testRun *run, struct gameState *state)
       {
         run->handPos = randNum(state->handCount[run->player]);
       }
-      printf("HAND POS: %d\n", run->handPos);
     }
 
     //fill in reverse for easier counting of treasures amidst reveals
     for(i=state->handCount[j] - 1; i >= 0; i--)
     {
       state->hand[j][i] = getRandomCard();
-      printf("handPos: %d  i:%d\n", run->handPos, i);
       if(run->handPos == i && j == run->player)
       {
-        printf("**********got here*******\n");
         state->hand[j][i] = run->card;
       }
     }
@@ -245,13 +245,15 @@ int randomTest(int k[])
   struct gameState state, before;
   struct testRun run;
 
-  initializeGame(2, k, 2, &state);
+  int numPlayers = 2 + randNum(3);
+  initializeGame(numPlayers, k, 2, &state);
   initRun(&run);
   run.card = adventurer;
 
   fillDecks(&run, &state);
 
   printf("Current Player: %d\n",run.player);
+  //state.whoseTurn = run.player;
   int choice1 = 0; 
   int choice2 = 0;
   int choice3 = 0;
