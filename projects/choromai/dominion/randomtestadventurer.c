@@ -140,8 +140,6 @@ void fillDecks(struct testRun *run, struct gameState *state)
   //random 2-4 players
   run->player = randNum(state->numPlayers);
 
-  //state->hand[player][handPos] = adventurer;
-
   int i,j;
   for(j=0; j < state->numPlayers; j++)
   {
@@ -155,9 +153,9 @@ void fillDecks(struct testRun *run, struct gameState *state)
       printf("Player: %d -- %d + %d + %d = %d\n", j, decks[0], decks[1], decks[2], sum);
     }
     
-    state->handCount[j] = decks[0];
-    state->deckCount[j] = decks[1];
-    state->discardCount[j] = decks[2];
+    state->handCount[j] = decks[0] + 5;
+    state->deckCount[j] = decks[1] + 5;
+    state->discardCount[j] = decks[2] + 5;
 
     //set position of played card, defaults to 0 otherwise
     if(j == run->player)
@@ -250,7 +248,10 @@ int randomTest(int k[])
   initRun(&run);
   run.card = adventurer;
 
-  fillDecks(&run, &state);
+  //fillDecks(&run, &state);
+  run.player = state.whoseTurn;
+  state.hand[state.whoseTurn][0] = run.card;
+  printf("DECK BEFORE: %d\n",state.deckCount[state.whoseTurn]);
 
   printf("Current Player: %d\n",run.player);
   //state.whoseTurn = run.player;
@@ -275,11 +276,13 @@ int randomTest(int k[])
   //record state before function
   memcpy(&before, &state, sizeof(struct gameState));
 
-  cardEffect(run.card, choice1, choice2, choice3, &state, run.handPos, bonus);
-
+  cardEffect(run.card, choice1, choice2, choice3, &state, 0, bonus);
+  //cardEffect(run.card, choice1, choice2, choice3, &state, run.handPos, bonus);
+  printf("DECK AFTER: %d\n",state.deckCount[0]);
+  printf("HAND AFTER: %d\n",state.handCount[0]);
+  
   int i=0;
   int cardsInHand = state.handCount[run.player];
-  int coppersAdded = 0;
   int treasuresAfter = 0;
   int treasuresBefore = 0;
 
@@ -302,7 +305,7 @@ int randomTest(int k[])
   for(i=0; i < state.handCount[run.player]; i++)
   {
       nextCard = state.hand[run.player][i];
-      printf("%d: %d\n",i,before.hand[run.player][i]);
+      printf("%d: %d\n",i,state.hand[run.player][i]);
       if(nextCard == silver || nextCard == gold || nextCard == copper)
       {
         treasuresAfter++;
