@@ -280,6 +280,7 @@ int randomTest(int k[])
   //cardEffect(run.card, choice1, choice2, choice3, &state, run.handPos, bonus);
   printf("DECK AFTER: %d\n",state.deckCount[0]);
   printf("HAND AFTER: %d\n",state.handCount[0]);
+  printf("DISCARD AFTER: %d\n",state.handCount[0]);
   
   int i=0;
   int cardsInHand = state.handCount[run.player];
