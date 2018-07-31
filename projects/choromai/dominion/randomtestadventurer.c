@@ -10,7 +10,8 @@
 int const MAX_TREASURES = 2;
 int const MAX_CARDS = 10;
 int const STATS = 1;
-int const RUNS = 1;
+int const LOG = 0;
+int const RUNS = 10;
 
 struct testRun
 {
@@ -137,8 +138,6 @@ void getPlayerDeckSizes(int array[])
 
 void fillDecks(struct testRun *run, struct gameState *state)
 {
-  //random 2-4 players
-  run->player = randNum(state->numPlayers);
 
   int i,j;
   for(j=0; j < state->numPlayers; j++)
@@ -149,8 +148,7 @@ void fillDecks(struct testRun *run, struct gameState *state)
 
     if(STATS)
     {
-      int sum = decks[0] + decks[1] + decks[2];
-      printf("Player: %d -- %d + %d + %d = %d\n", j, decks[0], decks[1], decks[2], sum);
+      printf("Player: %d -- Hand: %d + Deck: %d + Discard: %d\n", j, 5 + decks[0], 5 + decks[1], 5 + decks[2] + 5);
     }
     
     state->handCount[j] = decks[0] + 5;
@@ -180,34 +178,60 @@ void fillDecks(struct testRun *run, struct gameState *state)
     {
       state->deck[j][i] = getRandomCard();
 
-      if(run->treasureCount[j] == 2)
+      if(j != run->player)
         continue;
 
-      //add particular card to treasures, augment count
-      if(state->deck[j][i] == gold || state->deck[j][i] == silver || state->deck[j][i] == copper)
+      if(run->treasureCount[j] < 2)
       {
-        run->treasures[j][run->treasureCount[j]] = state->deck[j][i];
-        run->treasureCount[j]++;
+        //add particular card to treasures, augment count
+        if(state->deck[j][i] == gold || state->deck[j][i] == silver || state->deck[j][i] == copper)
+        {
+          run->treasures[j][run->treasureCount[j]] = state->deck[j][i];
+          run->treasureCount[j]++;
+        }
+        //if not a treasure, then a reveal
+        else
+        {
+          run->revealed[j][run->revealCount[j]] = state->deck[j][i];
+          run->revealCount[j]++;
+        }
       }
-      //if not a treasure, then a reveal
-      else
-      {
-        run->revealed[j][run->revealCount[j]] = state->deck[j][i];
-        run->revealCount[j]++;
-      }
+
     }
 
     //fill up discards
     for(i=state->discardCount[j] - 1; i >= 0; i--)
     {
       state->discard[j][i] = getRandomCard();
+
+      if(j != run->player)
+        continue;
+
+      if(run->treasureCount[j] < 2)
+      {
+        //add particular card to treasures, augment count
+        if(state->discard[j][i] == gold || state->discard[j][i] == silver || state->discard[j][i] == copper)
+        {
+          run->treasures[j][run->treasureCount[j]] = state->discard[j][i];
+          run->treasureCount[j]++;
+        }
+        //if not a treasure, then a reveal
+        else
+        {
+          run->revealed[j][run->revealCount[j]] = state->discard[j][i];
+          run->revealCount[j]++;
+        }
+      }
     }
   }
 
-  printf("reveal count: %d\n", run->revealCount[run->player]);
-  printf("treasure count: %d\n", run->treasureCount[run->player]);
+  if(LOG)
+  {
+    printf("reveal count: %d\n", run->revealCount[run->player]);
+    printf("treasure count: %d\n", run->treasureCount[run->player]);
+  }
 
-  if(STATS)
+  if(LOG)
   {
     for(j=0; j<state->numPlayers; j++)
     {
@@ -248,24 +272,23 @@ int randomTest(int k[])
   initRun(&run);
   run.card = adventurer;
 
-  //fillDecks(&run, &state);
-  run.player = state.whoseTurn;
-  state.hand[state.whoseTurn][0] = run.card;
-  printf("DECK BEFORE: %d\n",state.deckCount[state.whoseTurn]);
+  //random 2-4 players
+  run.player = randNum(state.numPlayers);
 
-  printf("Current Player: %d\n",run.player);
-  //state.whoseTurn = run.player;
+  fillDecks(&run, &state);
+  state.whoseTurn = run.player;
+
   int choice1 = 0; 
   int choice2 = 0;
   int choice3 = 0;
   int a = 0;
   int *bonus = &a;
 
-  if(STATS)
+  if(LOG)
   {
     int i;
     printf("Hand with Card --\n");
-    printf("HandPos:%d\n",run.handPos);
+    printf("HandPos:%d\n", run.handPos);
 
     for(i=0; i < state.handCount[run.player]; i++)
     {
@@ -276,23 +299,28 @@ int randomTest(int k[])
   //record state before function
   memcpy(&before, &state, sizeof(struct gameState));
 
-  cardEffect(run.card, choice1, choice2, choice3, &state, 0, bonus);
+  cardEffect(run.card, choice1, choice2, choice3, &state, run.handPos, bonus);
   //cardEffect(run.card, choice1, choice2, choice3, &state, run.handPos, bonus);
-  printf("DECK AFTER: %d\n",state.deckCount[0]);
-  printf("HAND AFTER: %d\n",state.handCount[0]);
-  printf("DISCARD AFTER: %d\n",state.handCount[0]);
+
+  if(LOG)
+  {
+    printf("DECK AFTER: %d\n",state.deckCount[0]);
+    printf("HAND AFTER: %d\n",state.handCount[0]);
+    printf("DISCARD AFTER: %d\n",state.handCount[0]);
+  }
   
   int i=0;
-  int cardsInHand = state.handCount[run.player];
   int treasuresAfter = 0;
   int treasuresBefore = 0;
 
   int nextCard = 0;
-  printf("BEFORE Player: %d\n",run.player);
+  if(LOG)
+    printf("BEFORE Player: %d\n",run.player);
   for(i=0; i < before.handCount[run.player]; i++)
   {
       nextCard = before.hand[run.player][i];
-      printf("%d: %d\n",i,before.hand[run.player][i]);
+      if(LOG)
+        printf("%d: %d\n",i,before.hand[run.player][i]);
       if(nextCard == silver || nextCard == gold || nextCard == copper)
       {
         treasuresBefore++;
@@ -301,12 +329,16 @@ int randomTest(int k[])
 
   //in hand before + after
   nextCard = 0;
-  printf("AFTER Player: %d\n",run.player);
-  printf("count: %d\n",state.handCount[run.player]);
+  if(LOG)
+  {
+    printf("AFTER Player: %d\n",run.player);
+    printf("count: %d\n",state.handCount[run.player]);
+  }
   for(i=0; i < state.handCount[run.player]; i++)
   {
       nextCard = state.hand[run.player][i];
-      printf("%d: %d\n",i,state.hand[run.player][i]);
+      if(LOG)
+        printf("%d: %d\n",i,state.hand[run.player][i]);
       if(nextCard == silver || nextCard == gold || nextCard == copper)
       {
         treasuresAfter++;
@@ -314,50 +346,86 @@ int randomTest(int k[])
   }
 
 
-  if(STATS)
+  if(LOG)
   {
     printf("Before: %d + Added: %d = After: %d\n", treasuresBefore, run.treasureCount[run.player], treasuresAfter);
   }
 
-  int totalDiscards = state.discardCount[run.player];
-
-  //THIS NEEDS TO COMPARE EVERY DISCARDED CARD, one by one, two arrays side by size
-  //
-  /*
-  int k;
-  int discartedVillageCount = 0;
-  for(k=1; k <= 2; k++)
+  int correctTreasureCount = 0;
+  if(treasuresBefore + run.treasureCount[run.player] == treasuresAfter)
   {
-    if(state->discard[player][totalDiscards-k] == village)
+    correctTreasureCount = 1;
+  }
+
+
+  int correctDiscardCount = 0;
+
+  if(run.revealCount[run.player] <= before.deckCount[run.player])
+  {
+    if(state.discardCount[run.player] == run.revealCount[run.player] + before.discardCount[run.player] + 1)
     {
-        discartedVillageCount++;
+      correctDiscardCount = 1;
     }
   }
-  */
+  else if(before.discardCount[run.player] + before.deckCount[run.player] - run.revealCount[run.player] + 1 == state.discardCount[run.player])
+  {
+    correctDiscardCount = 1;
+  }
+
+
+  int n;
+  int match [] = {};
+  int treasureTypeCorrect = 0;
+  for(n=0; n < run.treasureCount[run.player]; n++)
+  {
+    for(i=0; i<state.handCount[run.player]; i++)
+    {
+      if(run.treasures[run.player][n] == state.hand[run.player][i])
+      {
+          match[i]++;
+      }
+    }
+  }
+
+  if(treasuresBefore == treasuresAfter - 1)
+  {
+    if(run.treasureCount[run.player] == 1 && match[0] >= 1)
+    {
+      treasureTypeCorrect = 1;  
+    }
+    if(run.treasureCount[run.player] == 2 && match[0] + match[1] >= 2)
+    {
+      treasureTypeCorrect = 1;  
+    }
+  }
+
+  //split above, count 1st cards, count 2nd cards, then pass it.
+
+  int adventurerDiscarded = 0;
+  if(state.discard[run.player][state.discardCount[run.player]] == adventurer)
+  {
+    adventurerDiscarded = 1;
+  }
 
   int success = 1;
 
-  /*
   //did we add 2 treasure card and discard 2 cards from the deck in the process
-  success &= AssertCondition("Don't have 2 treasures", treasures == 2);
-  //are the added treasures really coppers
-  success &= AssertCondition("Don't have 2 coppers", coppersAdded == 2);
-  //were 2 cards discarded
-  success &= AssertCondition("Number of discarded cards is not 2", totalDiscards == 2);
+  success &= AssertCondition("Treasure count in hand incorrect", correctTreasureCount);
   //are the discarded cards really village
-  success &= AssertCondition("Number of discarded village cards in not 2", discartedVillageCount == 2);
-  */
+  success &= AssertCondition("Treasure type incorrect", treasureTypeCorrect);
+  //are the added treasures really coppers
+  success &= AssertCondition("Discard count incorrect", correctDiscardCount);
+  //were 2 cards discarded
+  success &= AssertCondition("Adventurer card NOT discarded", adventurerDiscarded); 
 
-  /*
-  Can write a very stellar and detailed reporting mechanism
-  Player = 1;
-  Player Hand Count = 37;
-  ..etc
-  */
+  char params[100];
+  sprintf(params, "TEST: Current Player: %d | Hand: %d | Deck: %d | Discards: %d | Treasures: %d | Revealed: %d",
+  run.player, before.handCount[run.player], before.deckCount[run.player], before.discardCount[run.player],
+  run.treasureCount[run.player], run.revealCount[run.player]);
 
-  //return success;
+  AssertTest(params, success);
 
-  return 1;
+  return 0;
 }
 
 
@@ -368,35 +436,21 @@ int main (int argc, char** argv) {
   int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
            sea_hag, tribute, smithy};
 
+  printf("\n**************  randomtest1: Adventurer ***********\n");
+
   int i;
   for(i = 0; i < RUNS; i++)
   {
     if(STATS)
     {
-      printf("************************\n");
       printf("RUN: %d\n",i);
     }
     randomTest(k);
+    if(STATS)
+    {
+      printf("************************\n");
+    }
   }
-
-  /*
-  int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
-           sea_hag, tribute, smithy};
-
-  printf("\n**************  cardtest2: Adventurer ***********\n");
-
-  int success = 1;
-
-  initializeGame(2, k, 2, &G);
-  success &= AssertTest("Test 1: 2 Treasures in Deck | Expected: 2 coppers added to hand, 2 village cards discarded",
-    twoTreasureCardsInDeck_twoCardsDiscardedtwoTreasuresFound(&G));
-
-  if(success)
-  {
-    printf ("ALL TESTS PASSED\n");
-  }
-  printf ("\n");
-  */
 
   return 0;
 }
