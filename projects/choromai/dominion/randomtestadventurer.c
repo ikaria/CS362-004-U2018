@@ -11,12 +11,12 @@ int const MAX_TREASURES = 2;
 int const MAX_CARDS = 10;
 int const STATS = 1;
 int const LOG = 0;
-int const RUNS = 10;
+int const RUNS = 100;
 
 struct testRun
 {
   int treasures[MAX_PLAYERS][2];
-  int revealed[MAX_PLAYERS][10];
+  int revealed[MAX_PLAYERS][100];
   int treasureCount[MAX_PLAYERS];
   int revealCount[MAX_PLAYERS];
   int handPos;
