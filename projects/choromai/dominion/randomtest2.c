@@ -241,7 +241,7 @@ int randomTest(int k[])
     state.discard[run.player][state.discardCount[run.player] - 1] == village);
 
   success &= AssertCondition("Number of actions added not 2", 
-    state.numActions == 2);
+    state.numActions == before.numActions + 2);
 
   success &= AssertCondition("Card added to hand is incorrect", 
     state.hand[run.player][run.handPos] == run.cardAdded);
