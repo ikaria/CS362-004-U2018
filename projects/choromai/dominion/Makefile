@@ -62,6 +62,9 @@ rand1: dominion.o rngs.o utils.o randomtestadventurer.c
 rand2: dominion.o rngs.o utils.o randomtest2.c 
 	gcc -o r2 randomtest2.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
 
+rand3: dominion.o rngs.o utils.o randomtest3.c 
+	gcc -o r3 randomtest3.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
 unittestresults.out: dominion.o utils.o
 	gcc -o u1 unittest1.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
 	gcc -o u2 unittest2.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)

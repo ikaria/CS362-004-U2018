@@ -10,7 +10,7 @@
 int const MAX_CARDS = 10;
 int const STATS = 1;
 int const LOG = 0;
-int const RUNS = 100;
+int const RUNS = 1;
 
 struct testRun
 {
@@ -48,7 +48,7 @@ int getRandomCard()
 
 void initRun(struct testRun *run, int numPlayers)
 {
-  int i = 0
+  int i = 0;
   for(i=0; i<4; i++)
   {
     run->cardsAdded[i] = randNum(27);
@@ -124,7 +124,7 @@ void fillDecks(struct testRun *run, struct gameState *state)
 
     if(STATS)
     {
-      printf("Player: %d -- Hand: %d + Deck: %d + Discard: %d\n", j, decks[0]+5, decks[1], decks[2]);
+      printf("Player: %d -- Hand: %d + Deck: %d + Discard: %d\n", j, decks[0], decks[1], decks[2]);
     }
     
     state->handCount[j] = decks[0];
@@ -226,7 +226,6 @@ int randomTest(int k[])
   memcpy(&before, &state, sizeof(struct gameState));
 
   cardEffect(run.card, choice1, choice2, choice3, &state, run.handPos, bonus);
-  //cardEffect(run.card, choice1, choice2, choice3, &state, run.handPos, bonus);
 
   if(LOG)
   {
@@ -235,34 +234,68 @@ int randomTest(int k[])
     printf("DISCARD AFTER: %d\n", state.handCount[0]);
   }
 
-  //checkCardsAdded
+  int i;
+  int cardsAddedCorrect = 1;
+  for(i=0; i<4;i++)
+  {
+      if(i == 0)
+      {
+          if(run.cardsAdded[0] != state.hand[run.player][run.handPos])
+          {
+              cardsAddedCorrect &= 0;
+          }
+      }
+      else
+      {
+          if(run.cardsAdded[4-i] != state.hand[run.player][state.handCount[run.player] - i])
+          {
+              cardsAddedCorrect &= 0;
+          }
+      }
+  }
+
+  int opponentCardCountCorrect = 1;
+  int opponentCardTypeCorrect = 0;
+
+  for(i=0; i<state.numPlayers; i++)
+  {
+      if(i != run.player)
+      {
+          if(before.handCount[i] + 1 != state.handCount[i])
+          {
+              opponentCardCountCorrect &= 0;
+          }
+          if(state.hand[i][state.handCount[i]-1] != before.deck[i][state.deckCount[i]-1])
+          {
+              opponentCardTypeCorrect &= 0;
+          }
+      }
+  }
   
   int success = 1;
 
   success &= AssertCondition("Incorrect number of discards", 
     before.discardCount[run.player] + 1 == state.discardCount[run.player]);
+    printf("%d %d\n", before.discardCount[run.player], state.discardCount[run.player]);
 
   success &= AssertCondition("Discarded card incorrect", 
     state.discard[run.player][state.discardCount[run.player] - 1] == council_room);
 
-  success &= AssertCondition("Number of actions added not 2", 
+  success &= AssertCondition("Number of buys added not ", 
     state.numActions == before.numBuys + 1);
 
-  success &= AssertCondition("Card added to hand is incorrect", 
-    state.hand[run.player][run.handPos] == run.cardAdded);
+  success &= AssertCondition("Card added to hand is incorrect", cardsAddedCorrect);
 
   success &= AssertCondition("Number of cards in hand incorrect", 
     before.handCount[run.player] + 3 == state.handCount[run.player]);
 
-  succes &= AssertCondition("Number of cards given to opponents incorrect"), oppenentCardCountCorrect)
+  success &= AssertCondition("Number of cards given to opponents incorrect", opponentCardCountCorrect);
 
-  succes &= AssertCondition("Cards given to opponents incorrect"), oppenentCardTypeCorrect)
-
+  success &= AssertCondition("Cards given to opponents incorrect", opponentCardTypeCorrect);
 
   char params[100];
-  sprintf(params, "TEST: Current Player: %d | Card Added: %d | HandPos: %d", 
-  run.player, run.cardAdded, run.handPos);  
-  
+  sprintf(params, "TEST: Current Player: %d | 4 cards added, 1 buy added, opponents received cards",
+  run.player);  
 
   AssertTest(params, success);
 
