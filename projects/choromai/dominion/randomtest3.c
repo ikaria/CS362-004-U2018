@@ -124,12 +124,12 @@ void fillDecks(struct testRun *run, struct gameState *state)
 
     if(STATS)
     {
-      printf("Player: %d -- Hand: %d + Deck: %d + Discard: %d\n", j, decks[0], decks[1], decks[2]);
+      printf("Player: %d -- Hand: %d + Deck: %d + Discard: %d\n", j, decks[0] +5, decks[1] + 5, decks[2] + 5);
     }
     
-    state->handCount[j] = decks[0];
-    state->deckCount[j] = decks[1];
-    state->discardCount[j] = decks[2];
+    state->handCount[j] = decks[0] + 5;
+    state->deckCount[j] = decks[1] + 5;
+    state->discardCount[j] = decks[2] + 5;
 
     //set position of played card, defaults to 0 otherwise
     if(j == run->player)
@@ -255,7 +255,7 @@ int randomTest(int k[])
   }
 
   int opponentCardCountCorrect = 1;
-  int opponentCardTypeCorrect = 0;
+  int opponentCardTypeCorrect = 1;
 
   for(i=0; i<state.numPlayers; i++)
   {
@@ -267,6 +267,8 @@ int randomTest(int k[])
           }
           if(state.hand[i][state.handCount[i]-1] != before.deck[i][state.deckCount[i]-1])
           {
+
+          printf("%d %d\n",state.hand[i][state.handCount[i]-1], before.deck[i][state.deckCount[i]-1]);
               opponentCardTypeCorrect &= 0;
           }
       }
@@ -274,22 +276,21 @@ int randomTest(int k[])
   
   int success = 1;
 
-  success &= AssertCondition("Incorrect number of discards", 
-    before.discardCount[run.player] + 1 == state.discardCount[run.player]);
-    printf("%d %d\n", before.discardCount[run.player], state.discardCount[run.player]);
+  success &= AssertCondition("Incorrect number of cards played", state.playedCardCount);
 
   success &= AssertCondition("Discarded card incorrect", 
-    state.discard[run.player][state.discardCount[run.player] - 1] == council_room);
+    state.playedCards[0] == council_room);
 
   success &= AssertCondition("Number of buys added not ", 
-    state.numActions == before.numBuys + 1);
-
-  success &= AssertCondition("Card added to hand is incorrect", cardsAddedCorrect);
+    state.numBuys == before.numBuys + 1);
 
   success &= AssertCondition("Number of cards in hand incorrect", 
     before.handCount[run.player] + 3 == state.handCount[run.player]);
 
+  success &= AssertCondition("Cards added to hand incorrect", cardsAddedCorrect);
+
   success &= AssertCondition("Number of cards given to opponents incorrect", opponentCardCountCorrect);
+
 
   success &= AssertCondition("Cards given to opponents incorrect", opponentCardTypeCorrect);
 
