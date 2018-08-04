@@ -56,14 +56,14 @@ cardTest3: dominion.o rngs.o utils.o cardtest3.c
 cardTest4: dominion.o rngs.o utils.o cardtest4.c 
 	gcc -o c4 cardtest4.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
 
-rand1: dominion.o rngs.o utils.o randomtestadventurer.c 
-	gcc -o r1 randomtestadventurer.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+randA: dominion.o rngs.o utils.o randomtestadventurer.c 
+	gcc -o rA randomtestadventurer.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
 
 rand2: dominion.o rngs.o utils.o randomtest2.c 
 	gcc -o r2 randomtest2.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
 
-rand3: dominion.o rngs.o utils.o randomtest3.c 
-	gcc -o r3 randomtest3.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+rand1: dominion.o rngs.o utils.o randomtest1.c 
+	gcc -o r1 randomtest1.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
 
 unittestresults.out: dominion.o utils.o
 	gcc -o u1 unittest1.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
