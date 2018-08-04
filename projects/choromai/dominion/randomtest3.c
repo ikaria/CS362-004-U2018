@@ -9,12 +9,11 @@
 //RANDOM TESTING:  COUNCIL ROOM CARD 
 int const MAX_CARDS = 10;
 int const STATS = 1;
-int const LOG = 0;
+int const LOG = 1;
 int const RUNS = 1;
 
 struct testRun
 {
-  int cardsAdded[4];
   int handPos;
   int player;
   int card;
@@ -50,9 +49,6 @@ void initRun(struct testRun *run, int numPlayers)
 {
   int i = 0;
   for(i=0; i<4; i++)
-  {
-    run->cardsAdded[i] = randNum(27);
-  }
   run->handPos = 0;
   run->card = council_room;
   //random 2-4 players
@@ -231,7 +227,7 @@ int randomTest(int k[])
   {
     printf("DECK AFTER: %d\n", state.deckCount[0]);
     printf("HAND AFTER: %d\n", state.handCount[0]);
-    printf("DISCARD AFTER: %d\n", state.handCount[0]);
+    printf("DISCARD AFTER: %d\n", state.discardCount[0]);
   }
 
   int i;
@@ -240,18 +236,33 @@ int randomTest(int k[])
   {
       if(i == 0)
       {
-          if(run.cardsAdded[0] != state.hand[run.player][run.handPos])
-          {
-              cardsAddedCorrect &= 0;
-          }
+        if(before.deck[run.player][before.deckCount[run.player]-4] != state.hand[run.player][run.handPos])
+        {
+            cardsAddedCorrect &= 0;
+        }
       }
       else
       {
-          if(run.cardsAdded[4-i] != state.hand[run.player][state.handCount[run.player] - i])
-          {
-              cardsAddedCorrect &= 0;
-          }
+        if(before.deck[run.player][before.deckCount[run.player]- 4 + i] != 
+            state.hand[run.player][state.handCount[run.player]- i])
+        {
+            cardsAddedCorrect &= 0;
+        }
       }
+
+    printf("card at handpos: %d\n", state.hand[run.player][run.handPos]);
+
+    printf("**** *******\n");
+    int j;
+    for(j=0; j<before.deckCount[i]; j++)
+    {
+        printf("d: %d\n", before.deck[i][j]);
+    }
+
+    for(j=0; j<before.handCount[i]; j++)
+    {
+        printf("h: %d\n", before.hand[i][j]);
+    }
   }
 
   int opponentCardCountCorrect = 1;
@@ -265,14 +276,16 @@ int randomTest(int k[])
           {
               opponentCardCountCorrect &= 0;
           }
-          if(state.hand[i][state.handCount[i]-1] != before.deck[i][state.deckCount[i]-1])
+          if(state.hand[i][state.handCount[i]-1] != before.deck[i][before.deckCount[i]-1])
           {
 
-          printf("%d %d\n",state.hand[i][state.handCount[i]-1], before.deck[i][state.deckCount[i]-1]);
+          printf("TYPE %d %d\n",state.hand[i][state.handCount[i]-1], before.deck[i][before.deckCount[i]-1]);
               opponentCardTypeCorrect &= 0;
           }
+
       }
   }
+
   
   int success = 1;
 
