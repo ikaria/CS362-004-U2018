@@ -698,7 +698,7 @@ int playCouncilRoom(struct gameState *state, int handPos)
       //Each other player draws a card
       for (i = 0; i < state->numPlayers; i++)
 	{
-	  if ( i != currentPlayer )
+	  if ( i == currentPlayer )
 	    {
 	      drawCard(i, state);
 	    }

@@ -9,8 +9,8 @@
 //RANDOM TESTING:  COUNCIL ROOM CARD 
 int const MAX_CARDS = 10;
 int const STATS = 1;
-int const LOG = 1;
-int const RUNS = 1;
+int const LOG = 0;
+int const RUNS = 100;
 
 struct testRun
 {
@@ -250,18 +250,21 @@ int randomTest(int k[])
         }
       }
 
-    printf("card at handpos: %d\n", state.hand[run.player][run.handPos]);
-
-    printf("**** *******\n");
-    int j;
-    for(j=0; j<before.deckCount[i]; j++)
+    if(LOG)
     {
-        printf("d: %d\n", before.deck[i][j]);
-    }
+        printf("card at handpos: %d\n", state.hand[run.player][run.handPos]);
 
-    for(j=0; j<before.handCount[i]; j++)
-    {
-        printf("h: %d\n", before.hand[i][j]);
+        printf("**** *******\n");
+        int j;
+        for(j=0; j<before.deckCount[i]; j++)
+        {
+            printf("d: %d\n", before.deck[i][j]);
+        }
+
+        for(j=0; j<before.handCount[i]; j++)
+        {
+            printf("h: %d\n", before.hand[i][j]);
+        }
     }
   }
 
@@ -278,8 +281,6 @@ int randomTest(int k[])
           }
           if(state.hand[i][state.handCount[i]-1] != before.deck[i][before.deckCount[i]-1])
           {
-
-          printf("TYPE %d %d\n",state.hand[i][state.handCount[i]-1], before.deck[i][before.deckCount[i]-1]);
               opponentCardTypeCorrect &= 0;
           }
 
@@ -324,14 +325,14 @@ int main (int argc, char** argv) {
   int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
            sea_hag, tribute, smithy};
 
-  printf("\n**************  randomtest1: Village ***********\n");
+  printf("\n**************  randomtest3: Council Room ***********\n");
 
   int i;
   for(i = 0; i < RUNS; i++)
   {
     if(STATS)
     {
-      printf("RUN: %d\n",i);
+      printf("RUN: %d\n",i+1);
     }
     randomTest(k);
     if(STATS)
