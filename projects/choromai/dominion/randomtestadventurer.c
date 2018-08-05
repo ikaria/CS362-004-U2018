@@ -11,7 +11,7 @@ int const MAX_TREASURES = 2;
 int const MAX_CARDS = 10;
 int const STATS = 1;
 int const LOG = 0;
-int const RUNS = 100;
+int const RUNS = 1;
 
 struct testRun
 {
@@ -148,7 +148,7 @@ void fillDecks(struct testRun *run, struct gameState *state)
 
     if(STATS)
     {
-      printf("Player: %d -- Hand: %d + Deck: %d + Discard: %d\n", j, 5 + decks[0], 5 + decks[1], 5 + decks[2] + 5);
+      printf("Player: %d -- Hand: %d + Deck: %d + Discard: %d\n", j, decks[0] + 5, decks[1] + 5, decks[2] +5);
     }
     
     state->handCount[j] = decks[0] + 5;
@@ -269,7 +269,7 @@ int randomTest(int k[])
 
   int numPlayers = 2 + randNum(3);
   initializeGame(numPlayers, k, 2, &state);
-  initRun(&run);
+  //initRun(&run);
   run.card = adventurer;
 
   //random 2-4 players
@@ -297,10 +297,9 @@ int randomTest(int k[])
   }
 
   //record state before function
-  memcpy(&before, &state, sizeof(struct gameState));
+  //memcpy(&before, &state, sizeof(struct gameState));
 
   cardEffect(run.card, choice1, choice2, choice3, &state, run.handPos, bonus);
-  //cardEffect(run.card, choice1, choice2, choice3, &state, run.handPos, bonus);
 
   if(LOG)
   {
@@ -315,7 +314,7 @@ int randomTest(int k[])
 
   int nextCard = 0;
   if(LOG)
-    printf("BEFORE Player: %d\n",run.player);
+    printf("Hand BEFORE Player: %d\n",run.player);
   for(i=0; i < before.handCount[run.player]; i++)
   {
       nextCard = before.hand[run.player][i];
@@ -331,8 +330,8 @@ int randomTest(int k[])
   nextCard = 0;
   if(LOG)
   {
-    printf("AFTER Player: %d\n",run.player);
-    printf("count: %d\n",state.handCount[run.player]);
+    printf("Hand AFTER Player: %d\n",run.player);
+    printf("hand count: %d\n",state.handCount[run.player]);
   }
   for(i=0; i < state.handCount[run.player]; i++)
   {
@@ -359,64 +358,59 @@ int randomTest(int k[])
 
 
   int correctDiscardCount = 0;
-
   if(run.revealCount[run.player] <= before.deckCount[run.player])
   {
-    if(state.discardCount[run.player] == run.revealCount[run.player] + before.discardCount[run.player] + 1)
+    if(state.discardCount[run.player] == run.revealCount[run.player] + before.discardCount[run.player])
     {
       correctDiscardCount = 1;
     }
   }
-  else if(before.discardCount[run.player] + before.deckCount[run.player] - run.revealCount[run.player] + 1 == state.discardCount[run.player])
+  else
   {
-    correctDiscardCount = 1;
+    if(before.discardCount[run.player] + before.deckCount[run.player] - run.revealCount[run.player] == state.discardCount[run.player])
+    {
+      correctDiscardCount = 1;
+    }
   }
 
-
   int n;
-  int match [] = {};
-  int treasureTypeCorrect = 0;
+  int match [2];
+  int treasureTypeNotIncorrect = 0;
   for(n=0; n < run.treasureCount[run.player]; n++)
   {
     for(i=0; i<state.handCount[run.player]; i++)
     {
       if(run.treasures[run.player][n] == state.hand[run.player][i])
       {
-          match[i]++;
+          match[n]++;
       }
     }
   }
 
-  if(treasuresBefore == treasuresAfter - 1)
+  if(run.treasureCount[run.player] == 1 && match[0] >= 1)
   {
-    if(run.treasureCount[run.player] == 1 && match[0] >= 1)
-    {
-      treasureTypeCorrect = 1;  
-    }
-    if(run.treasureCount[run.player] == 2 && match[0] + match[1] >= 2)
-    {
-      treasureTypeCorrect = 1;  
-    }
+    treasureTypeNotIncorrect = 1;  
+  }
+  if(run.treasureCount[run.player] == 2 && match[0] + match[1] >= 2)
+  {
+    treasureTypeNotIncorrect = 1;  
   }
 
   //split above, count 1st cards, count 2nd cards, then pass it.
-
-  int adventurerDiscarded = 0;
-  if(state.discard[run.player][state.discardCount[run.player]] == adventurer)
-  {
-    adventurerDiscarded = 1;
-  }
 
   int success = 1;
 
   //did we add 2 treasure card and discard 2 cards from the deck in the process
   success &= AssertCondition("Treasure count in hand incorrect", correctTreasureCount);
-  //are the discarded cards really village
-  success &= AssertCondition("Treasure type incorrect", treasureTypeCorrect);
+
+  //are the treasure cards of correct type
+  success &= AssertCondition("Treasure type incorrect", treasureTypeNotIncorrect);
+
   //are the added treasures really coppers
   success &= AssertCondition("Discard count incorrect", correctDiscardCount);
+
   //were 2 cards discarded
-  success &= AssertCondition("Adventurer card NOT discarded", adventurerDiscarded); 
+  success &= AssertCondition("Adventurer card NOT in played pile", state.playedCards[0] = adventurer); 
 
   char params[100];
   sprintf(params, "TEST: Current Player: %d | Hand: %d | Deck: %d | Discards: %d | Treasures: %d | Revealed: %d",
@@ -424,7 +418,6 @@ int randomTest(int k[])
   run.treasureCount[run.player], run.revealCount[run.player]);
 
   AssertTest(params, success);
-
   return 0;
 }
 
