@@ -88,17 +88,26 @@ unittestresults.out: dominion.o utils.o
 	cat dominion.c.gcov >> unittestresults.out
 
 
-randomtestresults.out: dominion.o utils.o
+randomtestcard1.out: dominion.o utils.o
+	rm -f dominion.c.gcov
 	gcc -o r1 randomtest1.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+	./r1 >> randomtestcard1.out
+	gcov -f -b dominion.c >> randomtestcard1.out
+	cat dominion.c.gcov >> randomtestcard1.out
+
+randomtestcard2.out: dominion.o utils.o
+	rm -f dominion.c.gcov
 	gcc -o r2 randomtest2.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+	./r2 >> randomtestcard2.out
+	gcov -f -b dominion.c >> randomtestcard2.out
+	cat dominion.c.gcov >> randomtestcard2.out
+
+randomtestadventurer.out: dominion.o utils.o
+	rm -f dominion.c.gcov
 	gcc -o rA randomtestadventurer.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
-
-	./r1 >> randomtestresults.out
-	./r2 >> randomtestresults.out
-	./rA >> randomtestresults.out
-
-	gcov -f -b dominion.c >> randomtestresults.out
-	cat dominion.c.gcov >> randomtestresults.out
+	./rA >> randomtestadventurer.out
+	gcov -f -b dominion.c >> randomtestadventurer.out
+	cat dominion.c.gcov >> randomtestadventurer.out
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)

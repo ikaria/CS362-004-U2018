@@ -323,7 +323,7 @@ int main (int argc, char** argv) {
   int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
            sea_hag, tribute, smithy};
 
-  printf("\n**************  randomtest3: Council Room ***********\n");
+  printf("\n**************  randomtest2: Council Room ***********\n");
 
   int i;
   for(i = 0; i < RUNS; i++)
