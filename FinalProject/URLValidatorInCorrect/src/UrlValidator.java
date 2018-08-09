@@ -164,7 +164,7 @@ public class UrlValidator implements Serializable {
      */
     private static final int PARSE_AUTHORITY_EXTRA = 4;
 
-    private static final String PATH_REGEX = "^(/[-\\w:@&?=+,.!*'%$_;\\(\\)]*)?$";
+    private static final String PATH_REGEX = "^(/[-\\w:@&?=+,./~!*'%$_;\\(\\)]*)?$";
     private static final Pattern PATH_PATTERN = Pattern.compile(PATH_REGEX);
 
     private static final String QUERY_REGEX = "^(\\S*)$";
@@ -189,7 +189,7 @@ public class UrlValidator implements Serializable {
     /**
      * If no schemes are provided, default to this set.
      */
-   private static final String[] DEFAULT_SCHEMES = {"http", "https", "ftp"}; // Must be lower-case
+    private static final String[] DEFAULT_SCHEMES = {"http", "https", "ftp"}; // Must be lower-case
 
 
 
@@ -309,6 +309,7 @@ public class UrlValidator implements Serializable {
         }
 
         String scheme = urlMatcher.group(PARSE_URL_SCHEME);
+        
         if (!isValidScheme(scheme)) {
             return false;
         }
@@ -362,7 +363,7 @@ public class UrlValidator implements Serializable {
         if (!SCHEME_PATTERN.matcher(scheme).matches()) {
             return false;
         }
-
+        
         if (isOff(ALLOW_ALL_SCHEMES) && !allowedSchemes.contains(scheme.toLowerCase(Locale.ENGLISH))) {
             return false;
         }

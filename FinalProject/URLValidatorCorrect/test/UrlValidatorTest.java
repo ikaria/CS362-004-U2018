@@ -81,7 +81,9 @@ protected void setUp() {
     * @param testObjects Used to create a url.
     */
    public void testIsValid(Object[] testObjects, long allowAllSchemes) {
+	      System.out.print("here1");
 	      UrlValidator urlVal = new UrlValidator(null, null, allowAllSchemes);
+	      System.out.print("here");
 	      //UrlValidator urlVal = new UrlValidator(null, allowAllSchemes);
       assertTrue(urlVal.isValid("http://www.google.com"));
       assertTrue(urlVal.isValid("http://www.google.com/"));
