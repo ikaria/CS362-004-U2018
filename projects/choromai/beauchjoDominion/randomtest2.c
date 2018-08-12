@@ -5,11 +5,8 @@
 #include <string.h>
 #include "utils.h"
 //#include "randomtestadventure.h"
-#define MAX(a,b) (((a)>(b))?(a):(b))
 
-
-//RANDOM TESTING: ADVENTURER CARD 
-int const MAX_TREASURES = 2;
+//RANDOM TESTING:  COUNCIL ROOM CARD 
 int const MAX_CARDS = 10;
 int const STATS = 1;
 int const LOG = 0;
@@ -17,34 +14,11 @@ int const RUNS = 100;
 
 struct testRun
 {
-  int treasures[MAX_PLAYERS][2];
-  int treasureCount[MAX_PLAYERS];
   int handPos;
   int player;
   int card;
+  int numPlayers;
 };
-
-void initRun(struct testRun *run)
-{
-  int i,j;
-
-  for(i=0; i < MAX_PLAYERS; i++)
-  {
-    for(j=0; j < MAX_TREASURES; j++)
-    {
-      run->treasures[i][j] = 0;
-    }
-  }
-
-  for(i=0; i < MAX_PLAYERS; i++)
-  {
-    run->treasureCount[i] = 0;
-  }
-
-  run->handPos = 0;
-  run->player = 0;
-
-}
 
 //1 in pool chance of it being empty
 int isEmpty(int pool)
@@ -64,10 +38,20 @@ int randNum(int size)
 int getRandomCard()
 {
   //MAX_CARDSnumber of different card types
-  int random = rand() % 27;
+  int random = rand() % 26;
 
   //account for enums starting with 1;
   return random;
+}
+
+void initRun(struct testRun *run, int numPlayers)
+{
+  int i = 0;
+  for(i=0; i<4; i++)
+  run->handPos = 0;
+  run->card = council_room;
+  //random 2-4 players
+  run->player = randNum(numPlayers);
 }
 
 //generates random sizes of hand, deck and discard piles totalling 100
@@ -135,7 +119,7 @@ void fillDecks(struct testRun *run, struct gameState *state)
 
     if(STATS)
     {
-      printf("Player: %d -- Hand: %d + Deck: %d + Discard: %d\n", j, decks[0] + 5, decks[1] + 5, decks[2] +5);
+      printf("Player: %d -- Hand: %d + Deck: %d + Discard: %d\n", j, decks[0] +5, decks[1] + 5, decks[2] + 5);
     }
     
     state->handCount[j] = decks[0] + 5;
@@ -155,6 +139,7 @@ void fillDecks(struct testRun *run, struct gameState *state)
     for(i=state->handCount[j] - 1; i >= 0; i--)
     {
       state->hand[j][i] = getRandomCard();
+
       if(run->handPos == i && j == run->player)
       {
         state->hand[j][i] = run->card;
@@ -164,52 +149,13 @@ void fillDecks(struct testRun *run, struct gameState *state)
     for(i=state->deckCount[j] - 1; i >= 0; i--)
     {
       state->deck[j][i] = getRandomCard();
-      if(i==0)
-      {
-        //state->deck[j][i] = 4; 
-      }
-
-      if(j == run->player)
-      {
-        if(run->treasureCount[j] < 2)
-        {
-          //add particular card to treasures, augment count
-          if(state->deck[j][i] == gold || state->deck[j][i] == silver || state->deck[j][i] == copper)
-          {
-            run->treasures[j][run->treasureCount[j]] = state->deck[j][i];
-            run->treasureCount[j]++;
-          }
-        }
-      }
     }
 
     //fill up discards
     for(i=state->discardCount[j] - 1; i >= 0; i--)
     {
       state->discard[j][i] = getRandomCard();
-      if(i==0)
-      {
-        state->deck[j][i] = 4; 
-      }
-
-      if(j != run->player)
-        continue;
-
-      if(run->treasureCount[j] < 2)
-      {
-        //add particular card to treasures, augment count
-        if(state->discard[j][i] == gold || state->discard[j][i] == silver || state->discard[j][i] == copper)
-        {
-          run->treasures[j][run->treasureCount[j]] = state->discard[j][i];
-          run->treasureCount[j]++;
-        }
-      }
     }
-  }
-
-  if(LOG)
-  {
-    printf("treasure count: %d\n", run->treasureCount[run->player]);
   }
 
   if(LOG)
@@ -217,7 +163,6 @@ void fillDecks(struct testRun *run, struct gameState *state)
     for(j=0; j<state->numPlayers; j++)
     {
       printf("\n****************************\n");
-      printf("Current: %d\n", run->player);
       printf("Player: %d\n", j);
 
       printf("Hand --\n");
@@ -239,23 +184,17 @@ void fillDecks(struct testRun *run, struct gameState *state)
       }
     }
   }
-
 }
 
 //executes single instance of test
 int randomTest(int k[])
 {
-
   struct gameState state, before;
   struct testRun run;
 
-  int numPlayers = 2 + randNum(3);
-  initializeGame(numPlayers, k, 2, &state);
-  //initRun(&run);
-  run.card = adventurer;
-
-  //random 2-4 players
-  run.player = randNum(state.numPlayers);
+  run.numPlayers = 2 + randNum(3);
+  initializeGame(run.numPlayers, k, 2, &state);
+  initRun(&run, run.numPlayers);
 
   fillDecks(&run, &state);
   state.whoseTurn = run.player;
@@ -280,80 +219,99 @@ int randomTest(int k[])
 
   //record state before function
   memcpy(&before, &state, sizeof(struct gameState));
+
   cardEffect(run.card, choice1, choice2, choice3, &state, run.handPos, bonus);
 
-
   if(LOG)
   {
-    printf("DECK AFTER: %d\n",state.deckCount[0]);
-    printf("HAND AFTER: %d\n",state.handCount[0]);
-    printf("DISCARD AFTER: %d\n",state.handCount[0]);
+    printf("DECK AFTER: %d\n", state.deckCount[0]);
+    printf("HAND AFTER: %d\n", state.handCount[0]);
+    printf("DISCARD AFTER: %d\n", state.discardCount[0]);
   }
+
+  int i;
+  int cardsAddedCorrect = 1;
+  for(i=0; i<4;i++)
+  {
+      if(i == 0)
+      {
+        if(before.deck[run.player][before.deckCount[run.player]-4] != state.hand[run.player][run.handPos])
+        {
+            cardsAddedCorrect &= 0;
+        }
+      }
+      else
+      {
+        if(before.deck[run.player][before.deckCount[run.player]- 4 + i] != 
+            state.hand[run.player][state.handCount[run.player]- i])
+        {
+            cardsAddedCorrect &= 0;
+        }
+      }
+
+    if(LOG)
+    {
+        printf("card at handpos: %d\n", state.hand[run.player][run.handPos]);
+
+        printf("**** *******\n");
+        int j;
+        for(j=0; j<before.deckCount[i]; j++)
+        {
+            printf("d: %d\n", before.deck[i][j]);
+        }
+
+        for(j=0; j<before.handCount[i]; j++)
+        {
+            printf("h: %d\n", before.hand[i][j]);
+        }
+    }
+  }
+
+  int opponentCardCountCorrect = 1;
+  int opponentCardTypeCorrect = 1;
+
+  for(i=0; i<state.numPlayers; i++)
+  {
+      if(i != run.player)
+      {
+          if(before.handCount[i] + 1 != state.handCount[i])
+          {
+              opponentCardCountCorrect &= 0;
+          }
+          if(state.hand[i][state.handCount[i]-1] != before.deck[i][before.deckCount[i]-1])
+          {
+              opponentCardTypeCorrect &= 0;
+          }
+
+      }
+  }
+
   
-  int i=0;
-  int treasuresAfter = 0;
-  int treasuresBefore = 0;
-
-  int nextCard = 0;
-  if(LOG)
-    printf("Hand BEFORE Player: %d\n",run.player);
-  for(i=0; i < before.handCount[run.player]; i++)
-  {
-      nextCard = before.hand[run.player][i];
-      if(LOG)
-        printf("%d: %d\n",i,before.hand[run.player][i]);
-      if(nextCard == silver || nextCard == gold || nextCard == copper)
-      {
-        treasuresBefore++;
-      }
-  }
-
-  //in hand before + after
-  nextCard = 0;
-  if(LOG)
-  {
-    printf("Hand AFTER Player: %d\n",run.player);
-    printf("hand count: %d\n",state.handCount[run.player]);
-  }
-  for(i=0; i < state.handCount[run.player]; i++)
-  {
-      nextCard = state.hand[run.player][i];
-      if(LOG)
-        printf("%d: %d\n",i,state.hand[run.player][i]);
-      if(nextCard == silver || nextCard == gold || nextCard == copper)
-      {
-        treasuresAfter++;
-      }
-  }
-
-
-  if(LOG)
-  {
-    printf("Before: %d + Added: %d = After: %d\n", treasuresBefore, MAX(run.treasureCount[run.player],2), treasuresAfter);
-  }
-
-  int correctTreasureCount = 0;
-  if(treasuresBefore + MAX(run.treasureCount[run.player],2) == treasuresAfter)
-  {
-    correctTreasureCount = 1;
-  }
-
-  //split above, count 1st cards, count 2nd cards, then pass it.
-
   int success = 1;
 
-  //did we add 2 treasure card and discard 2 cards from the deck in the process
-  success &= AssertCondition("Treasure count in hand incorrect", correctTreasureCount);
+  success &= AssertCondition("Incorrect number of cards played", state.playedCardCount);
 
-  //were 2 cards discarded
-  success &= AssertCondition("Adventurer card NOT in played pile", state.playedCards[0] = adventurer); 
+  success &= AssertCondition("Discarded card incorrect", 
+    state.playedCards[0] == council_room);
+
+  success &= AssertCondition("Number of buys added not ", 
+    state.numBuys == before.numBuys + 1);
+
+  success &= AssertCondition("Number of cards in hand incorrect", 
+    before.handCount[run.player] + 3 == state.handCount[run.player]);
+
+  success &= AssertCondition("Cards added to hand incorrect", cardsAddedCorrect);
+
+  success &= AssertCondition("Number of cards given to opponents incorrect", opponentCardCountCorrect);
+
+  success &= AssertCondition("Cards given to opponents incorrect", opponentCardTypeCorrect);
 
   char params[100];
-  sprintf(params, "TEST: Current Player: %d | Hand: %d | Deck: %d | Discards: %d | Treasures: %d",
-  run.player, before.handCount[run.player], before.deckCount[run.player], before.discardCount[run.player],
-  run.treasureCount[run.player]);
+  sprintf(params, "TEST: Current Player: %d | 4 cards added, 1 buy added, opponents received cards",
+  run.player);  
 
   AssertTest(params, success);
+
   return 0;
 }
 
@@ -365,14 +323,14 @@ int main (int argc, char** argv) {
   int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
            sea_hag, tribute, smithy};
 
-  printf("\n**************  randomtest1: Adventurer ***********\n");
+  printf("\n**************  randomtest2: Council Room ***********\n");
 
   int i;
   for(i = 0; i < RUNS; i++)
   {
     if(STATS)
     {
-      printf("RUN: %d\n",i);
+      printf("RUN: %d\n",i+1);
     }
     randomTest(k);
     if(STATS)

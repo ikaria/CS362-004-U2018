@@ -1,227 +1,161 @@
-/* -----------------------------------------------------------------------
- * unittest4.c
- *
- * Written by: Joe Beauchesne
- * ONID: beauchjo
- *
- * Last updated: 7/18/18
- *
- * This code heavily leverages the code provided in the classroom materials
- * that is said to be OK to use as a template.
- *
- * This code tests the buyCard function
- *
- * int buyCard(int supplyPos, struct gameState *state)
- *
- * This function buys a card. It sends a gameState and a card to buy, and then handles the
- * buy transaction.
- *
- *
- *
- * The test function does the following:
- * 1) Tests the standard game setup with 7 coppers and 3 estates. This covers cards in the hand and the deck.
- * 2) Then the MAXDECK is filled through the discard pile to add 490 duchys so that the player has a total of
- *    500 cards. Then the count is checked against cards
- * -----------------------------------------------------------------------
- */
-
 #include "dominion.h"
-#include "dominion_helpers.h"
-#include <string.h>
 #include <stdio.h>
-#include <assert.h>
 #include "rngs.h"
+#include <stdlib.h>
+#include "utils.h"
 
-// set NOISY_TEST to 0 to remove printfs from output
+//TESTING: gainCard()
 
-#define NOISY_TEST 0
+//Test successful add of Province to deck
+int addToDeckProvince_Success(struct gameState *state)
+{
+  int player = 0;
+  state->supplyCount[province] = 1;
 
-/* This needs to move into a different location, but I'm struggling to figure out where
- *  For now I'll leave it here
- *
- * This function compares two integers and if they are equal, returns 0. If they are not equal, it
- * returns -1. This can be used at the next level to see if any tests fails by use of a test failure flag
- * after each execution. If any of the tests (which are all expected to pass) result in a failure, then the
- * flag has changed and so the total test fails as a whole.
- *
- *  */
+  int deckCountBefore = state->deckCount[player];
 
-int testAssert(int a, int b, int* c) {
-    (*c)++;
-    if (a==b) {
-#if (NOISY_TEST == 1)
-        printf("Test Passed\n");
-#endif
-        return 0;
-    }
-    else {
-#if (NOISY_TEST == 1)
-        printf("Test Failed\n");
-#endif
-        return -1;
-    }
+  gainCard(province,state, 1,player);
+
+  int deckCountAfter = state->deckCount[player];
+
+  int success = 1;
+
+  success &= AssertCondition("Deck count incorrect.", 
+  deckCountBefore + 1 == deckCountAfter);
+
+  success &= AssertCondition("Card added is not province.", 
+    state->deck[player][state->deckCount[player]-1] == province);
+
+  success &= AssertCondition("Supply count incorrect.", 
+    state->supplyCount[province] == 0);
+
+  return success;
 }
 
-int main() {
-    int i;
-    int seed = 5;
-    int totalTestResult=0;
-    int totalTestCount=0;
-    int totalCount = 0;
-    int numPlayer = 4;
-    int r;
-    int k[10] = {adventurer, council_room, feast, gardens, mine
-               , remodel, smithy, village, baron, great_hall};
-    struct gameState G, Gcopy;
-    int MAXSUPPLYPOS = 17;
+//Test try add Province to deck when pile empty
+int addToDeckProvince_Fail(struct gameState *state)
+{
+  int result = 0; 
+  int player = 0;
 
-// The first test just checks at game initialization
+  state->supplyCount[province] = 0;
 
-    printf ("TESTING buyCard():\n");
+  int deckCountBefore = state->deckCount[player];
+  
+  result = gainCard(province,state,0,player);
 
+  int deckCountAfter = state->deckCount[player];
 
-        // Initialize a gameState struct and what will be a copy of the struct
+  int success = 1;
 
-        memset(&G, 23, sizeof(struct gameState));   // clear the game state
-        memset(&Gcopy, 23, sizeof(struct gameState));   // clear the game state
-        r = initializeGame(numPlayer, k, seed, &G); // initialize a new game
-                if (r == -1) {
-                    printf("Error initializing game\n");
-                }
+  success &= AssertCondition("Deck count changed.", 
+  deckCountBefore == deckCountAfter);
 
-// At the start of a new game, the player should have 7 coppers and 3 estates between their deck and their hand, but
-// their discard pile is empty.
+  success &= AssertCondition("Province pile count changed.", 
+    state->supplyCount[province] == 0);
 
-// Populate the discard pile with a varying number of duchy cards for each user
+  success &= AssertCondition("Failed to detect empty province pile.", 
+    result);
 
-// Test what happens when the number of buys is set to zero, should return -1
+  return success;
+}
 
-        G.numBuys = 0;
-// Make a copy of the game state
-        memcpy(&Gcopy, &G, sizeof(struct gameState));
+//Add province to hand
+int addToHandProvince_Success(struct gameState *state)
+{
+  int player = 0;
 
-        for (int i=0; i<MAXSUPPLYPOS; i++) {
-            totalTestResult += testAssert(buyCard(i, &G), -1, &totalTestCount);
-            totalCount++;
-        }
-// Verify that the game state has not changed
-        totalTestResult += testAssert(memcmp(&Gcopy, &G, sizeof(struct gameState)),0, &totalTestCount);
-//        printf("test result after no buys = %d\n", totalTestResult);
+  state->hand[player][0] = village;
+  state->hand[player][1] = copper;
+  state->hand[player][2] = copper;
+  state->hand[player][3] = copper;
+  state->hand[player][4] = smithy;
 
-    if (totalTestResult >= 0) {
-        printf("buyCard does not allow cards to be purchased when no buys are available\n");
-    }
+  state->supplyCount[province] = 1;
 
+  int handCountBefore = state->handCount[player];
 
-#if (NOISY_TEST == 1)
-    printf("nobuy results = %d\n", totalTestResult );
-#endif
+  gainCard(province,state, 2,player);
 
-// Test what happens when the number of buys is set to one, and number of coins is set to 0;
-// No transaction can occur
+  int handCountAfter = state->handCount[player];
 
-        G.numBuys = 1;
-        G.coins = 0;
-// Copy the prebuy state
-        memcpy(&Gcopy, &G, sizeof(struct gameState));
+  int success = 1;
 
-        for (i=1; i<MAXSUPPLYPOS; i++) {
-            // Try to buy any of the 26 card positions except 0 or 4
-            if (i != 4) {
-                totalTestResult += testAssert(buyCard(i, &G), -1, &totalTestCount);
-            } else {
-                totalTestResult += testAssert(buyCard(i, &G), 0, &totalTestCount);
-                totalTestResult += testAssert(G.coins, 0, &totalTestCount);
-//                printf("coin result %d = %d\n", i, totalTestResult);
+  success &= AssertCondition("Hand count incorrect.", 
+    handCountBefore + 1 == handCountAfter);
 
-                totalTestResult += testAssert(G.discardCount[0], Gcopy.discardCount[0]+1, &totalTestCount);
-                totalTestResult += testAssert(G.discardCount[1], Gcopy.discardCount[1], &totalTestCount);
-                totalTestResult += testAssert(G.discardCount[2], Gcopy.discardCount[2], &totalTestCount);
-                totalTestResult += testAssert(G.discardCount[3], Gcopy.discardCount[3], &totalTestCount);
-                totalTestResult += testAssert(G.numBuys+1,Gcopy.numBuys, &totalTestCount);
-//                printf("numBuys result %d = %d\n", i, totalTestResult);
-            }
-//            printf("test result after no coins %d = %d\n", i, totalTestResult);
-        }
-    if (totalTestResult >= 0) {
-        printf("buyCard does not allow cards to be purchased when insufficient funds are available!\n");
-    }
+  success &= AssertCondition("Actual card added not province",
+    state->hand[player][state->handCount[player]-1] == province);
 
+  success &= AssertCondition("Province supply count incorrect.",
+    state->supplyCount[province] == 0);
 
-// Supply Pile empty test
-// Reinitialize the game
-        printf("Starting empty supply pile tests!\n");
-        memset(&G, 23, sizeof(struct gameState));   // clear the game state
-        memset(&Gcopy, 23, sizeof(struct gameState));   // clear the game state
-        r = initializeGame(numPlayer, k, seed, &G); // initialize a new game
-        G.numBuys = 1;
-        G.coins = 10;
+  return success;
+}
 
-        for (int i=0; i<MAXSUPPLYPOS; i++) {
-            G.supplyCount[i]=0;
-        }
+//Add province to discard pile 
+int discardProvince_Success(struct gameState *state)
+{
+  int player = 0;
 
-    memcpy(&Gcopy, &G, sizeof(struct gameState));
+  state->hand[player][0] = province;
+  state->hand[player][1] = copper;
+  state->hand[player][2] = copper;
+  state->hand[player][3] = copper;
+  state->hand[player][4] = smithy;
 
-    for (i=0; i<MAXSUPPLYPOS; i++) {
-        totalTestResult += testAssert(buyCard(i, &G), -1, &totalTestCount);
-// Since the supply piles are empty, no transactions should be made;
-        for (int j=0; j<numPlayer; j++) {
-            totalTestResult += testAssert(G.discardCount[j], Gcopy.discardCount[j], &totalTestCount);
-            totalTestResult += testAssert(G.deckCount[j], Gcopy.deckCount[j], &totalTestCount);
-            totalTestResult += testAssert(G.handCount[j], Gcopy.handCount[j], &totalTestCount);
-        }
+  state->supplyCount[province] = 1;
 
-    }
+  int discardCountBefore = state->discardCount[player];
 
-    if (totalTestResult >= 0) {
-        printf("buyCard does not allow a card to be bought from empty piles!\n");
-    }
+  gainCard(province,state, 0,player);
 
-// Normal card test - 1 buy
-// Reinitialize the game
-    printf("Starting regular purchase test!\n");
+  int discardCountAfter = state->discardCount[player];
 
+  int success = 1;
 
-    for (i=0; i<MAXSUPPLYPOS; i++) {
-        memset(&G, 23, sizeof(struct gameState));   // clear the game state
-        memset(&Gcopy, 23, sizeof(struct gameState));   // clear the game state
-        r = initializeGame(numPlayer, k, seed, &G); // initialize a new game
-        G.numBuys = 1;
-        G.coins = 10;
+  success &= AssertCondition("Discard count incorrect.",
+    discardCountBefore + 1 == discardCountAfter);
 
-        memcpy(&Gcopy, &G, sizeof(struct gameState));
-#if (NOISY_TEST == 1)
-        printf("coins before = %d\n", G.coins );
-        printf("buys before = %d\n", G.numBuys );
-#endif
-        totalTestResult += testAssert(buyCard(i, &G), 0, &totalTestCount);
-#if (NOISY_TEST == 1)
-        printf("coins after  = %d\n", G.coins );
-        printf("buys after = %d\n", G.numBuys );
-#endif
-        totalTestResult += testAssert(G.coins, Gcopy.coins-getCost(i), &totalTestCount);
-        totalTestResult += testAssert(G.numBuys, Gcopy.numBuys-1, &totalTestCount);
+  success &= AssertCondition("Actual card not province",
+    state->discard[player][state->discardCount[player]-1] == province);
 
-    }
+  success &= AssertCondition("Province supply count incorrect.",
+    state->supplyCount[province] == 0);
 
-    if (totalTestResult >= 0) {
-        printf("buyCard passes the normal purchase test!\n");
-    }
+  return success;
+}
 
+int main (int argc, char** argv) {
+  struct gameState G;
+  int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
+           sea_hag, tribute, smithy};
 
+  printf("\n**************  gainCard() ***********\n");
 
+  int success = 1;
 
+  initializeGame(2, k, 2, &G);
+  success &= AssertTest("Test 1: Add Province To Deck | Expected: Deck+1, Supply-1, Card=Province",
+    addToDeckProvince_Success(&G));
 
-        if (totalTestResult >= 0) {
-            printf("All tests passed - buyCard function!\n");
-            printf("Total checks made = %d\n", totalTestCount);
-        } else {
-            printf("There was at least one test failure - buyCard function\n");
-            printf("Total checks made = %d\n", totalTestCount);
-        }
+  initializeGame(2, k, 2, &G);
+  success &= AssertTest("Test 2: Try Add Province when none available | Expected: Deck & Supply unchanged, Gain returns -1",
+    addToDeckProvince_Fail(&G));
 
+  initializeGame(2, k, 2, &G);
+  success &= AssertTest("Test 3: Add Province To Hand | Expection: Hand Count + 1, Supply-1, Card=Province",
+    addToHandProvince_Success(&G));
 
+  initializeGame(2, k, 2, &G);
+  success &= AssertTest("Test 4: Add Province To Discard Pile | Expected: Discard + 1, Supply-1; Card=Province",
+    discardProvince_Success(&G));
 
-    return 0;
+  if(success)
+  {
+    printf ("ALL TESTS PASSED\n");
+  }
+  printf ("\n");
+
+  return 0;
 }

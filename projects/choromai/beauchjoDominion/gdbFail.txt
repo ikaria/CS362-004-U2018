@@ -1,0 +1,177 @@
+ikaria@IKARIA-RZR:beauchjoDominion$ gdb ./c2d
+GNU gdb (Ubuntu 8.1-0ubuntu3) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from ./c2d...done.
+(gdb) run
+Starting program: /mnt/c/igor/OSU/CS362/CS362-004-U2018/projects/choromai/beauchjoDominion/c2d
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+**************  cardtest2: Adventurer ***********
+Don't have 2 treasures
+Don't have 1 copper, 1 gold
+Gold Treasure Test: Expected: 1 Gold and 1 Copper  | Result: FAILED
+
+[Inferior 1 (process 225) exited normally]
+(gdb) break 38
+Breakpoint 1 at 0x80020cf: file cardtest2d.c, line 38.
+(gdb) step
+The program is not being run.
+(gdb) run
+Starting program: /mnt/c/igor/OSU/CS362/CS362-004-U2018/projects/choromai/beauchjoDominion/c2d
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+**************  cardtest2: Adventurer ***********
+
+Breakpoint 1, testGold (state=0x7ffffffe75d0) at cardtest2d.c:39
+39        cardEffect(card, choice1, choice2, choice3, state, handPos, bonus);
+(gdb) step
+cardEffect (card=7, choice1=0, choice2=0, choice3=0, state=0x7ffffffe75d0, handPos=4,
+    bonus=0x7ffffffe751c) at dominion.c:647
+647     {
+(gdb)
+653       int currentPlayer = whoseTurn(state);
+(gdb)
+whoseTurn (state=0x7ffffffe75d0) at dominion.c:347
+347       return state->whoseTurn;
+(gdb)
+348     }
+(gdb)
+cardEffect (card=7, choice1=0, choice2=0, choice3=0, state=0x7ffffffe75d0, handPos=4,
+    bonus=0x7ffffffe751c) at dominion.c:654
+654       int nextPlayer = currentPlayer + 1;
+(gdb)
+656       int tributeRevealedCards[2] = {-1, -1};
+(gdb)
+661       if (nextPlayer > (state->numPlayers - 1)){
+(gdb)
+667       switch( card )
+(gdb)
+673           newAdventurer(state, currentPlayer);
+(gdb)
+newAdventurer (state=0x7ffffffe75d0, currentPlayer=0) at dominion.c:1368
+1368    void newAdventurer(struct gameState *state, int currentPlayer) {
+(gdb)
+1369      int drawntreasure = 0;
+(gdb)
+1372      int z=0;
+(gdb)
+1376      while(drawntreasure<2) {
+(gdb)
+1377        if (state->deckCount[currentPlayer] < 1) {//if the deck is empty we need to shuffle discard and add to deck
+(gdb)
+1380        drawCard(currentPlayer, state);
+(gdb)
+drawCard (player=0, state=0x7ffffffe75d0) at dominion.c:528
+528       if (state->deckCount[player] <= 0){//Deck is empty
+(gdb)
+568         int count = state->handCount[player];//Get current hand count for player
+(gdb)
+574         deckCounter = state->deckCount[player];//Create holder for the deck count
+(gdb)
+575         state->hand[player][count] = state->deck[player][deckCounter - 1];//Add card to the hand
+(gdb)
+576         state->deckCount[player]--;
+(gdb)
+577         state->handCount[player]++;//Increment hand count
+(gdb)
+580       return 0;
+(gdb)
+581     }
+(gdb)
+newAdventurer (state=0x7ffffffe75d0, currentPlayer=0) at dominion.c:1381
+1381        cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] -
+(gdb) p cardDrawn
+$1 = 0
+(gdb)
+$2 = 0
+(gdb) step
+1383        if (cardDrawn == copper || cardDrawn == silver)
+(gdb)
+1386          temphand[z] = cardDrawn;
+(gdb)
+1387          state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
+(gdb)
+1388          z++;
+(gdb)
+1376      while(drawntreasure<2) {
+(gdb)
+1377        if (state->deckCount[currentPlayer] < 1) {//if the deck is empty we need to shuffle discard and add to deck
+(gdb)
+1380        drawCard(currentPlayer, state);
+(gdb)
+drawCard (player=0, state=0x7ffffffe75d0) at dominion.c:528
+528       if (state->deckCount[player] <= 0){//Deck is empty
+(gdb)
+568         int count = state->handCount[player];//Get current hand count for player
+(gdb)
+574         deckCounter = state->deckCount[player];//Create holder for the deck count
+(gdb)
+575         state->hand[player][count] = state->deck[player][deckCounter - 1];//Add card to the hand
+(gdb)
+576         state->deckCount[player]--;
+(gdb)
+577         state->handCount[player]++;//Increment hand count
+(gdb)
+580       return 0;
+(gdb)
+581     }
+(gdb)
+newAdventurer (state=0x7ffffffe75d0, currentPlayer=0) at dominion.c:1381
+1381        cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] -
+(gdb) p cardDrawn
+$3 = 14
+(gdb) step
+1383        if (cardDrawn == copper || cardDrawn == silver)
+(gdb)
+1386          temphand[z] = cardDrawn;
+(gdb)
+1387          state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
+(gdb)
+1388          z++;
+(gdb)
+1376      while(drawntreasure<2) {
+(gdb)
+1377        if (state->deckCount[currentPlayer] < 1) {//if the deck is empty we need to shuffle discard and add to deck
+(gdb)
+1380        drawCard(currentPlayer, state);
+(gdb)
+drawCard (player=0, state=0x7ffffffe75d0) at dominion.c:528
+528       if (state->deckCount[player] <= 0){//Deck is empty
+(gdb)
+568         int count = state->handCount[player];//Get current hand count for player
+(gdb)
+574         deckCounter = state->deckCount[player];//Create holder for the deck count
+(gdb)
+575         state->hand[player][count] = state->deck[player][deckCounter - 1];//Add card to the hand
+(gdb)
+576         state->deckCount[player]--;
+(gdb)
+577         state->handCount[player]++;//Increment hand count
+(gdb)
+580       return 0;
+(gdb)
+581     }
+(gdb)
+newAdventurer (state=0x7ffffffe75d0, currentPlayer=0) at dominion.c:1381
+1381        cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] -
+(gdb) p cardDrawn
+$4 = 6
+(gdb) p drawntreasures
+No symbol "drawntreasures" in current context.
+(gdb) p drawntreasure
+$5 = 0
+(gdb)

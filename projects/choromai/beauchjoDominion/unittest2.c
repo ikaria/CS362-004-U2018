@@ -1,148 +1,131 @@
-/* -----------------------------------------------------------------------
- * unittest2.c
- *
- * Written by: Joe Beauchesne
- * ONID: beauchjo
- *
- * Last updated: 7/18/18
- *
- * This code heavily leverages the code provided in the classroom materials
- * that is said to be OK to use as a template.
- *
- * This code tests the gainCard function
- *
- * int gainCard(int supplyPos, struct gameState *state, int toFlag, int player)
- *
- * Demonstration of how to write unit tests for dominion-base
- * Include the following lines in your makefile:
- *
- * unittest2: unittest2.c dominion.o rngs.o
- *      gcc -o unittest2 -g  unittest2.c dominion.o rngs.o $(CFLAGS)
- * -----------------------------------------------------------------------
- */
-
 #include "dominion.h"
-#include "dominion_helpers.h"
-#include <string.h>
 #include <stdio.h>
-#include <assert.h>
 #include "rngs.h"
+#include <stdlib.h>
+#include "utils.h"
 
-// set NOISY_TEST to 0 to remove printfs from output
-#define NOISY_TEST 0
 
-/* This needs to move into a different location, but I'm struggling to figure out where
- *  For now I'll leave it here
- *
- * This function compares two integers and if they are equal, returns 0. If they are not equal, it
- * returns -1. This can be used at the next level to see if any tests fails by use of a test failure flag
- * after each execution. If any of the tests (which are all expected to pass) result in a failure, then the
- * flag has changed and so the total test fails as a whole.
- *
- *  */
+//Test Gold count
+int twoGoldCoins_Plus6(struct gameState *state)
+{
 
-int testAssert(int a, int b, int* c) {
-    (*c)++;
-//    printf("%i  %i\n", a, b);
-    if (a==b) {
-#if (NOISY_TEST == 1)
-        printf("Test Passed\n");
-#endif
-        return 0;
-    }
-    else {
-#if (NOISY_TEST == 1)
-        printf("Test Failed\n");
-#endif
-        return -1;
-    }
+  //setup state
+  int player = 1;
+  state->handCount[player] = 5;
+
+  state->hand[player][0] = village;
+  state->hand[player][1] = village;
+  state->hand[player][2] = village;
+  state->hand[player][3] = gold;
+  state->hand[player][4] = gold;
+
+  //run function
+  updateCoins(player,state,0);
+
+  //return results, add fail msg if 0 
+  return AssertCondition("Gold coins failed.", state->coins == 6);
 }
 
-int main() {
-//    int i;
-    int seed = 5;
-//    int testAssertResult=0;
-    int totalTestResult=0;
-    int supplyPos = 0;
-    int toFlag = 0;
-    int numPlayer = 4;
-    int players, r;
-    int handCount = 20;
-    int totalTestCount = 0;
-//    int bonus;
-    int k[10] = {adventurer, council_room, feast, gardens, mine
-               , remodel, smithy, village, baron, great_hall};
-    struct gameState G;
-//    int maxHandCount = 5;
-    int maxSupplyPos = 27;
 
-// Test with a card not present in the game
+//Test Silver count
+int oneSilverCoin_Plus2(struct gameState *state)
+{
+ 
+  //setup state
+  int player = 1;
+  state->handCount[player] = 5;
 
-    printf ("TESTING gainCard():\n");
-    for (supplyPos = 0; supplyPos < maxSupplyPos; supplyPos++)
-    {
-        for (toFlag = 0; toFlag <= 2; toFlag++) {
-            for (players = 0; players <= numPlayer; players++) {
-#if (NOISY_TEST == 1)
-                printf("Test %d player with supply position %d with %d trash status.\n", players, supplyPos, toFlag);
-#endif
-                memset(&G, 23, sizeof(struct gameState));   // clear the game state
-                r = initializeGame(numPlayer, k, seed, &G); // initialize a new game
-                if (r == -1) {
-                    totalTestResult = -1;
-                }
-                G.handCount[players] = handCount;                 // set the number of cards in a hand
-                G.deckCount[players] = handCount;
-                G.discardCount[players] = handCount;
-                int cardResult = gainCard(supplyPos, &G, toFlag, players);
-//                printf("Function result = %d\n", cardResult);
-#if (NOISY_TEST == 1)
-                if (cardResult == -1) {
-                    printf("Card %d is not used in the game\n", supplyPos);
-                }
-                printf("toFlag = %d\n", toFlag);
-                printf("G.handcount = %d\n", G.handCount[players]);
-                printf("G.deckcount = %d\n", G.deckCount[players]);
-                printf("G.discardcount = %d\n", G.discardCount[players]);
-#endif
-                if ((toFlag == 0 && cardResult != -1)) {
-                    totalTestResult += testAssert(G.discardCount[players], handCount + 1, &totalTestCount);
-                    totalTestResult += testAssert(G.deckCount[players], handCount, &totalTestCount);
-                    totalTestResult += testAssert(G.handCount[players], handCount, &totalTestCount);
-                }
+  state->hand[player][0] = village;
+  state->hand[player][1] = village;
+  state->hand[player][2] = village;
+  state->hand[player][3] = village;
+  state->hand[player][4] = silver;
 
-                if ((toFlag == 1 && cardResult != -1)) {
-                    totalTestResult += testAssert(G.deckCount[players], handCount + 1, &totalTestCount);
-                    totalTestResult += testAssert(G.discardCount[players], handCount, &totalTestCount);
-                    totalTestResult += testAssert(G.handCount[players], handCount, &totalTestCount);
-                }
+  //test function
+  updateCoins(player,state,0);
+   
+   //return result
+  return AssertCondition("Silver coin value incorrect. ", state->coins == 2);
+}
 
-                if ((toFlag == 2) && (cardResult != -1)) {
-                    totalTestResult += testAssert(G.handCount[players], handCount + 1, &totalTestCount);
-                    totalTestResult += testAssert(G.deckCount[players], handCount, &totalTestCount);
-                    totalTestResult += testAssert(G.discardCount[players], handCount, &totalTestCount);
-                }
-// For cards 17 and higher, which aren't used in this test game, we should show a failure if this isn't de
-                if ((supplyPos >= 17) && (cardResult != -1)) {
-                    totalTestResult--;
-                }
+//Test Copper count
+int threeCopperCoins_Plus3(struct gameState *state)
+{
 
-            }
-            if (totalTestResult >= 0) {
-                printf("A loop of cases passed - gain card!\n");
-            }
-        }
-    }
+  //state->coins = 0;
+  int player = 1;
+  state->handCount[player] = 5;
 
-    if (totalTestResult >= 0) {
-        printf("All tests passed - gain card!\n");
-        printf("Total asserts conducted - %d cases\n", totalTestCount);
-    } else {
-        printf("There was at least one test failure\n");
-        printf("Total asserts conducted - %d cases\n", totalTestCount);
-    }
+  //setup state
+  state->hand[player][0] = village;
+  state->hand[player][1] = village;
+  state->hand[player][2] = copper;
+  state->hand[player][3] = copper;
+  state->hand[player][4] = copper;
+
+  updateCoins(player,state,0);
+   
+
+  return AssertCondition("Copper coin value incorrect. ", state->coins == 3);
+}
+
+//Test Bonus Count
+int fiveBonusAdded_plus5(struct gameState *state)
+{
+
+  int player = 1;
+
+  updateCoins(player,state,5);
+   
+
+  return AssertCondition("Bonus value incorrect. ", state->coins == 5);
+}
+
+//function has race condition, expected: none 
+void raceCondition_NoneDetected()
+{
+  struct gameState G;
+  int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
+           sea_hag, tribute, smithy};
+  initializeGame(2, k, 2, &G);
+
+  updateCoins(1, &G, 0);
+}
 
 
+int main (int argc, char** argv) {
+  struct gameState G;
+  int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
+           sea_hag, tribute, smithy};
 
-    return 0;
+  printf("\n**************  updateCoins() ***********\n");
+
+  int success = 1;
+
+  success &= AssertTest ("Test 0: Race Condition | Expected: None Detected ",
+    TestRace(&raceCondition_NoneDetected));
+
+  initializeGame(2, k, 2, &G);
+  success &= AssertTest ("Test 1: Gold Coins Added = 2 | Expected: Coins = 6",
+    twoGoldCoins_Plus6(&G));
+
+  initializeGame(2, k, 2, &G);
+  success &= AssertTest("Test 2: Silver Coins Added = 1 | Expected: Coins = 2", 
+    oneSilverCoin_Plus2(&G));
+
+  initializeGame(2, k, 2, &G);
+  success &= AssertTest("Test 3: Copper Coins Added = 3 | Expected: Coins = 3", 
+    threeCopperCoins_Plus3(&G));
+
+  initializeGame(2, k, 2, &G);
+  success &= AssertTest("Test 4: Bonus Added = 5 | Expected: Coins = 5",
+    fiveBonusAdded_plus5(&G));
+
+  if(success)
+  {
+    printf ("ALL TESTS PASSED\n");
+  }
+  printf ("\n");
+
+  return 0;
 }

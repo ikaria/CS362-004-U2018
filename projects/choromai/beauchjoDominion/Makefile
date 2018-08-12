@@ -21,107 +21,96 @@ testBuyCard: testDrawCard.c dominion.o rngs.o
 testAll: dominion.o testSuite.c
 	gcc -o testSuite testSuite.c -g  dominion.o rngs.o $(CFLAGS)
 
-unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c cardtest1.c cardtest2.c cardtest3.c cardtest4.c dominion.o rngs.o
-
-	echo "------------------------------------------------" >> unittestresults.out
-	echo "------------------------------------------------" >> unittestresults.out
-	echo "Results for all tests" >> unittestresults.out
-	echo "------------------------------------------------" >> unittestresults.out
-	echo "------------------------------------------------" >> unittestresults.out
-
-	echo "unittest1.c - updateCoins tests:" >> unittestresults.out
-	gcc -o unittest1 -g unittest1.c dominion.c rngs.c $(CFLAGS)
-	unittest1 >> unittestresults.out
-	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
-	echo "------------------------------------------------" >> unittestresults.out
-	echo "------------------------------------------------" >> unittestresults.out
-
-	echo "unittest2.c - gainCard tests:" >> unittestresults.out
-	gcc -o unittest2 -g unittest2.c dominion.c rngs.c $(CFLAGS)
-	unittest2 >> unittestresults.out
-	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
-	echo "------------------------------------------------" >> unittestresults.out
-	
-	echo "------------------------------------------------" >> unittestresults.out
-	echo "unittest3.c - fullDeckCount tests:" >> unittestresults.out
-	gcc -o unittest3 -g unittest3.c dominion.c rngs.c $(CFLAGS)
-	unittest3 >> unittestresults.out
-	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
-	echo "------------------------------------------------" >> unittestresults.out
-
-	echo "------------------------------------------------" >> unittestresults.out
-	echo "unittest4.c - buyCard tests: :" >> unittestresults.out
-	gcc -o unittest4 -g unittest4.c dominion.c rngs.c $(CFLAGS)
-	unittest4 >> unittestresults.out
-	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
-	echo "------------------------------------------------" >> unittestresults.out
-
-	echo "------------------------------------------------" >> unittestresults.out
-	echo "cardtest1.c - newAdventurer tests:" >> unittestresults.out
-	gcc -o cardtest1 -g cardtest1.c dominion.c rngs.c $(CFLAGS)
-	cardtest1 >> unittestresults.out
-	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
-	echo "------------------------------------------------" >> unittestresults.out
-	
-	echo "------------------------------------------------" >> unittestresults.out
-	echo "cardtest2.c - newSmithy tests::" >> unittestresults.out
-	gcc -o cardtest2 -g cardtest2.c dominion.c rngs.c $(CFLAGS)
-	cardtest2 >> unittestresults.out
-	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
-	echo "------------------------------------------------" >> unittestresults.out
-
-	echo "------------------------------------------------" >> unittestresults.out
-	echo "cardtest3.c - newCouncilRoom tests:" >> unittestresults.out
-	gcc -o cardtest3 -g cardtest3.c dominion.c rngs.c $(CFLAGS)
-	cardtest3 >> unittestresults.out
-	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
-	echo "------------------------------------------------" >> unittestresults.out
-	echo "------------------------------------------------" >> unittestresults.out
-	echo "cardtest4.c - newVillage tests::" >> unittestresults.out
-	gcc -o cardtest4 -g cardtest4.c dominion.c rngs.c $(CFLAGS)
-	cardtest4 >> unittestresults.out
-	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
-
-	echo "------------------------------------------------" >> unittestresults.out
-	echo "------------------------------------------------" >> unittestresults.out
-	echo "------------------------------------------------" >> unittestresults.out
-
-randomtestresults: randomtestadventurer.c randomtestcard1.c randomtestcard2.c dominion.o rngs.o
-
-	echo "randomtestadventurer.c tests:" >> randomtestadventurer.out
-	gcc -o randomtestadventurer -g randomtestadventurer.c dominion.c rngs.c $(CFLAGS)
-	randomtestadventurer >> randomtestadventurer.out
-	gcov -b dominion.c >> randomtestadventurer.out
-	cat dominion.c.gcov >> randomtestadventurer.out
-
-	echo "randomtestcard1.c tests:" >> randomtestcard1.out
-	gcc -o randomtestcard1 -g randomtestcard1.c dominion.c rngs.c $(CFLAGS)
-	randomtestcard1 >> randomtestcard1.out
-	gcov -b dominion.c >> randomtestcard1.out
-	cat dominion.c.gcov >> randomtestcard1.out
-	
-	echo "randomtestcard2.c tests:" >> randomtestcard2.out
-	gcc -o randomtestcard2 -g randomtestcard2.c dominion.c rngs.c $(CFLAGS)
-	randomtestcard2 >> randomtestcard2.out
-	gcov -b dominion.c >> randomtestcard2.out
-	cat dominion.c.gcov >> randomtestcard2.out
-
 interface.o: interface.h interface.c
 	gcc -c interface.c -g  $(CFLAGS)
 
 runtests: testDrawCard 
 	./testDrawCard &> unittestresult.out
 	gcov dominion.c >> unittestresult.out
+	cat dominion.c.gcov >> unittestresult.out
 
+utils.o: utils.h utils.c
+	gcc -c utils.c -lpthread $(CFLAGS)
 
+unitTest1: dominion.o rngs.o utils.o unittest1.c 
+	gcc -o u1 unittest1.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
+unitTest2: dominion.o rngs.o utils.o unittest2.c 
+	gcc -o u2 unittest2.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
+unitTest3: dominion.o rngs.o utils.o unittest3.c 
+	gcc -o u3 unittest3.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
+unitTest4: dominion.o rngs.o utils.o unittest4.c 
+	gcc -o u4 unittest4.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
+cardTest1: dominion.o rngs.o utils.o cardtest1.c 
+	gcc -o c1 cardtest1.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
+cardTest2: dominion.o rngs.o utils.o cardtest2.c 
+	gcc -o c2 cardtest2.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
+cardTest3: dominion.o rngs.o utils.o cardtest3.c 
+	gcc -o c3 cardtest3.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
+cardTest4: dominion.o rngs.o utils.o cardtest4.c 
+	gcc -o c4 cardtest4.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
+randA: dominion.o rngs.o utils.o randomtestadventurer.c 
+	gcc -o rA randomtestadventurer.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
+rand2: dominion.o rngs.o utils.o randomtest2.c 
+	gcc -o r2 randomtest2.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
+rand1: dominion.o rngs.o utils.o randomtest1.c 
+	gcc -o r1 randomtest1.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
+unittestresults.out: dominion.o utils.o
+	gcc -o u1 unittest1.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+	gcc -o u2 unittest2.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+	gcc -o u3 unittest3.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+	gcc -o u4 unittest4.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+	gcc -o c1 cardtest1.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+	gcc -o c2 cardtest2.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+	gcc -o c3 cardtest3.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+	gcc -o c4 cardtest4.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+
+	./u1 >> unittestresults.out
+	./u2 >> unittestresults.out
+	./u3 >> unittestresults.out
+	./u4 >> unittestresults.out
+	./c1 >> unittestresults.out
+	./c2 >> unittestresults.out
+	./c3 >> unittestresults.out
+	./c4 >> unittestresults.out
+
+	gcov -f -b dominion.c >> unittestresults.out
+	cat dominion.c.gcov >> unittestresults.out
+
+debugTest: dominion.o rngs.o utils.o cardtest2d.c 
+	gcc -o c2d cardtest2d.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+	./c2d >> debugTestResults.out
+
+randomtestcard1.out: dominion.o utils.o
+	rm -f dominion.c.gcov
+	gcc -o r1 randomtest1.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+	./r1 >> randomtestcard1.out
+	gcov -f -b dominion.c >> randomtestcard1.out
+	cat dominion.c.gcov >> randomtestcard1.out
+
+randomtestcard2.out: dominion.o utils.o
+	rm -f dominion.c.gcov
+	gcc -o r2 randomtest2.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+	./r2 >> randomtestcard2.out
+	gcov -f -b dominion.c >> randomtestcard2.out
+	cat dominion.c.gcov >> randomtestcard2.out
+
+randomtestadventurer.out: dominion.o utils.o
+	rm -f dominion.c.gcov
+	gcc -o rA randomtestadventurer.c -g dominion.o utils.o rngs.o -lpthread $(CFLAGS)
+	./rA >> randomtestadventurer.out
+	gcov -f -b dominion.c >> randomtestadventurer.out
+	cat dominion.c.gcov >> randomtestadventurer.out
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)

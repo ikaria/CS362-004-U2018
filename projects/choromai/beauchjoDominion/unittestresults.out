@@ -1,782 +1,63 @@
 
-**************  randomtest1: Village ***********
-RUN: 0
-Player: 0 -- Hand: 11 + Deck: 4 + Discard: 0
-Player: 1 -- Hand: 8 + Deck: 4 + Discard: 3
-Player: 2 -- Hand: 12 + Deck: 1 + Discard: 2
-Player: 3 -- Hand: 9 + Deck: 0 + Discard: 6
-Number of actions added not 2
-TEST: Current Player: 1 | Card Added: 22 | HandPos: 7 | Result: FAILED
-************************
-RUN: 1
-Player: 0 -- Hand: 11 + Deck: 2 + Discard: 2
-Player: 1 -- Hand: 7 + Deck: 2 + Discard: 6
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 11 | HandPos: 4 | Result: FAILED
-************************
-RUN: 2
-Player: 0 -- Hand: 10 + Deck: 5 + Discard: 0
-Player: 1 -- Hand: 6 + Deck: 4 + Discard: 5
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 21 | HandPos: 0 | Result: FAILED
-************************
-RUN: 3
-Player: 0 -- Hand: 13 + Deck: 0 + Discard: 2
-Player: 1 -- Hand: 13 + Deck: 0 + Discard: 2
-Player: 2 -- Hand: 13 + Deck: 0 + Discard: 2
-Player: 3 -- Hand: 7 + Deck: 6 + Discard: 2
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 25 | HandPos: 9 | Result: FAILED
-************************
-RUN: 4
-Player: 0 -- Hand: 8 + Deck: 7 + Discard: 0
-Player: 1 -- Hand: 6 + Deck: 8 + Discard: 1
-Player: 2 -- Hand: 14 + Deck: 0 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 13 | HandPos: 2 | Result: FAILED
-************************
-RUN: 5
-Player: 0 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 1 -- Hand: 11 + Deck: 3 + Discard: 1
-Player: 2 -- Hand: 12 + Deck: 2 + Discard: 1
-Player: 3 -- Hand: 11 + Deck: 3 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 2 | Card Added: 2 | HandPos: 3 | Result: FAILED
-************************
-RUN: 6
-Player: 0 -- Hand: 8 + Deck: 7 + Discard: 0
-Player: 1 -- Hand: 12 + Deck: 1 + Discard: 2
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 19 | HandPos: 7 | Result: FAILED
-************************
-RUN: 7
-Player: 0 -- Hand: 9 + Deck: 0 + Discard: 6
-Player: 1 -- Hand: 6 + Deck: 8 + Discard: 1
-Player: 2 -- Hand: 13 + Deck: 0 + Discard: 2
-Player: 3 -- Hand: 12 + Deck: 0 + Discard: 3
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 3 | Card Added: 25 | HandPos: 6 | Result: FAILED
-************************
-RUN: 8
-Player: 0 -- Hand: 7 + Deck: 6 + Discard: 2
-Player: 1 -- Hand: 15 + Deck: 0 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 3 | HandPos: 2 | Result: FAILED
-************************
-RUN: 9
-Player: 0 -- Hand: 11 + Deck: 0 + Discard: 4
-Player: 1 -- Hand: 14 + Deck: 0 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 11 | HandPos: 5 | Result: FAILED
-************************
-RUN: 10
-Player: 0 -- Hand: 7 + Deck: 7 + Discard: 1
-Player: 1 -- Hand: 9 + Deck: 6 + Discard: 0
-Player: 2 -- Hand: 10 + Deck: 3 + Discard: 2
-Player: 3 -- Hand: 6 + Deck: 2 + Discard: 7
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 3 | Card Added: 20 | HandPos: 2 | Result: FAILED
-************************
-RUN: 11
-Player: 0 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 1 -- Hand: 15 + Deck: 0 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 14 | HandPos: 9 | Result: FAILED
-************************
-RUN: 12
-Player: 0 -- Hand: 15 + Deck: 0 + Discard: 0
-Player: 1 -- Hand: 11 + Deck: 0 + Discard: 4
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 6 | HandPos: 4 | Result: FAILED
-************************
-RUN: 13
-Player: 0 -- Hand: 9 + Deck: 1 + Discard: 5
-Player: 1 -- Hand: 7 + Deck: 8 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 25 | HandPos: 3 | Result: FAILED
-************************
-RUN: 14
-Player: 0 -- Hand: 13 + Deck: 0 + Discard: 2
-Player: 1 -- Hand: 6 + Deck: 7 + Discard: 2
-Number of actions added not 2
-TEST: Current Player: 1 | Card Added: 24 | HandPos: 5 | Result: FAILED
-************************
-RUN: 15
-Player: 0 -- Hand: 8 + Deck: 7 + Discard: 0
-Player: 1 -- Hand: 9 + Deck: 0 + Discard: 6
-Player: 2 -- Hand: 11 + Deck: 0 + Discard: 4
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 2 | Card Added: 23 | HandPos: 7 | Result: FAILED
-************************
-RUN: 16
-Player: 0 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 1 -- Hand: 11 + Deck: 0 + Discard: 4
-Player: 2 -- Hand: 14 + Deck: 1 + Discard: 0
-Player: 3 -- Hand: 13 + Deck: 1 + Discard: 1
-Number of actions added not 2
-TEST: Current Player: 0 | Card Added: 19 | HandPos: 8 | Result: FAILED
-************************
-RUN: 17
-Player: 0 -- Hand: 8 + Deck: 3 + Discard: 4
-Player: 1 -- Hand: 13 + Deck: 2 + Discard: 0
-Player: 2 -- Hand: 13 + Deck: 0 + Discard: 2
-Player: 3 -- Hand: 14 + Deck: 0 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 3 | Card Added: 16 | HandPos: 9 | Result: FAILED
-************************
-RUN: 18
-Player: 0 -- Hand: 6 + Deck: 4 + Discard: 5
-Player: 1 -- Hand: 10 + Deck: 1 + Discard: 4
-Number of actions added not 2
-TEST: Current Player: 1 | Card Added: 6 | HandPos: 9 | Result: FAILED
-************************
-RUN: 19
-Player: 0 -- Hand: 6 + Deck: 6 + Discard: 3
-Player: 1 -- Hand: 6 + Deck: 7 + Discard: 2
-Player: 2 -- Hand: 6 + Deck: 0 + Discard: 9
-Player: 3 -- Hand: 9 + Deck: 6 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 21 | HandPos: 4 | Result: FAILED
-************************
-RUN: 20
-Player: 0 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 1 -- Hand: 6 + Deck: 0 + Discard: 9
-Player: 2 -- Hand: 10 + Deck: 0 + Discard: 5
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 19 | HandPos: 8 | Result: FAILED
-************************
-RUN: 21
-Player: 0 -- Hand: 8 + Deck: 3 + Discard: 4
-Player: 1 -- Hand: 13 + Deck: 1 + Discard: 1
-Player: 2 -- Hand: 6 + Deck: 9 + Discard: 0
-Player: 3 -- Hand: 15 + Deck: 0 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 2 | Card Added: 16 | HandPos: 4 | Result: FAILED
-************************
-RUN: 22
-Player: 0 -- Hand: 12 + Deck: 2 + Discard: 1
-Player: 1 -- Hand: 10 + Deck: 0 + Discard: 5
-Player: 2 -- Hand: 13 + Deck: 0 + Discard: 2
-Number of actions added not 2
-TEST: Current Player: 0 | Card Added: 1 | HandPos: 11 | Result: FAILED
-************************
-RUN: 23
-Player: 0 -- Hand: 11 + Deck: 0 + Discard: 4
-Player: 1 -- Hand: 15 + Deck: 0 + Discard: 0
-Player: 2 -- Hand: 6 + Deck: 2 + Discard: 7
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 22 | HandPos: 4 | Result: FAILED
-************************
-RUN: 24
-Player: 0 -- Hand: 13 + Deck: 2 + Discard: 0
-Player: 1 -- Hand: 9 + Deck: 6 + Discard: 0
-Player: 2 -- Hand: 8 + Deck: 3 + Discard: 4
-Player: 3 -- Hand: 12 + Deck: 0 + Discard: 3
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 3 | Card Added: 15 | HandPos: 9 | Result: FAILED
-************************
-RUN: 25
-Player: 0 -- Hand: 9 + Deck: 4 + Discard: 2
-Player: 1 -- Hand: 13 + Deck: 1 + Discard: 1
-Player: 2 -- Hand: 14 + Deck: 0 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 2 | Card Added: 0 | HandPos: 11 | Result: FAILED
-************************
-RUN: 26
-Player: 0 -- Hand: 11 + Deck: 0 + Discard: 4
-Player: 1 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 2 -- Hand: 10 + Deck: 2 + Discard: 3
-Player: 3 -- Hand: 7 + Deck: 0 + Discard: 8
-Number of actions added not 2
-TEST: Current Player: 0 | Card Added: 9 | HandPos: 0 | Result: FAILED
-************************
-RUN: 27
-Player: 0 -- Hand: 8 + Deck: 3 + Discard: 4
-Player: 1 -- Hand: 13 + Deck: 0 + Discard: 2
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 6 | HandPos: 1 | Result: FAILED
-************************
-RUN: 28
-Player: 0 -- Hand: 13 + Deck: 0 + Discard: 2
-Player: 1 -- Hand: 13 + Deck: 2 + Discard: 0
-Player: 2 -- Hand: 13 + Deck: 1 + Discard: 1
-Player: 3 -- Hand: 13 + Deck: 0 + Discard: 2
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 3 | Card Added: 24 | HandPos: 9 | Result: FAILED
-************************
-RUN: 29
-Player: 0 -- Hand: 6 + Deck: 0 + Discard: 9
-Player: 1 -- Hand: 6 + Deck: 9 + Discard: 0
-Player: 2 -- Hand: 6 + Deck: 1 + Discard: 8
-Number of actions added not 2
-TEST: Current Player: 0 | Card Added: 5 | HandPos: 5 | Result: FAILED
-************************
-RUN: 30
-Player: 0 -- Hand: 7 + Deck: 2 + Discard: 6
-Player: 1 -- Hand: 6 + Deck: 2 + Discard: 7
-Player: 2 -- Hand: 13 + Deck: 1 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 0 | HandPos: 0 | Result: FAILED
-************************
-RUN: 31
-Player: 0 -- Hand: 7 + Deck: 0 + Discard: 8
-Player: 1 -- Hand: 10 + Deck: 5 + Discard: 0
-Player: 2 -- Hand: 10 + Deck: 0 + Discard: 5
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 6 | HandPos: 6 | Result: FAILED
-************************
-RUN: 32
-Player: 0 -- Hand: 7 + Deck: 8 + Discard: 0
-Player: 1 -- Hand: 15 + Deck: 0 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 1 | HandPos: 11 | Result: FAILED
-************************
-RUN: 33
-Player: 0 -- Hand: 10 + Deck: 0 + Discard: 5
-Player: 1 -- Hand: 8 + Deck: 5 + Discard: 2
-Player: 2 -- Hand: 12 + Deck: 0 + Discard: 3
-Player: 3 -- Hand: 7 + Deck: 2 + Discard: 6
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 3 | Card Added: 11 | HandPos: 0 | Result: FAILED
-************************
-RUN: 34
-Player: 0 -- Hand: 8 + Deck: 4 + Discard: 3
-Player: 1 -- Hand: 12 + Deck: 0 + Discard: 3
-Player: 2 -- Hand: 6 + Deck: 2 + Discard: 7
-Player: 3 -- Hand: 12 + Deck: 0 + Discard: 3
-Number of actions added not 2
-TEST: Current Player: 1 | Card Added: 2 | HandPos: 11 | Result: FAILED
-************************
-RUN: 35
-Player: 0 -- Hand: 7 + Deck: 4 + Discard: 4
-Player: 1 -- Hand: 8 + Deck: 0 + Discard: 7
-Player: 2 -- Hand: 10 + Deck: 0 + Discard: 5
-Player: 3 -- Hand: 8 + Deck: 5 + Discard: 2
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 22 | HandPos: 6 | Result: FAILED
-************************
-RUN: 36
-Player: 0 -- Hand: 8 + Deck: 6 + Discard: 1
-Player: 1 -- Hand: 15 + Deck: 0 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 16 | HandPos: 2 | Result: FAILED
-************************
-RUN: 37
-Player: 0 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 1 -- Hand: 8 + Deck: 4 + Discard: 3
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 12 | HandPos: 6 | Result: FAILED
-************************
-RUN: 38
-Player: 0 -- Hand: 12 + Deck: 2 + Discard: 1
-Player: 1 -- Hand: 6 + Deck: 9 + Discard: 0
-Number of actions added not 2
-TEST: Current Player: 0 | Card Added: 24 | HandPos: 11 | Result: FAILED
-************************
-RUN: 39
-Player: 0 -- Hand: 7 + Deck: 5 + Discard: 3
-Player: 1 -- Hand: 14 + Deck: 1 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 10 | HandPos: 2 | Result: FAILED
-************************
-RUN: 40
-Player: 0 -- Hand: 10 + Deck: 0 + Discard: 5
-Player: 1 -- Hand: 10 + Deck: 5 + Discard: 0
-Player: 2 -- Hand: 6 + Deck: 7 + Discard: 2
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 8 | HandPos: 3 | Result: FAILED
-************************
-RUN: 41
-Player: 0 -- Hand: 6 + Deck: 6 + Discard: 3
-Player: 1 -- Hand: 11 + Deck: 3 + Discard: 1
-Player: 2 -- Hand: 6 + Deck: 5 + Discard: 4
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 0 | HandPos: 3 | Result: FAILED
-************************
-RUN: 42
-Player: 0 -- Hand: 12 + Deck: 0 + Discard: 3
-Player: 1 -- Hand: 8 + Deck: 3 + Discard: 4
-Player: 2 -- Hand: 12 + Deck: 3 + Discard: 0
-Player: 3 -- Hand: 14 + Deck: 1 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 3 | Card Added: 11 | HandPos: 7 | Result: FAILED
-************************
-RUN: 43
-Player: 0 -- Hand: 7 + Deck: 0 + Discard: 8
-Player: 1 -- Hand: 6 + Deck: 0 + Discard: 9
-Player: 2 -- Hand: 10 + Deck: 0 + Discard: 5
-Player: 3 -- Hand: 7 + Deck: 8 + Discard: 0
-Incorrect number of cards played
-Played card incorrect
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 2 | Card Added: 4 | HandPos: 7 | Result: FAILED
-************************
-RUN: 44
-Player: 0 -- Hand: 12 + Deck: 1 + Discard: 2
-Player: 1 -- Hand: 9 + Deck: 2 + Discard: 4
-Player: 2 -- Hand: 11 + Deck: 4 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 14 | HandPos: 6 | Result: FAILED
-************************
-RUN: 45
-Player: 0 -- Hand: 7 + Deck: 0 + Discard: 8
-Player: 1 -- Hand: 9 + Deck: 0 + Discard: 6
-Player: 2 -- Hand: 13 + Deck: 0 + Discard: 2
-Player: 3 -- Hand: 7 + Deck: 4 + Discard: 4
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 0 | HandPos: 7 | Result: FAILED
-************************
-RUN: 46
-Player: 0 -- Hand: 8 + Deck: 0 + Discard: 7
-Player: 1 -- Hand: 6 + Deck: 8 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 25 | HandPos: 4 | Result: FAILED
-************************
-RUN: 47
-Player: 0 -- Hand: 12 + Deck: 0 + Discard: 3
-Player: 1 -- Hand: 8 + Deck: 0 + Discard: 7
-Player: 2 -- Hand: 14 + Deck: 0 + Discard: 1
-Number of actions added not 2
-TEST: Current Player: 1 | Card Added: 12 | HandPos: 7 | Result: FAILED
-************************
-RUN: 48
-Player: 0 -- Hand: 6 + Deck: 8 + Discard: 1
-Player: 1 -- Hand: 11 + Deck: 0 + Discard: 4
-Player: 2 -- Hand: 8 + Deck: 6 + Discard: 1
-Player: 3 -- Hand: 7 + Deck: 3 + Discard: 5
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 3 | Card Added: 14 | HandPos: 0 | Result: FAILED
-************************
-RUN: 49
-Player: 0 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 1 -- Hand: 15 + Deck: 0 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 6 | HandPos: 9 | Result: FAILED
-************************
-RUN: 50
-Player: 0 -- Hand: 9 + Deck: 6 + Discard: 0
-Player: 1 -- Hand: 6 + Deck: 0 + Discard: 9
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 12 | HandPos: 0 | Result: FAILED
-************************
-RUN: 51
-Player: 0 -- Hand: 12 + Deck: 3 + Discard: 0
-Player: 1 -- Hand: 6 + Deck: 4 + Discard: 5
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 0 | HandPos: 4 | Result: FAILED
-************************
-RUN: 52
-Player: 0 -- Hand: 12 + Deck: 3 + Discard: 0
-Player: 1 -- Hand: 6 + Deck: 1 + Discard: 8
-Player: 2 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 3 -- Hand: 13 + Deck: 1 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 13 | HandPos: 0 | Result: FAILED
-************************
-RUN: 53
-Player: 0 -- Hand: 8 + Deck: 7 + Discard: 0
-Player: 1 -- Hand: 7 + Deck: 2 + Discard: 6
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 2 | HandPos: 3 | Result: FAILED
-************************
-RUN: 54
-Player: 0 -- Hand: 7 + Deck: 8 + Discard: 0
-Player: 1 -- Hand: 9 + Deck: 0 + Discard: 6
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 25 | HandPos: 3 | Result: FAILED
-************************
-RUN: 55
-Player: 0 -- Hand: 11 + Deck: 2 + Discard: 2
-Player: 1 -- Hand: 6 + Deck: 0 + Discard: 9
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 15 | HandPos: 4 | Result: FAILED
-************************
-RUN: 56
-Player: 0 -- Hand: 12 + Deck: 3 + Discard: 0
-Player: 1 -- Hand: 11 + Deck: 0 + Discard: 4
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 3 | HandPos: 6 | Result: FAILED
-************************
-RUN: 57
-Player: 0 -- Hand: 10 + Deck: 4 + Discard: 1
-Player: 1 -- Hand: 11 + Deck: 0 + Discard: 4
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 12 | HandPos: 7 | Result: FAILED
-************************
-RUN: 58
-Player: 0 -- Hand: 15 + Deck: 0 + Discard: 0
-Player: 1 -- Hand: 11 + Deck: 0 + Discard: 4
-Player: 2 -- Hand: 11 + Deck: 3 + Discard: 1
-Player: 3 -- Hand: 11 + Deck: 2 + Discard: 2
-Number of actions added not 2
-TEST: Current Player: 2 | Card Added: 23 | HandPos: 10 | Result: FAILED
-************************
-RUN: 59
-Player: 0 -- Hand: 6 + Deck: 9 + Discard: 0
-Player: 1 -- Hand: 14 + Deck: 1 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 1 | HandPos: 1 | Result: FAILED
-************************
-RUN: 60
-Player: 0 -- Hand: 9 + Deck: 1 + Discard: 5
-Player: 1 -- Hand: 12 + Deck: 0 + Discard: 3
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 21 | HandPos: 10 | Result: FAILED
-************************
-RUN: 61
-Player: 0 -- Hand: 13 + Deck: 1 + Discard: 1
-Player: 1 -- Hand: 8 + Deck: 7 + Discard: 0
-Player: 2 -- Hand: 15 + Deck: 0 + Discard: 0
-Player: 3 -- Hand: 14 + Deck: 0 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 2 | Card Added: 21 | HandPos: 11 | Result: FAILED
-************************
-RUN: 62
-Player: 0 -- Hand: 6 + Deck: 9 + Discard: 0
-Player: 1 -- Hand: 10 + Deck: 4 + Discard: 1
-Player: 2 -- Hand: 11 + Deck: 4 + Discard: 0
-Player: 3 -- Hand: 8 + Deck: 7 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 2 | Card Added: 11 | HandPos: 6 | Result: FAILED
-************************
-RUN: 63
-Player: 0 -- Hand: 12 + Deck: 2 + Discard: 1
-Player: 1 -- Hand: 14 + Deck: 0 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 5 | HandPos: 0 | Result: FAILED
-************************
-RUN: 64
-Player: 0 -- Hand: 10 + Deck: 3 + Discard: 2
-Player: 1 -- Hand: 6 + Deck: 9 + Discard: 0
-Player: 2 -- Hand: 11 + Deck: 0 + Discard: 4
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 19 | HandPos: 5 | Result: FAILED
-************************
-RUN: 65
-Player: 0 -- Hand: 13 + Deck: 1 + Discard: 1
-Player: 1 -- Hand: 14 + Deck: 0 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 5 | HandPos: 2 | Result: FAILED
-************************
-RUN: 66
-Player: 0 -- Hand: 13 + Deck: 1 + Discard: 1
-Player: 1 -- Hand: 12 + Deck: 1 + Discard: 2
-Player: 2 -- Hand: 10 + Deck: 0 + Discard: 5
-Player: 3 -- Hand: 13 + Deck: 0 + Discard: 2
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 9 | HandPos: 10 | Result: FAILED
-************************
-RUN: 67
-Player: 0 -- Hand: 10 + Deck: 3 + Discard: 2
-Player: 1 -- Hand: 8 + Deck: 0 + Discard: 7
-Player: 2 -- Hand: 11 + Deck: 4 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 1 | HandPos: 5 | Result: FAILED
-************************
-RUN: 68
-Player: 0 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 1 -- Hand: 9 + Deck: 5 + Discard: 1
-Player: 2 -- Hand: 9 + Deck: 2 + Discard: 4
-Player: 3 -- Hand: 14 + Deck: 0 + Discard: 1
-Number of actions added not 2
-TEST: Current Player: 3 | Card Added: 3 | HandPos: 6 | Result: FAILED
-************************
-RUN: 69
-Player: 0 -- Hand: 13 + Deck: 0 + Discard: 2
-Player: 1 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 2 -- Hand: 8 + Deck: 5 + Discard: 2
-Player: 3 -- Hand: 8 + Deck: 0 + Discard: 7
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 17 | HandPos: 3 | Result: FAILED
-************************
-RUN: 70
-Player: 0 -- Hand: 7 + Deck: 2 + Discard: 6
-Player: 1 -- Hand: 10 + Deck: 0 + Discard: 5
-Player: 2 -- Hand: 8 + Deck: 3 + Discard: 4
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 21 | HandPos: 3 | Result: FAILED
-************************
-RUN: 71
-Player: 0 -- Hand: 6 + Deck: 4 + Discard: 5
-Player: 1 -- Hand: 6 + Deck: 9 + Discard: 0
-Number of actions added not 2
-TEST: Current Player: 1 | Card Added: 17 | HandPos: 5 | Result: FAILED
-************************
-RUN: 72
-Player: 0 -- Hand: 7 + Deck: 2 + Discard: 6
-Player: 1 -- Hand: 15 + Deck: 0 + Discard: 0
-Player: 2 -- Hand: 14 + Deck: 0 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 23 | HandPos: 3 | Result: FAILED
-************************
-RUN: 73
-Player: 0 -- Hand: 7 + Deck: 0 + Discard: 8
-Player: 1 -- Hand: 13 + Deck: 0 + Discard: 2
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 23 | HandPos: 6 | Result: FAILED
-************************
-RUN: 74
-Player: 0 -- Hand: 12 + Deck: 2 + Discard: 1
-Player: 1 -- Hand: 12 + Deck: 2 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 25 | HandPos: 3 | Result: FAILED
-************************
-RUN: 75
-Player: 0 -- Hand: 15 + Deck: 0 + Discard: 0
-Player: 1 -- Hand: 7 + Deck: 3 + Discard: 5
-Number of actions added not 2
-TEST: Current Player: 1 | Card Added: 19 | HandPos: 6 | Result: FAILED
-************************
-RUN: 76
-Player: 0 -- Hand: 9 + Deck: 1 + Discard: 5
-Player: 1 -- Hand: 15 + Deck: 0 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 5 | HandPos: 7 | Result: FAILED
-************************
-RUN: 77
-Player: 0 -- Hand: 7 + Deck: 0 + Discard: 8
-Player: 1 -- Hand: 7 + Deck: 2 + Discard: 6
-Player: 2 -- Hand: 11 + Deck: 0 + Discard: 4
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 2 | Card Added: 17 | HandPos: 0 | Result: FAILED
-************************
-RUN: 78
-Player: 0 -- Hand: 10 + Deck: 4 + Discard: 1
-Player: 1 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 2 -- Hand: 7 + Deck: 8 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 13 | HandPos: 7 | Result: FAILED
-************************
-RUN: 79
-Player: 0 -- Hand: 13 + Deck: 0 + Discard: 2
-Player: 1 -- Hand: 8 + Deck: 6 + Discard: 1
-Player: 2 -- Hand: 10 + Deck: 3 + Discard: 2
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 2 | Card Added: 5 | HandPos: 8 | Result: FAILED
-************************
-RUN: 80
-Player: 0 -- Hand: 8 + Deck: 2 + Discard: 5
-Player: 1 -- Hand: 15 + Deck: 0 + Discard: 0
-Player: 2 -- Hand: 12 + Deck: 2 + Discard: 1
-Player: 3 -- Hand: 13 + Deck: 0 + Discard: 2
-Number of actions added not 2
-TEST: Current Player: 0 | Card Added: 22 | HandPos: 7 | Result: FAILED
-************************
-RUN: 81
-Player: 0 -- Hand: 15 + Deck: 0 + Discard: 0
-Player: 1 -- Hand: 9 + Deck: 2 + Discard: 4
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 19 | HandPos: 2 | Result: FAILED
-************************
-RUN: 82
-Player: 0 -- Hand: 11 + Deck: 2 + Discard: 2
-Player: 1 -- Hand: 9 + Deck: 6 + Discard: 0
-Player: 2 -- Hand: 13 + Deck: 0 + Discard: 2
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 25 | HandPos: 6 | Result: FAILED
-************************
-RUN: 83
-Player: 0 -- Hand: 13 + Deck: 1 + Discard: 1
-Player: 1 -- Hand: 7 + Deck: 0 + Discard: 8
-Player: 2 -- Hand: 9 + Deck: 0 + Discard: 6
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 7 | HandPos: 0 | Result: FAILED
-************************
-RUN: 84
-Player: 0 -- Hand: 8 + Deck: 6 + Discard: 1
-Player: 1 -- Hand: 14 + Deck: 1 + Discard: 0
-Player: 2 -- Hand: 11 + Deck: 0 + Discard: 4
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 20 | HandPos: 3 | Result: FAILED
-************************
-RUN: 85
-Player: 0 -- Hand: 10 + Deck: 5 + Discard: 0
-Player: 1 -- Hand: 6 + Deck: 4 + Discard: 5
-Player: 2 -- Hand: 10 + Deck: 4 + Discard: 1
-Player: 3 -- Hand: 6 + Deck: 2 + Discard: 7
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 3 | Card Added: 15 | HandPos: 3 | Result: FAILED
-************************
-RUN: 86
-Player: 0 -- Hand: 9 + Deck: 5 + Discard: 1
-Player: 1 -- Hand: 9 + Deck: 2 + Discard: 4
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 17 | HandPos: 6 | Result: FAILED
-************************
-RUN: 87
-Player: 0 -- Hand: 15 + Deck: 0 + Discard: 0
-Player: 1 -- Hand: 12 + Deck: 0 + Discard: 3
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 1 | HandPos: 4 | Result: FAILED
-************************
-RUN: 88
-Player: 0 -- Hand: 9 + Deck: 5 + Discard: 1
-Player: 1 -- Hand: 11 + Deck: 1 + Discard: 3
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 3 | HandPos: 4 | Result: FAILED
-************************
-RUN: 89
-Player: 0 -- Hand: 13 + Deck: 0 + Discard: 2
-Player: 1 -- Hand: 7 + Deck: 7 + Discard: 1
-Player: 2 -- Hand: 14 + Deck: 0 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 2 | Card Added: 15 | HandPos: 4 | Result: FAILED
-************************
-RUN: 90
-Player: 0 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 1 -- Hand: 6 + Deck: 1 + Discard: 8
-Player: 2 -- Hand: 14 + Deck: 0 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 2 | Card Added: 13 | HandPos: 11 | Result: FAILED
-************************
-RUN: 91
-Player: 0 -- Hand: 6 + Deck: 8 + Discard: 1
-Player: 1 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 2 -- Hand: 6 + Deck: 2 + Discard: 7
-Player: 3 -- Hand: 12 + Deck: 2 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 1 | HandPos: 4 | Result: FAILED
-************************
-RUN: 92
-Player: 0 -- Hand: 13 + Deck: 1 + Discard: 1
-Player: 1 -- Hand: 7 + Deck: 5 + Discard: 3
-Player: 2 -- Hand: 9 + Deck: 4 + Discard: 2
-Player: 3 -- Hand: 10 + Deck: 0 + Discard: 5
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 1 | Card Added: 24 | HandPos: 2 | Result: FAILED
-************************
-RUN: 93
-Player: 0 -- Hand: 9 + Deck: 5 + Discard: 1
-Player: 1 -- Hand: 6 + Deck: 8 + Discard: 1
-Player: 2 -- Hand: 14 + Deck: 1 + Discard: 0
-Player: 3 -- Hand: 7 + Deck: 7 + Discard: 1
-Number of actions added not 2
-TEST: Current Player: 1 | Card Added: 2 | HandPos: 5 | Result: FAILED
-************************
-RUN: 94
-Player: 0 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 1 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 2 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 3 -- Hand: 7 + Deck: 1 + Discard: 7
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 15 | HandPos: 10 | Result: FAILED
-************************
-RUN: 95
-Player: 0 -- Hand: 11 + Deck: 0 + Discard: 4
-Player: 1 -- Hand: 14 + Deck: 0 + Discard: 1
-Player: 2 -- Hand: 11 + Deck: 0 + Discard: 4
-Player: 3 -- Hand: 14 + Deck: 0 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 2 | Card Added: 7 | HandPos: 7 | Result: FAILED
-************************
-RUN: 96
-Player: 0 -- Hand: 13 + Deck: 0 + Discard: 2
-Player: 1 -- Hand: 15 + Deck: 0 + Discard: 0
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 17 | HandPos: 6 | Result: FAILED
-************************
-RUN: 97
-Player: 0 -- Hand: 11 + Deck: 4 + Discard: 0
-Player: 1 -- Hand: 9 + Deck: 2 + Discard: 4
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 14 | HandPos: 8 | Result: FAILED
-************************
-RUN: 98
-Player: 0 -- Hand: 9 + Deck: 6 + Discard: 0
-Player: 1 -- Hand: 8 + Deck: 4 + Discard: 3
-Player: 2 -- Hand: 6 + Deck: 6 + Discard: 3
-Number of actions added not 2
-TEST: Current Player: 1 | Card Added: 3 | HandPos: 7 | Result: FAILED
-************************
-RUN: 99
-Player: 0 -- Hand: 10 + Deck: 3 + Discard: 2
-Player: 1 -- Hand: 14 + Deck: 0 + Discard: 1
-Number of actions added not 2
-Card added to hand is incorrect
-TEST: Current Player: 0 | Card Added: 6 | HandPos: 8 | Result: FAILED
-************************
+**************  isGameOver() ***********
+Test 0: Race Condition | Expected: None Detected  | Result: PASSED
+Test 1: Province Count = 0 | Expected: End Game | Result: PASSED
+Test 2: (2) Treasures Count = 0 | Expected: Continue Game | Result: PASSED
+Test 3: (3) Treasures Count = 0 | Expected: End Game | Result: PASSED
+ALL TESTS PASSED
+
+
+**************  updateCoins() ***********
+Test 0: Race Condition | Expected: None Detected  | Result: PASSED
+Test 1: Gold Coins Added = 2 | Expected: Coins = 6 | Result: PASSED
+Test 2: Silver Coins Added = 1 | Expected: Coins = 2 | Result: PASSED
+Test 3: Copper Coins Added = 3 | Expected: Coins = 3 | Result: PASSED
+Test 4: Bonus Added = 5 | Expected: Coins = 5 | Result: PASSED
+ALL TESTS PASSED
+
+
+**************  handCard() ***********
+Test 1: Get card in position: 1 | Expected: Village | Result: PASSED
+Test 2: Get card in position: 5 | Expected: Smithy | Result: PASSED
+Out of range card has value, but shouldn't
+Test 3: Try card out of range | Expected: invalid enum | Result: FAILED
+
+
+**************  gainCard() ***********
+Test 1: Add Province To Deck | Expected: Deck+1, Supply-1, Card=Province | Result: PASSED
+Test 2: Try Add Province when none available | Expected: Deck & Supply unchanged, Gain returns -1 | Result: PASSED
+Test 3: Add Province To Hand | Expection: Hand Count + 1, Supply-1, Card=Province | Result: PASSED
+Test 4: Add Province To Discard Pile | Expected: Discard + 1, Supply-1; Card=Province | Result: PASSED
+ALL TESTS PASSED
+
+
+**************  cardtest1: Smithy ***********
+Test 0: Race Condition | Expected: None Detected  | Result: PASSED
+Test 1: At least 3 Cards in Deck | Expected: Played = Smithy, 3 Coppers added, total 7 cards | Result: PASSED
+Test 2: Less than 3 Cards in Deck | Expected: Played = Smithy, 3 Coppers added, total 7 cards | Result: PASSED
+Test 3: Less than 3 Cards in Deck, none in Discard Pile | Expected: Played = Smithy, 3 Coppers added, total 7 cards | Result: PASSED
+ALL TESTS PASSED
+
+
+**************  cardtest2: Adventurer ***********
+Test 1: 2 Treasures in Deck | Expected: 2 coppers added to hand, 2 village cards discarded | Result: PASSED
+Test 2: 1 Treasures in Deck | Expected: 1 copper added to hand, 4 village cards discarded | Result: PASSED
+ALL TESTS PASSED
+
+
+**************  cardtest3: Village ***********
+Number of actions added not 2
+Test 1: Play Action, Normal Deck | Expection: 2 actions added, Smithy in hand, village discarded, # of cards in hand unchanged | Result: FAILED
+Number of actions added not 2
+Test 2: Play Action, DeckEmpty | Expection: 2 actions added, 4 cards in hand, village discarded | Result: FAILED
+
+
+**************  cardtest4: Council Room ***********
+Test 0: Race Condition | Expected: None Detected  | Result: PASSED
+Test 1: Play Action, Normal Deck | Expected: 4 Coppers in Hand, Buy Added, 1 copper for each opponent, council_room discarded | Result: PASSED
+Test 2: Play Action, 2 Cards in Deck | Expected: 2 Coppers in Hand, Buy Added, 1 copper for each opponent, council_room discarded | Result: PASSED
+ALL TESTS PASSED
+
 Function 'newCouncilRoom'
 Lines executed:100.00% of 10
 Branches executed:100.00% of 6
@@ -790,10 +71,10 @@ Taken at least once:0.00% of 12
 Calls executed:0.00% of 5
 
 Function 'newVillage'
-Lines executed:100.00% of 15
-Branches executed:100.00% of 6
-Taken at least once:83.33% of 6
-Calls executed:100.00% of 3
+Lines executed:80.00% of 15
+Branches executed:66.67% of 6
+Taken at least once:50.00% of 6
+Calls executed:66.67% of 3
 
 Function 'newSmithy'
 Lines executed:100.00% of 12
@@ -826,9 +107,9 @@ Taken at least once:66.67% of 6
 No calls
 
 Function 'cardEffect'
-Lines executed:8.52% of 223
+Lines executed:8.07% of 223
 Branches executed:13.77% of 167
-Taken at least once:3.59% of 167
+Taken at least once:2.99% of 167
 Calls executed:8.62% of 58
 
 Function 'getCost'
@@ -912,9 +193,9 @@ Taken at least once:100.00% of 8
 Calls executed:100.00% of 2
 
 Function 'initializeGame'
-Lines executed:95.16% of 62
-Branches executed:100.00% of 46
-Taken at least once:89.13% of 46
+Lines executed:83.87% of 62
+Branches executed:95.65% of 46
+Taken at least once:78.26% of 46
 Calls executed:100.00% of 5
 
 Function 'kingdomCards'
@@ -934,17 +215,17 @@ Taken at least once:75.00% of 4
 No calls
 
 File 'dominion.c'
-Lines executed:35.34% of 631
-Branches executed:33.65% of 425
-Taken at least once:26.35% of 425
-Calls executed:26.00% of 100
+Lines executed:33.60% of 631
+Branches executed:32.71% of 425
+Taken at least once:24.47% of 425
+Calls executed:25.00% of 100
 Creating 'dominion.c.gcov'
 
         -:    0:Source:dominion.c
         -:    0:Graph:dominion.gcno
         -:    0:Data:dominion.gcda
-        -:    0:Runs:9
-        -:    0:Programs:9
+        -:    0:Runs:8
+        -:    0:Programs:8
         -:    1:#include "dominion.h"
         -:    2:#include "dominion_helpers.h"
         -:    3:#include "rngs.h"
@@ -952,17 +233,17 @@ Creating 'dominion.c.gcov'
         -:    5:#include <math.h>
         -:    6:#include <stdlib.h>
         -:    7:
-function compare called 5190 returned 100% blocks executed 83%
-     5190:    8:int compare(const void* a, const void* b) {
-     5190:    9:  if (*(int*)a > *(int*)b)
+function compare called 810 returned 100% blocks executed 83%
+      810:    8:int compare(const void* a, const void* b) {
+      810:    9:  if (*(int*)a > *(int*)b)
 branch  0 taken 0% (fallthrough)
 branch  1 taken 100%
     #####:   10:    return 1;
-     5190:   11:  if (*(int*)a < *(int*)b)
+      810:   11:  if (*(int*)a < *(int*)b)
 branch  0 taken 27% (fallthrough)
 branch  1 taken 73%
-     1384:   12:    return -1;
-     3806:   13:  return 0;
+      216:   12:    return -1;
+      594:   13:  return 0;
         -:   14:}
         -:   15:
 function newGame called 0 returned 0% blocks executed 0%
@@ -988,21 +269,21 @@ function kingdomCards called 0 returned 0% blocks executed 0%
     #####:   34:  return k;
         -:   35:}
         -:   36:
-function initializeGame called 127 returned 100% blocks executed 95%
-      127:   37:int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed,
+function initializeGame called 27 returned 100% blocks executed 88%
+       27:   37:int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed,
         -:   38:		   struct gameState *state) {
         -:   39:
         -:   40:  int i;
         -:   41:  int j;
         -:   42:  int it;			
         -:   43:  //set up random number generator
-      127:   44:  SelectStream(1);
+       27:   44:  SelectStream(1);
 call    0 returned 100%
-      127:   45:  PutSeed((long)randomSeed);
+       27:   45:  PutSeed((long)randomSeed);
 call    0 returned 100%
         -:   46:  
         -:   47:  //check number of players
-      127:   48:  if (numPlayers > MAX_PLAYERS || numPlayers < 2)
+       27:   48:  if (numPlayers > MAX_PLAYERS || numPlayers < 2)
 branch  0 taken 100% (fallthrough)
 branch  1 taken 0%
 branch  2 taken 0% (fallthrough)
@@ -1012,18 +293,18 @@ branch  3 taken 100%
         -:   51:    }
         -:   52:
         -:   53:  //set number of players
-      127:   54:  state->numPlayers = numPlayers;
+       27:   54:  state->numPlayers = numPlayers;
         -:   55:
         -:   56:  //check selected kingdom cards are different
-     1397:   57:  for (i = 0; i < 10; i++)
+      297:   57:  for (i = 0; i < 10; i++)
 branch  0 taken 91%
 branch  1 taken 9% (fallthrough)
         -:   58:    {
-    13970:   59:      for (j = 0; j < 10; j++)
+     2970:   59:      for (j = 0; j < 10; j++)
 branch  0 taken 91%
 branch  1 taken 9% (fallthrough)
         -:   60:        {
-    12700:   61:	  if (j != i && kingdomCards[j] == kingdomCards[i])
+     2700:   61:	  if (j != i && kingdomCards[j] == kingdomCards[i])
 branch  0 taken 90% (fallthrough)
 branch  1 taken 10%
 branch  2 taken 0% (fallthrough)
@@ -1039,80 +320,80 @@ branch  3 taken 100%
         -:   70:  ///////////////////////////////
         -:   71:
         -:   72:  //set number of Curse cards
-      127:   73:  if (numPlayers == 2)
-branch  0 taken 54% (fallthrough)
-branch  1 taken 46%
+       27:   73:  if (numPlayers == 2)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
         -:   74:    {
-       68:   75:      state->supplyCount[curse] = 10;
+       27:   75:      state->supplyCount[curse] = 10;
         -:   76:    }
-       59:   77:  else if (numPlayers == 3)
-branch  0 taken 44% (fallthrough)
-branch  1 taken 56%
+    #####:   77:  else if (numPlayers == 3)
+branch  0 never executed
+branch  1 never executed
         -:   78:    {
-       26:   79:      state->supplyCount[curse] = 20;
+    #####:   79:      state->supplyCount[curse] = 20;
         -:   80:    }
         -:   81:  else
         -:   82:    {
-       33:   83:      state->supplyCount[curse] = 30;
+    #####:   83:      state->supplyCount[curse] = 30;
         -:   84:    }
         -:   85:
         -:   86:  //set number of Victory cards
-      127:   87:  if (numPlayers == 2)
-branch  0 taken 54% (fallthrough)
-branch  1 taken 46%
+       27:   87:  if (numPlayers == 2)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
         -:   88:    {
-       68:   89:      state->supplyCount[estate] = 8;
-       68:   90:      state->supplyCount[duchy] = 8;
-       68:   91:      state->supplyCount[province] = 8;
+       27:   89:      state->supplyCount[estate] = 8;
+       27:   90:      state->supplyCount[duchy] = 8;
+       27:   91:      state->supplyCount[province] = 8;
         -:   92:    }
         -:   93:  else
         -:   94:    {
-       59:   95:      state->supplyCount[estate] = 12;
-       59:   96:      state->supplyCount[duchy] = 12;
-       59:   97:      state->supplyCount[province] = 12;
+    #####:   95:      state->supplyCount[estate] = 12;
+    #####:   96:      state->supplyCount[duchy] = 12;
+    #####:   97:      state->supplyCount[province] = 12;
         -:   98:    }
         -:   99:
         -:  100:  //set number of Treasure cards
-      127:  101:  state->supplyCount[copper] = 60 - (7 * numPlayers);
-      127:  102:  state->supplyCount[silver] = 40;
-      127:  103:  state->supplyCount[gold] = 30;
+       27:  101:  state->supplyCount[copper] = 60 - (7 * numPlayers);
+       27:  102:  state->supplyCount[silver] = 40;
+       27:  103:  state->supplyCount[gold] = 30;
         -:  104:
         -:  105:  //set number of Kingdom cards
-     2667:  106:  for (i = adventurer; i <= treasure_map; i++)       	//loop all cards
+      567:  106:  for (i = adventurer; i <= treasure_map; i++)       	//loop all cards
 branch  0 taken 95%
 branch  1 taken 5% (fallthrough)
         -:  107:    {
-    20955:  108:      for (j = 0; j < 10; j++)           		//loop chosen cards
+     4455:  108:      for (j = 0; j < 10; j++)           		//loop chosen cards
 branch  0 taken 94%
 branch  1 taken 6% (fallthrough)
         -:  109:	{
-    19685:  110:	  if (kingdomCards[j] == i)
+     4185:  110:	  if (kingdomCards[j] == i)
 branch  0 taken 6% (fallthrough)
 branch  1 taken 94%
         -:  111:	    {
         -:  112:	      //check if card is a 'Victory' Kingdom card
-     1270:  113:	      if (kingdomCards[j] == great_hall || kingdomCards[j] == gardens)
+      270:  113:	      if (kingdomCards[j] == great_hall || kingdomCards[j] == gardens)
 branch  0 taken 100% (fallthrough)
 branch  1 taken 0%
 branch  2 taken 10% (fallthrough)
 branch  3 taken 90%
         -:  114:		{
-      254:  115:		  if (numPlayers == 2){ 
-branch  0 taken 54% (fallthrough)
-branch  1 taken 46%
-       68:  116:		    state->supplyCount[i] = 8; 
+       54:  115:		  if (numPlayers == 2){ 
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+       27:  116:		    state->supplyCount[i] = 8; 
         -:  117:		  }
-       59:  118:		  else{ state->supplyCount[i] = 12; }
+    #####:  118:		  else{ state->supplyCount[i] = 12; }
         -:  119:		}
         -:  120:	      else
         -:  121:		{
-     1143:  122:		  state->supplyCount[i] = 10;
+      243:  122:		  state->supplyCount[i] = 10;
         -:  123:		}
-     1270:  124:	      break;
+      270:  124:	      break;
         -:  125:	    }
         -:  126:	  else    //card is not in the set choosen for the game
         -:  127:	    {
-    18415:  128:	      state->supplyCount[i] = -1;
+     3915:  128:	      state->supplyCount[i] = -1;
         -:  129:	    }
         -:  130:	}
         -:  131:
@@ -1122,33 +403,33 @@ branch  1 taken 46%
         -:  135:  //supply intilization complete
         -:  136:
         -:  137:  //set player decks
-      473:  138:  for (i = 0; i < numPlayers; i++)
-branch  0 taken 73%
-branch  1 taken 27% (fallthrough)
+       81:  138:  for (i = 0; i < numPlayers; i++)
+branch  0 taken 67%
+branch  1 taken 33% (fallthrough)
         -:  139:    {
-      346:  140:      state->deckCount[i] = 0;
-     1384:  141:      for (j = 0; j < 3; j++)
+       54:  140:      state->deckCount[i] = 0;
+      216:  141:      for (j = 0; j < 3; j++)
 branch  0 taken 75%
 branch  1 taken 25% (fallthrough)
         -:  142:	{
-     1038:  143:	  state->deck[i][j] = estate;
-     1038:  144:	  state->deckCount[i]++;
+      162:  143:	  state->deck[i][j] = estate;
+      162:  144:	  state->deckCount[i]++;
         -:  145:	}
-     2768:  146:      for (j = 3; j < 10; j++)
+      432:  146:      for (j = 3; j < 10; j++)
 branch  0 taken 88%
 branch  1 taken 13% (fallthrough)
         -:  147:	{
-     2422:  148:	  state->deck[i][j] = copper;
-     2422:  149:	  state->deckCount[i]++;		
+      378:  148:	  state->deck[i][j] = copper;
+      378:  149:	  state->deckCount[i]++;		
         -:  150:	}
         -:  151:    }
         -:  152:
         -:  153:  //shuffle player decks
-      473:  154:  for (i = 0; i < numPlayers; i++)
-branch  0 taken 73%
-branch  1 taken 27% (fallthrough)
+       81:  154:  for (i = 0; i < numPlayers; i++)
+branch  0 taken 67%
+branch  1 taken 33% (fallthrough)
         -:  155:    {
-      346:  156:      if ( shuffle(i, state) < 0 )
+       54:  156:      if ( shuffle(i, state) < 0 )
 call    0 returned 100%
 branch  1 taken 0% (fallthrough)
 branch  2 taken 100%
@@ -1158,13 +439,13 @@ branch  2 taken 100%
         -:  160:    }
         -:  161:
         -:  162:  //draw player hands
-      473:  163:  for (i = 0; i < numPlayers; i++)
-branch  0 taken 73%
-branch  1 taken 27% (fallthrough)
+       81:  163:  for (i = 0; i < numPlayers; i++)
+branch  0 taken 67%
+branch  1 taken 33% (fallthrough)
         -:  164:    {  
         -:  165:      //initialize hand size to zero
-      346:  166:      state->handCount[i] = 0;
-      346:  167:      state->discardCount[i] = 0;
+       54:  166:      state->handCount[i] = 0;
+       54:  167:      state->discardCount[i] = 0;
         -:  168:      //draw 5 cards
         -:  169:      // for (j = 0; j < 5; j++)
         -:  170:      //	{
@@ -1173,76 +454,76 @@ branch  1 taken 27% (fallthrough)
         -:  173:    }
         -:  174:  
         -:  175:  //set embargo tokens to 0 for all supply piles
-     3556:  176:  for (i = 0; i <= treasure_map; i++)
+      756:  176:  for (i = 0; i <= treasure_map; i++)
 branch  0 taken 96%
 branch  1 taken 4% (fallthrough)
         -:  177:    {
-     3429:  178:      state->embargoTokens[i] = 0;
+      729:  178:      state->embargoTokens[i] = 0;
         -:  179:    }
         -:  180:
         -:  181:  //initialize first player's turn
-      127:  182:  state->outpostPlayed = 0;
-      127:  183:  state->phase = 0;
-      127:  184:  state->numActions = 1;
-      127:  185:  state->numBuys = 1;
-      127:  186:  state->playedCardCount = 0;
-      127:  187:  state->whoseTurn = 0;
-      127:  188:  state->handCount[state->whoseTurn] = 0;
+       27:  182:  state->outpostPlayed = 0;
+       27:  183:  state->phase = 0;
+       27:  184:  state->numActions = 1;
+       27:  185:  state->numBuys = 1;
+       27:  186:  state->playedCardCount = 0;
+       27:  187:  state->whoseTurn = 0;
+       27:  188:  state->handCount[state->whoseTurn] = 0;
         -:  189:  //int it; move to top
         -:  190:
         -:  191:  //Moved draw cards to here, only drawing at the start of a turn
-      762:  192:  for (it = 0; it < 5; it++){
+      162:  192:  for (it = 0; it < 5; it++){
 branch  0 taken 83%
 branch  1 taken 17% (fallthrough)
-      635:  193:    drawCard(state->whoseTurn, state);
+      135:  193:    drawCard(state->whoseTurn, state);
 call    0 returned 100%
         -:  194:  }
         -:  195:
-      127:  196:  updateCoins(state->whoseTurn, state, 0);
+       27:  196:  updateCoins(state->whoseTurn, state, 0);
 call    0 returned 100%
         -:  197:
-      127:  198:  return 0;
+       27:  198:  return 0;
         -:  199:}
         -:  200:
-function shuffle called 352 returned 100% blocks executed 100%
-      352:  201:int shuffle(int player, struct gameState *state) {
+function shuffle called 60 returned 100% blocks executed 100%
+       60:  201:int shuffle(int player, struct gameState *state) {
         -:  202: 
         -:  203:
         -:  204:  int newDeck[MAX_DECK];
-      352:  205:  int newDeckPos = 0;
+       60:  205:  int newDeckPos = 0;
         -:  206:  int card;
         -:  207:  int i;
         -:  208:
-      352:  209:  if (state->deckCount[player] < 1)
-branch  0 taken 2% (fallthrough)
-branch  1 taken 98%
+       60:  209:  if (state->deckCount[player] < 1)
+branch  0 taken 10% (fallthrough)
+branch  1 taken 90%
         6:  210:    return -1;
-      346:  211:  qsort ((void*)(state->deck[player]), state->deckCount[player], sizeof(int), compare); 
+       54:  211:  qsort ((void*)(state->deck[player]), state->deckCount[player], sizeof(int), compare); 
 call    0 returned 100%
         -:  212:  /* SORT CARDS IN DECK TO ENSURE DETERMINISM! */
         -:  213:
-     4152:  214:  while (state->deckCount[player] > 0) {
+      648:  214:  while (state->deckCount[player] > 0) {
 branch  0 taken 91%
 branch  1 taken 9% (fallthrough)
-     3460:  215:    card = floor(Random() * state->deckCount[player]);
+      540:  215:    card = floor(Random() * state->deckCount[player]);
 call    0 returned 100%
-     3460:  216:    newDeck[newDeckPos] = state->deck[player][card];
-     3460:  217:    newDeckPos++;
-    12601:  218:    for (i = card; i < state->deckCount[player]-1; i++) {
-branch  0 taken 73%
-branch  1 taken 27% (fallthrough)
-     9141:  219:      state->deck[player][i] = state->deck[player][i+1];
+      540:  216:    newDeck[newDeckPos] = state->deck[player][card];
+      540:  217:    newDeckPos++;
+     2187:  218:    for (i = card; i < state->deckCount[player]-1; i++) {
+branch  0 taken 75%
+branch  1 taken 25% (fallthrough)
+     1647:  219:      state->deck[player][i] = state->deck[player][i+1];
         -:  220:    }
-     3460:  221:    state->deckCount[player]--;
+      540:  221:    state->deckCount[player]--;
         -:  222:  }
-     3806:  223:  for (i = 0; i < newDeckPos; i++) {
+      594:  223:  for (i = 0; i < newDeckPos; i++) {
 branch  0 taken 91%
 branch  1 taken 9% (fallthrough)
-     3460:  224:    state->deck[player][i] = newDeck[i];
-     3460:  225:    state->deckCount[player]++;
+      540:  224:    state->deck[player][i] = newDeck[i];
+      540:  225:    state->deckCount[player]++;
         -:  226:  }
         -:  227:
-      346:  228:  return 0;
+       54:  228:  return 0;
         -:  229:}
         -:  230:
 function playCard called 0 returned 0% blocks executed 0%
@@ -1403,9 +684,9 @@ branch  1 never executed
     #####:  343:  return count;
         -:  344:}
         -:  345:
-function whoseTurn called 115 returned 100% blocks executed 100%
-      115:  346:int whoseTurn(struct gameState *state) {
-      115:  347:  return state->whoseTurn;
+function whoseTurn called 15 returned 100% blocks executed 100%
+       15:  346:int whoseTurn(struct gameState *state) {
+       15:  347:  return state->whoseTurn;
         -:  348:}
         -:  349:
 function endTurn called 0 returned 0% blocks executed 0%
@@ -1673,13 +954,13 @@ branch  1 never executed
     #####:  522:  return 0;
         -:  523:}
         -:  524:
-function drawCard called 780 returned 100% blocks executed 85%
-      780:  525:int drawCard(int player, struct gameState *state)
+function drawCard called 179 returned 100% blocks executed 85%
+      179:  525:int drawCard(int player, struct gameState *state)
         -:  526:{	int count;
         -:  527:  int deckCounter;
-      780:  528:  if (state->deckCount[player] <= 0){//Deck is empty
-branch  0 taken 1% (fallthrough)
-branch  1 taken 99%
+      179:  528:  if (state->deckCount[player] <= 0){//Deck is empty
+branch  0 taken 3% (fallthrough)
+branch  1 taken 97%
         -:  529:    
         -:  530:    //Step 1 Shuffle the discard pile back into a deck
         -:  531:    int i;
@@ -1724,19 +1005,19 @@ branch  1 taken 0%
         -:  565:  }
         -:  566:
         -:  567:  else{
-      775:  568:    int count = state->handCount[player];//Get current hand count for player
+      174:  568:    int count = state->handCount[player];//Get current hand count for player
         -:  569:    int deckCounter;
         -:  570:    if (DEBUG){//Debug statements
         -:  571:      printf("Current hand count: %d\n", count);
         -:  572:    }
         -:  573:
-      775:  574:    deckCounter = state->deckCount[player];//Create holder for the deck count
-      775:  575:    state->hand[player][count] = state->deck[player][deckCounter - 1];//Add card to the hand
-      775:  576:    state->deckCount[player]--;
-      775:  577:    state->handCount[player]++;//Increment hand count
+      174:  574:    deckCounter = state->deckCount[player];//Create holder for the deck count
+      174:  575:    state->hand[player][count] = state->deck[player][deckCounter - 1];//Add card to the hand
+      174:  576:    state->deckCount[player]--;
+      174:  577:    state->handCount[player]++;//Increment hand count
         -:  578:  }
         -:  579:
-      775:  580:  return 0;
+      174:  580:  return 0;
         -:  581:}
         -:  582:
 function getCost called 0 returned 0% blocks executed 0%
@@ -1831,40 +1112,40 @@ branch 27 never executed
     #####:  643:  return -1;
         -:  644:}
         -:  645:
-function cardEffect called 111 returned 100% blocks executed 6%
-      111:  646:int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
+function cardEffect called 11 returned 100% blocks executed 6%
+       11:  646:int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
         -:  647:{
         -:  648:  int i;
         -:  649:  int j;
         -:  650://  int k;
         -:  651:  int x;
         -:  652:  int index;
-      111:  653:  int currentPlayer = whoseTurn(state);
+       11:  653:  int currentPlayer = whoseTurn(state);
 call    0 returned 100%
-      111:  654:  int nextPlayer = currentPlayer + 1;
+       11:  654:  int nextPlayer = currentPlayer + 1;
         -:  655:
-      111:  656:  int tributeRevealedCards[2] = {-1, -1};
+       11:  656:  int tributeRevealedCards[2] = {-1, -1};
         -:  657:  int temphand[MAX_HAND];// moved above the if statement
         -:  658://  int drawntreasure=0;
         -:  659://  int cardDrawn;
         -:  660://  int z = 0;// this is the counter for the temp hand
-      111:  661:  if (nextPlayer > (state->numPlayers - 1)){
-branch  0 taken 35% (fallthrough)
-branch  1 taken 65%
-       39:  662:    nextPlayer = 0;
+       11:  661:  if (nextPlayer > (state->numPlayers - 1)){
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:  662:    nextPlayer = 0;
         -:  663:  }
         -:  664:  
         -:  665:	
         -:  666:  //uses switch to select card and perform actions
-      111:  667:  switch( card ) 
-branch  0 taken 2%
-branch  1 taken 3%
+       11:  667:  switch( card ) 
+branch  0 taken 18%
+branch  1 taken 27%
 branch  2 taken 0%
 branch  3 taken 0%
 branch  4 taken 0%
 branch  5 taken 0%
-branch  6 taken 4%
-branch  7 taken 92%
+branch  6 taken 36%
+branch  7 taken 18%
 branch  8 taken 0%
 branch  9 taken 0%
 branch 10 taken 0%
@@ -2121,11 +1402,11 @@ call    0 returned 100%
         4:  860:      return 0;
         -:  861:
         -:  862:		
-      102:  863:    case village:
+        2:  863:    case village:
         -:  864:
         -:  865://      printf("About to launch newVillage");
         -:  866:
-      102:  867:      newVillage(state, currentPlayer, handPos);
+        2:  867:      newVillage(state, currentPlayer, handPos);
 call    0 returned 100%
         -:  868:
         -:  869:/*
@@ -2139,7 +1420,7 @@ call    0 returned 100%
         -:  877:      discardCard(handPos, currentPlayer, state, 0);
         -:  878:
         -:  879:*/
-      102:  880:      return 0;
+        2:  880:      return 0;
         -:  881:
         -:  882:
         -:  883:		
@@ -2672,32 +1953,32 @@ call    0 never executed
     #####: 1258:  return -1;
         -: 1259:}
         -: 1260:
-function discardCard called 115 returned 100% blocks executed 89%
-      115: 1261:int discardCard(int handPos, int currentPlayer, struct gameState *state, int trashFlag)
+function discardCard called 14 returned 100% blocks executed 89%
+       14: 1261:int discardCard(int handPos, int currentPlayer, struct gameState *state, int trashFlag)
         -: 1262:{
         -: 1263:	
         -: 1264:  //if card is not trashed, added to Played pile 
-      115: 1265:  if (trashFlag < 1)
+       14: 1265:  if (trashFlag < 1)
 branch  0 taken 100% (fallthrough)
 branch  1 taken 0%
         -: 1266:    {
         -: 1267:      //add card to played pile
-      115: 1268:      state->playedCards[state->playedCardCount] = state->hand[currentPlayer][handPos]; 
-      115: 1269:      state->playedCardCount++;
+       14: 1268:      state->playedCards[state->playedCardCount] = state->hand[currentPlayer][handPos]; 
+       14: 1269:      state->playedCardCount++;
         -: 1270:    }
         -: 1271:	
         -: 1272:  //set played card to -1
-      115: 1273:  state->hand[currentPlayer][handPos] = -1;
+       14: 1273:  state->hand[currentPlayer][handPos] = -1;
         -: 1274:	
         -: 1275:  //remove card from player's hand
-      115: 1276:  if ( handPos == (state->handCount[currentPlayer] - 1) ) 	//last card in hand array is played
-branch  0 taken 5% (fallthrough)
-branch  1 taken 95%
+       14: 1276:  if ( handPos == (state->handCount[currentPlayer] - 1) ) 	//last card in hand array is played
+branch  0 taken 36% (fallthrough)
+branch  1 taken 64%
         -: 1277:    {
         -: 1278:      //reduce number of cards in hand
-        6: 1279:      state->handCount[currentPlayer]--;
+        5: 1279:      state->handCount[currentPlayer]--;
         -: 1280:    }
-      109: 1281:  else if ( state->handCount[currentPlayer] == 1 ) //only one card in hand
+        9: 1281:  else if ( state->handCount[currentPlayer] == 1 ) //only one card in hand
 branch  0 taken 0% (fallthrough)
 branch  1 taken 100%
         -: 1282:    {
@@ -2707,14 +1988,14 @@ branch  1 taken 100%
         -: 1286:  else 	
         -: 1287:    {
         -: 1288:      //replace discarded card with last card in hand
-      109: 1289:      state->hand[currentPlayer][handPos] = state->hand[currentPlayer][ (state->handCount[currentPlayer] - 1)];
+        9: 1289:      state->hand[currentPlayer][handPos] = state->hand[currentPlayer][ (state->handCount[currentPlayer] - 1)];
         -: 1290:      //set last card to -1
-      109: 1291:      state->hand[currentPlayer][state->handCount[currentPlayer] - 1] = -1;
+        9: 1291:      state->hand[currentPlayer][state->handCount[currentPlayer] - 1] = -1;
         -: 1292:      //reduce number of cards in hand
-      109: 1293:      state->handCount[currentPlayer]--;
+        9: 1293:      state->handCount[currentPlayer]--;
         -: 1294:    }
         -: 1295:	
-      115: 1296:  return 0;
+       14: 1296:  return 0;
         -: 1297:}
         -: 1298:
 function gainCard called 15 returned 100% blocks executed 100%
@@ -2762,43 +2043,43 @@ branch  1 taken 67%
        14: 1333:  return 0;
         -: 1334:}
         -: 1335:
-function updateCoins called 132 returned 100% blocks executed 100%
-      132: 1336:int updateCoins(int player, struct gameState *state, int bonus)
+function updateCoins called 32 returned 100% blocks executed 100%
+       32: 1336:int updateCoins(int player, struct gameState *state, int bonus)
         -: 1337:{
         -: 1338:  int i;
         -: 1339:	
         -: 1340:  //reset coin count
-      132: 1341:  state->coins = 0;
+       32: 1341:  state->coins = 0;
         -: 1342:
         -: 1343:  //add coins for each Treasure card in player's hand
-      782: 1344:  for (i = 0; i < state->handCount[player]; i++)
-branch  0 taken 83%
-branch  1 taken 17% (fallthrough)
+      182: 1344:  for (i = 0; i < state->handCount[player]; i++)
+branch  0 taken 82%
+branch  1 taken 18% (fallthrough)
         -: 1345:    {
-      650: 1346:      if (state->hand[player][i] == copper)
-branch  0 taken 79% (fallthrough)
-branch  1 taken 21%
+      150: 1346:      if (state->hand[player][i] == copper)
+branch  0 taken 74% (fallthrough)
+branch  1 taken 26%
         -: 1347:	{
-      511: 1348:	  state->coins += 1;
+      111: 1348:	  state->coins += 1;
         -: 1349:	}
-      139: 1350:      else if (state->hand[player][i] == silver)
-branch  0 taken 1% (fallthrough)
-branch  1 taken 99%
+       39: 1350:      else if (state->hand[player][i] == silver)
+branch  0 taken 3% (fallthrough)
+branch  1 taken 97%
         -: 1351:	{
         1: 1352:	  state->coins += 2;
         -: 1353:	}
-      138: 1354:      else if (state->hand[player][i] == gold)
-branch  0 taken 1% (fallthrough)
-branch  1 taken 99%
+       38: 1354:      else if (state->hand[player][i] == gold)
+branch  0 taken 5% (fallthrough)
+branch  1 taken 95%
         -: 1355:	{
         2: 1356:	  state->coins += 3;
         -: 1357:	}	
         -: 1358:    }	
         -: 1359:
         -: 1360:  //add bonus
-      132: 1361:  state->coins += bonus;
+       32: 1361:  state->coins += bonus;
         -: 1362:
-      132: 1363:  return 0;
+       32: 1363:  return 0;
         -: 1364:}
         -: 1365:
         -: 1366:// Note : as of 7/2 at 7:55 there are no bugs yet. This is the basic code
@@ -2901,34 +2182,34 @@ call    0 returned 100%
         4: 1440:}
         -: 1441:
         -: 1442:
-function newVillage called 102 returned 100% blocks executed 100%
-      102: 1443:void newVillage(struct gameState *state, int currentPlayer, int handPos) {
+function newVillage called 2 returned 100% blocks executed 70%
+        2: 1443:void newVillage(struct gameState *state, int currentPlayer, int handPos) {
         -: 1444:  int i;
-      102: 1445:  int cardsRemaining = state->deckCount[currentPlayer]-1;
+        2: 1445:  int cardsRemaining = state->deckCount[currentPlayer]-1;
         -: 1446:
         -: 1447://  printf("Inside the newVillage function\n");
         -: 1448://+1 Card
         -: 1449:
-      205: 1450:  for (i = 0; i < 1; i++)
+        4: 1450:  for (i = 0; i < 1; i++)
 branch  0 taken 50%
 branch  1 taken 50% (fallthrough)
         -: 1451:  {
-      103: 1452:  drawCard(currentPlayer, state);
+        2: 1452:  drawCard(currentPlayer, state);
 call    0 returned 100%
         -: 1453:
-      103: 1454:  int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];
-      103: 1455:  cardsRemaining--;
+        2: 1454:  int cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1];
+        2: 1455:  cardsRemaining--;
         -: 1456://  printf("Cards remaining = %i\n", cardsRemaining);
         -: 1457:
-      103: 1458:  if (cardDrawn == copper) {
-branch  0 taken 1% (fallthrough)
-branch  1 taken 99%
-        1: 1459:    if (cardsRemaining > 1) {
-branch  0 taken 100% (fallthrough)
-branch  1 taken 0%
-        1: 1460:      discardCard(state->handCount[currentPlayer] - 1, currentPlayer, state, 0);
-call    0 returned 100%
-        1: 1461:      i--;
+        2: 1458:  if (cardDrawn == copper) {
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####: 1459:    if (cardsRemaining > 1) {
+branch  0 never executed
+branch  1 never executed
+    #####: 1460:      discardCard(state->handCount[currentPlayer] - 1, currentPlayer, state, 0);
+call    0 never executed
+    #####: 1461:      i--;
         -: 1462://      printf("Discarded!\n");
         -: 1463:
         -: 1464:    }
@@ -2937,20 +2218,20 @@ call    0 returned 100%
         -: 1467:  }
         -: 1468:
         -: 1469://+2 Actions
-      102: 1470:  state->numActions = state->numActions + 2;
+        2: 1470:  state->numActions = state->numActions + 2;
         -: 1471:
         -: 1472://+1 Buys
-      102: 1473:  state->numActions = state->numBuys + 1;
+        2: 1473:  state->numActions = state->numBuys + 1;
         -: 1474:
         -: 1475://+1 Coins
-      102: 1476:  state->coins = state->coins + 1;
+        2: 1476:  state->coins = state->coins + 1;
         -: 1477:
         -: 1478://discard played card from hand
-      102: 1479:  discardCard(handPos, currentPlayer, state, 0);
+        2: 1479:  discardCard(handPos, currentPlayer, state, 0);
 call    0 returned 100%
         -: 1480://  printf("Ending newVillage\n");
         -: 1481:
-      102: 1482:}
+        2: 1482:}
         -: 1483:
         -: 1484:
 function newCutpurse called 0 returned 0% blocks executed 0%

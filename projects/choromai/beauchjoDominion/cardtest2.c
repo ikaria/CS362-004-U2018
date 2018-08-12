@@ -1,488 +1,193 @@
-/* -----------------------------------------------------------------------
- * cardtest2.c
- *
- * Written by: Joe Beauchesne
- * ONID: beauchjo
- *
- * Last updated: 7/16/18
- *
- * This code heavily leverages the code provided in the classroom materials
- * that is said to be OK to use as a template.
- *
- * This code tests the newSmithy function, it can do this directly or through the use
- * of the cardEffect function. As long as the function call is correct, either should work and
- * both have been tested. The direction function calls are actually used in the final code.
- *
- * void newSmithy(struct gameState *state, int currentPlayer, int handPos);
- *
- * This function handles the playing of the newSmithy function, which is known to have a bug. The function
- * draws cards from the players hand.
- *
- * Test cases - nominal - player has a max count of estate cards and the proper number are drawn (passes)
- *              copper - player has a max count of copper cards and the proper number are drawn (fails)
- *              short - player does not have enough cards (passes)
- *
- * -----------------------------------------------------------------------
- */
-
 #include "dominion.h"
-#include "dominion_helpers.h"
-#include <string.h>
 #include <stdio.h>
-#include <assert.h>
 #include "rngs.h"
+#include <stdlib.h>
+#include <string.h>
+#include "utils.h"
 
-// set NOISY_TEST to 0 to remove printfs from output
+//TESTING: ADVENTURER CARD 
 
-#define NOISY_TEST 0
+//Deck has at least 3 cards, three coppers added, 7 cards total 
+int twoTreasureCardsInDeck_twoCardsDiscardedtwoTreasuresFound(struct gameState *state)
+{
 
-/* This needs to move into a different location, but I'm struggling to figure out where
- *  For now I'll leave it here
- *
- * This function compares two integers and if they are equal, returns 0. If they are not equal, it
- * returns -1. This can be used at the next level to see if any tests fails by use of a test failure flag
- * after each execution. If any of the tests (which are all expected to pass) result in a failure, then the
- * flag has changed and so the total test fails as a whole.
- *
- *  */
+  int player = 0;
+  state->handCount[player] = 5;
 
-int testAssert(int a, int b, int* c) {
-    (*c)++;
-//    printf("%i  %i\n", a, b);
-    if (a==b) {
-#if (NOISY_TEST == 1)
-        printf("Test Passed\n");
-#endif
-        return 0;
+  //setup state
+  state->hand[player][0] = smithy;
+  state->hand[player][1] = village;
+  state->hand[player][2] = village;
+  state->hand[player][3] = village;
+  state->hand[player][4] = adventurer;
+
+  int card = adventurer;
+  int choice1 = 0; 
+  int choice2 = 0;
+  int choice3 = 0;
+  int handPos = 4;
+  int a = 0;
+  int *bonus = &a;
+
+  //add 2 treasures and 2 other cards to deck
+  state->supplyCount[copper] = 2;
+  state->supplyCount[village] = 2;
+
+  state->deck[player][0] = copper; 
+  state->deck[player][1] = copper; 
+  state->deck[player][2] = village; 
+  state->deck[player][3] = copper; 
+  state->deck[player][4] = village; 
+
+  cardEffect(card, choice1, choice2, choice3, state, handPos, bonus);
+
+  int i=0;
+  int cardsInHand = state->handCount[player];
+  int treasures = 0;
+  int nextCard = 0;
+  int coppersAdded = 0;
+
+  for(i=0; i < cardsInHand; i++)
+  {
+      nextCard = state->hand[player][i];
+      if(nextCard == silver || nextCard == gold || nextCard == copper)
+      {
+        treasures++;
+        if(nextCard == copper)
+        {
+          coppersAdded++;
+        }
+      }
+  }
+
+  int totalDiscards = state->discardCount[player];
+
+  int j;
+  int discartedVillageCount = 0;
+  for(j=1; j <= 2; j++)
+  {
+    if(state->discard[player][totalDiscards-j] == village)
+    {
+        discartedVillageCount++;
     }
-    else {
-#if (NOISY_TEST == 1)
-        printf("Test Failed\n");
-#endif
-        return -1;
-    }
+  }
+
+  int success = 1;
+
+  //did we add 2 treasure card and discard 2 cards from the deck in the process
+  success &= AssertCondition("Don't have 2 treasures", treasures == 2);
+  //are the added treasures really coppers
+  success &= AssertCondition("Don't have 2 coppers", coppersAdded == 2);
+  //were 2 cards discarded
+  success &= AssertCondition("Number of discarded cards is not 2", totalDiscards == 2);
+  //are the discarded cards really village
+  success &= AssertCondition("Number of discarded village cards in not 2", discartedVillageCount == 2);
+
+  return success;
 }
 
+int oneTreasureCardInDeck_fourCardsDiscardedoneTreasureFound(struct gameState *state)
+{
 
-int main() {
-    struct gameState G;
-    struct gameState Gcopy;
-    int totalTestResult = 0;
-    int testResult = 0;
-    int testCaseResult = 0;
-    int totalTestCount = 0;
-    int j,l,r;
-    int seed = 5;
-    int numPlayer = 4;
-    int maxHandCount = 500;
-    int k[10] = {adventurer, council_room, feast, gardens, mine
-            , remodel, smithy, village, baron, great_hall};
-    int player=0;
-    int bonus;  // Needed for cardEffect execution
-    int handPos = 0;
-// // //
-//
+  int player = 0;
+  state->handCount[player] = 5;
 
-// Run for each of the players in a four player game
+  //setup state
+  state->hand[player][0] = smithy;
+  state->hand[player][1] = village;
+  state->hand[player][2] = village;
+  state->hand[player][3] = village;
+  state->hand[player][4] = adventurer;
 
-//        for (player = 0; player < numPlayer; player++) {
+  int card = adventurer;
+  int choice1 = 0; 
+  int choice2 = 0;
+  int choice3 = 0;
+  int handPos = 4;
+  int a = 0;
+  int *bonus = &a;
 
-// Test 1 - all cards in the deck are turned to estate cards
+  //add 1 treasures and 2 other cards to deck
+  state->supplyCount[copper] = 1;
+  state->supplyCount[village] = 2;
 
-        printf ("TESTING newSmithy() - nominal test case:\n");
+  state->deck[player][0] = copper; 
+  state->deck[player][1] = village; 
+  state->deck[player][2] = village; 
+  state->deck[player][3] = village; 
+  state->deck[player][4] = village; 
 
-        memset(&G, 23, sizeof(struct gameState));   // clear the game state
-        memset(&Gcopy, 23, sizeof(struct gameState));   // clear the game state
+  cardEffect(card, choice1, choice2, choice3, state, handPos, bonus);
 
-        r = initializeGame(numPlayer, k, seed, &G); // initialize a new game
-        if (r == -1) {
-            totalTestResult = -1;
-            printf("Game state initialization failure\n");
+  int i=0;
+  int cardsInHand = state->handCount[player];
+  int treasures = 0;
+  int nextCard = 0;
+  int coppersAdded = 0;
+
+  for(i=0; i < cardsInHand; i++)
+  {
+      nextCard = state->hand[player][i];
+      if(nextCard == silver || nextCard == gold || nextCard == copper)
+      {
+        treasures++;
+        if(nextCard == copper)
+        {
+          coppersAdded++;
         }
-// Set all deck cards to estate cards
-        for (j = 0; j < maxHandCount; j++) {
-            G.deck[player][j] = estate;
-        }
-        G.deckCount[player]=maxHandCount;
-        G.discardCount[player]=0;
+      }
+  }
 
+  int totalDiscards = state->discardCount[player];
 
-
-
-        memcpy(&Gcopy, &G, sizeof(struct gameState));
-
-#if (NOISY_TEST == 1)
-    printf("deck card zero = %d\n", G.deck[player][0]);
-    printf("hand card zero = %d\n", G.deck[player][0]);
-    printf("deckCount = %d\n", G.deckCount[player]);
-    printf("handCount = %d\n", G.handCount[player]);
-#endif
-
-        newSmithy(&G, player, handPos);
-
-
-#if (NOISY_TEST == 1)
-    printf("deck card zero = %d\n", G.deck[player][0]);
-    printf("hand card zero = %d\n", G.deck[player][0]);
-    printf("deckCount = %d\n", G.deckCount[player]);
-    printf("handCount = %d\n", G.handCount[player]);
-#endif
-        testResult =0;
-    // Hand count should be increased by 3 - but one card is played, so its 2
-
-        testResult += testAssert(G.handCount[player], Gcopy.handCount[player]+2, &totalTestCount);
-            if (testResult <= -1) {
-                printf("hand count test failed\n");
-                testResult = 0;
-                testCaseResult = -1;
+  int j;
+  int discartedVillageCount = 0;
+  for(j=1; j <= 4; j++)
+  {
+    if(state->discard[player][totalDiscards-j] == village)
+    {
+        discartedVillageCount++;
     }
+  }
+  //did we add 1 treasure card and discard 4 cards from the deck in the process
 
-#if (NOISY_TEST == 1)
-    printf("newdeckCount = %d\n", G.deckCount[player]);
-    printf("newhandCount = %d\n", G.handCount[player]);
-    printf("newplayedCount = %d\n", G.playedCardCount);
-    printf("olddeckCount = %d\n", Gcopy.deckCount[player]);
-    printf("oldhandCount = %d\n", Gcopy.handCount[player]);
-    printf("oldplayedCount = %d\n", Gcopy.playedCardCount);
-#endif
-    // Deck Count should be decreased by 3
-        testResult += testAssert(G.deckCount[player], Gcopy.deckCount[player]-3, &totalTestCount);
-        if (testResult <= -1) {
-            printf("deck count test failed\n");
-            testResult = 0;
-            testCaseResult = -1;
-        }
+  int success = 1;
 
-        testResult += testAssert(G.playedCardCount, Gcopy.playedCardCount+1, &totalTestCount);
-        if (testResult <= -1) {
-            printf("played count test failed\n");
-            testResult = 0;
-            testCaseResult = -1;
-        }
+  //did we add 1 treasure card and discard 4 cards from the deck in the process
+  success &= AssertCondition("Don't have 1 treasure", treasures == 1);
+  //was one copper added
+  success &= AssertCondition("Don't have 1 copper", coppersAdded == 1);
+  //were 4 cards discarded
+  success &= AssertCondition("Number of discarded cards is not 4", totalDiscards == 4);
+  //are the discarded cards really village
+  success &= AssertCondition("Number of discarded village cards in not 4", discartedVillageCount == 4);
 
-    // Supply Count should be unchanged
-        testResult += testAssert(G.supplyCount[estate], Gcopy.supplyCount[estate], &totalTestCount);
-        if (testResult <= -1) {
-            printf("supply card count checks failed\n");
-            testResult = 0;
-            testCaseResult = -1;
-        }
-        testResult += testAssert(G.coins, Gcopy.coins, &totalTestCount);
-        if (testResult <= -1) {
-            printf("coins check failed\n");
-            testResult = 0;
-            testCaseResult = -1;
-        }
-        testResult += testAssert(G.numBuys, Gcopy.numBuys, &totalTestCount);
-        if (testResult <= -1) {
-            printf("numBuys check failed\n");
-            testResult = 0;
-            testCaseResult = -1;
-        }
-        testResult += testAssert(G.numActions, Gcopy.numActions, &totalTestCount);
-        if (testResult <= -1) {
-            printf("numActions check failed\n");
-            testResult = 0;
-            testCaseResult = -1;
-        }
-   // None of the other players' hands should be affected, either
-        for (l=0; l<numPlayer; l++) {
-            if (l !=player) {
-                testResult += testAssert(G.deckCount[l], Gcopy.deckCount[l], &totalTestCount);
-                if (testResult <= -1) {
-                    printf("deckCount check failed for another player\n");
-                    testResult = 0;
-                    testCaseResult = -1;
-                }
-                testResult += testAssert(G.handCount[l], Gcopy.handCount[l], &totalTestCount);
-                if (testResult <= -1) {
-                    printf("deckCount check failed for another player\\n");
-                    testResult = 0;
-                    testCaseResult = -1;
-                }
-                testResult += testAssert(G.discardCount[l], Gcopy.discardCount[l], &totalTestCount);
-                if (testResult <= -1) {
-                    printf("deckCount check failed for another player\\n");
-                    testResult = 0;
-                    testCaseResult = -1;
-                }
+  return success;
+}
 
-            }
-        }
+int main (int argc, char** argv) {
+  struct gameState G, emptyG;
+  int k[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse,
+           sea_hag, tribute, smithy};
 
+  printf("\n**************  cardtest2: Adventurer ***********\n");
 
-        if (testCaseResult >= 0) {
-            printf("The estate case passed - player %d\n", player);
-        } else {
-            printf("The estate case case failed - player %d\n", player);
-            totalTestResult = -1;
-            testResult =0;
-            testCaseResult =0;
-        }
+  int success = 1;
 
-    printf ("TESTING newSmithy() - copper test case:\n");
+  initializeGame(2, k, 2, &G);
+  success &= AssertTest("Test 1: 2 Treasures in Deck | Expected: 2 coppers added to hand, 2 village cards discarded",
+    twoTreasureCardsInDeck_twoCardsDiscardedtwoTreasuresFound(&G));
 
-    memset(&G, 23, sizeof(struct gameState));   // clear the game state
-    memset(&Gcopy, 23, sizeof(struct gameState));   // clear the game state
+  initializeGame(2, k, 2, &G);
+  memcpy(&emptyG, &G, sizeof(struct gameState));
+  success &= AssertTest("Test 2: 1 Treasures in Deck | Expected: 1 copper added to hand, 4 village cards discarded",
+  oneTreasureCardInDeck_fourCardsDiscardedoneTreasureFound(&G));
 
-    r = initializeGame(numPlayer, k, seed, &G); // initialize a new game
-    if (r == -1) {
-        totalTestResult = -1;
-        printf("Game state initialization failure\n");
-    }
+  if(success)
+  {
+    printf ("ALL TESTS PASSED\n");
+  }
+  printf ("\n");
 
-    for (j = 0; j < maxHandCount; j++) {
-        G.deck[player][j] = copper;
-    }
-    G.deckCount[player]=maxHandCount;
-    G.discardCount[player]=0;
-
-    memcpy(&Gcopy, &G, sizeof(struct gameState));
-
-#if (NOISY_TEST == 1)
-    printf("deck card zero = %d\n", G.deck[player][0]);
-    printf("hand card zero = %d\n", G.deck[player][0]);
-    printf("deckCount = %d\n", G.deckCount[player]);
-    printf("handCount = %d\n", G.handCount[player]);
-#endif
-
-    newSmithy(&G, player, handPos);
-
-
-#if (NOISY_TEST == 1)
-    printf("deck card zero = %d\n", G.deck[player][0]);
-    printf("hand card zero = %d\n", G.deck[player][0]);
-    printf("deckCount = %d\n", G.deckCount[player]);
-    printf("handCount = %d\n", G.handCount[player]);
-#endif
-    testResult =0;
-    // Hand count should be increased by 3 - but one card is played, so its 2
-
-    testResult += testAssert(G.handCount[player], Gcopy.handCount[player]+2, &totalTestCount);
-    if (testResult <= -1) {
-        printf("hand count test failed\n");
-        testResult = 0;
-        testCaseResult = -1;
-    }
-
-#if (NOISY_TEST == 1)
-    printf("newdeckCount = %d\n", G.deckCount[player]);
-    printf("newhandCount = %d\n", G.handCount[player]);
-    printf("newplayedCount = %d\n", G.playedCardCount);
-    printf("olddeckCount = %d\n", Gcopy.deckCount[player]);
-    printf("oldhandCount = %d\n", Gcopy.handCount[player]);
-    printf("oldplayedCount = %d\n", Gcopy.playedCardCount);
-#endif
-    // Deck Count should be decreased by 3
-    testResult += testAssert(G.deckCount[player], Gcopy.deckCount[player]-3, &totalTestCount);
-    if (testResult <= -1) {
-        printf("deck count test failed\n");
-        testResult = 0;
-        testCaseResult = -1;
-    }
-
-    testResult += testAssert(G.playedCardCount, Gcopy.playedCardCount+1, &totalTestCount);
-    if (testResult <= -1) {
-        printf("played count test failed\n");
-        testResult = 0;
-        testCaseResult = -1;
-    }
-
-    // Supply Count should be unchanged
-    testResult += testAssert(G.supplyCount[estate], Gcopy.supplyCount[estate], &totalTestCount);
-    if (testResult <= -1) {
-        printf("supply card count checks failed\n");
-        testResult = 0;
-        testCaseResult = -1;
-    }
-    testResult += testAssert(G.coins, Gcopy.coins, &totalTestCount);
-    if (testResult <= -1) {
-        printf("coins check failed\n");
-        testResult = 0;
-        testCaseResult = -1;
-    }
-    testResult += testAssert(G.numBuys, Gcopy.numBuys, &totalTestCount);
-    if (testResult <= -1) {
-        printf("numBuys check failed\n");
-        testResult = 0;
-        testCaseResult = -1;
-    }
-    testResult += testAssert(G.numActions, Gcopy.numActions, &totalTestCount);
-    if (testResult <= -1) {
-        printf("numActions check failed\n");
-        testResult = 0;
-        testCaseResult = -1;
-    }
-    // None of the other players' hands shoudl be affected, either
-    for (l=0; l<numPlayer; l++) {
-        if (l !=player) {
-            testResult += testAssert(G.deckCount[l], Gcopy.deckCount[l], &totalTestCount);
-            if (testResult <= -1) {
-                printf("deckCount check failed for another player\n");
-                testResult = 0;
-                testCaseResult = -1;
-            }
-            testResult += testAssert(G.handCount[l], Gcopy.handCount[l], &totalTestCount);
-            if (testResult <= -1) {
-                printf("deckCount check failed for another player\\n");
-                testResult = 0;
-                testCaseResult = -1;
-            }
-            testResult += testAssert(G.discardCount[l], Gcopy.discardCount[l], &totalTestCount);
-            if (testResult <= -1) {
-                printf("deckCount check failed for another player\\n");
-                testResult = 0;
-                testCaseResult = -1;
-            }
-
-        }
-    }
-
-
-    if (testCaseResult >= 0) {
-        printf("The copper case passed - player %d\n", player);
-    } else {
-        printf("The copper case case failed - player %d\n", player);
-        totalTestResult = -1;
-        testResult =0;
-        testCaseResult =0;
-    }
-
-
-    printf ("TESTING newSmithy() - Fewer than three cards test case:\n");
-
-    memset(&G, 23, sizeof(struct gameState));   // clear the game state
-    memset(&Gcopy, 23, sizeof(struct gameState));   // clear the game state
-
-    r = initializeGame(numPlayer, k, seed, &G); // initialize a new game
-
-
-    for (j = 0; j < maxHandCount; j++) {
-        G.deck[player][j] = copper;
-    }
-    G.deckCount[player]=2;
-    G.discardCount[player]=0;
-
-    memcpy(&Gcopy, &G, sizeof(struct gameState));
-
-#if (NOISY_TEST == 1)
-    printf("deck card zero = %d\n", G.deck[player][0]);
-    printf("hand card zero = %d\n", G.deck[player][0]);
-    printf("deckCount = %d\n", G.deckCount[player]);
-    printf("handCount = %d\n", G.handCount[player]);
-#endif
-// This to check the call within the cardEffect function
-//    newSmithy(&G, player, handPos);
-    cardEffect(smithy, 0, 0, 0, &G, handPos, &bonus);
-
-
-#if (NOISY_TEST == 1)
-    printf("deck card zero = %d\n", G.deck[player][0]);
-    printf("hand card zero = %d\n", G.deck[player][0]);
-    printf("deckCount = %d\n", G.deckCount[player]);
-    printf("handCount = %d\n", G.handCount[player]);
-#endif
-    testResult =0;
-    // Hand count should be increased by 3 - but one card is played, and only two are available, so 1
-
-    testResult += testAssert(G.handCount[player], Gcopy.handCount[player]+1, &totalTestCount);
-    if (testResult <= -1) {
-        printf("hand count test failed\n");
-        testResult = 0;
-        testCaseResult = -1;
-    }
-
-#if (NOISY_TEST == 1)
-    printf("newdeckCount = %d\n", G.deckCount[player]);
-    printf("newhandCount = %d\n", G.handCount[player]);
-    printf("newplayedCount = %d\n", G.playedCardCount);
-    printf("olddeckCount = %d\n", Gcopy.deckCount[player]);
-    printf("oldhandCount = %d\n", Gcopy.handCount[player]);
-    printf("oldplayedCount = %d\n", Gcopy.playedCardCount);
-#endif
-    // Deck Count should be decreased by 2 as there are only two cards
-    testResult += testAssert(G.deckCount[player], Gcopy.deckCount[player]-2, &totalTestCount);
-    if (testResult <= -1) {
-        printf("deck count test failed\n");
-        testResult = 0;
-        testCaseResult = -1;
-    }
-
-    testResult += testAssert(G.playedCardCount, Gcopy.playedCardCount+1, &totalTestCount);
-    if (testResult <= -1) {
-        printf("played count test failed\n");
-        testResult = 0;
-        testCaseResult = -1;
-    }
-
-    // Supply Count should be unchanged
-    testResult += testAssert(G.supplyCount[estate], Gcopy.supplyCount[estate], &totalTestCount);
-    if (testResult <= -1) {
-        printf("supply card count checks failed\n");
-        testResult = 0;
-        testCaseResult = -1;
-    }
-    testResult += testAssert(G.coins, Gcopy.coins, &totalTestCount);
-    if (testResult <= -1) {
-        printf("coins check failed\n");
-        testResult = 0;
-        testCaseResult = -1;
-    }
-    testResult += testAssert(G.numBuys, Gcopy.numBuys, &totalTestCount);
-    if (testResult <= -1) {
-        printf("numBuys check failed\n");
-        testResult = 0;
-        testCaseResult = -1;
-    }
-    testResult += testAssert(G.numActions, Gcopy.numActions, &totalTestCount);
-    if (testResult <= -1) {
-        printf("numActions check failed\n");
-        testResult = 0;
-        testCaseResult = -1;
-    }
-    // None of the other players' hands shoudl be affected, either
-    for (l=0; l<numPlayer; l++) {
-        if (l !=player) {
-            testResult += testAssert(G.deckCount[l], Gcopy.deckCount[l], &totalTestCount);
-            if (testResult <= -1) {
-                printf("deckCount check failed for another player\n");
-                testResult = 0;
-                testCaseResult = -1;
-            }
-            testResult += testAssert(G.handCount[l], Gcopy.handCount[l], &totalTestCount);
-            if (testResult <= -1) {
-                printf("deckCount check failed for another player\\n");
-                testResult = 0;
-                testCaseResult = -1;
-            }
-            testResult += testAssert(G.discardCount[l], Gcopy.discardCount[l], &totalTestCount);
-            if (testResult <= -1) {
-                printf("deckCount check failed for another player\\n");
-                testResult = 0;
-                testCaseResult = -1;
-            }
-
-        }
-    }
-
-
-    if (testCaseResult >= 0) {
-        printf("The fewer than three card case passed - player %d\n", player);
-    } else {
-        printf("The fewer than three card case failed - player %d\n", player);
-        totalTestResult = -1;
-        testResult =0;
-        testCaseResult =0;
-    }
-
-
-    if (totalTestResult >= 0) {
-        printf("FINAL RESULT - All newSmithy tests passed!\n");
-        printf("Total checks made = %d\n", totalTestCount);
-    } else {
-        printf("FINAL RESULT - There was at least one test failure during the newSmithy tests\n");
-        printf("Total checks made = %d\n", totalTestCount);
-    }
-
-    return 0;
+  return 0;
 }
