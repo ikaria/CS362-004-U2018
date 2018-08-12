@@ -8,5 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="lib" path="C:/Igor/OSU/CS362/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="C:/Igor/OSU/CS362/CS362-004-U2018/FinalProject/commons-lang3-3.7/commons-lang3-3.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

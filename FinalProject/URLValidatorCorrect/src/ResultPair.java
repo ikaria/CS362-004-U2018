@@ -24,9 +24,22 @@
  public class ResultPair {
       public String item;
       public boolean valid;
+      public int parts;
+      public String p1;
+      public String p2;
+
 
       public ResultPair(String item, boolean valid) {
          this.item = item;
          this.valid = valid;  //Weather the individual part of url is valid.
+         this.parts = 0;
+      }
+
+      public ResultPair(String item, boolean valid, int parts, String p1, String p2) {
+         this.item = item;
+         this.valid = valid;  //Weather the individual part of url is valid.
+         this.parts = parts;  
+         this.p1 = p1;  
+         this.p1 = p2;  
       }
    }
