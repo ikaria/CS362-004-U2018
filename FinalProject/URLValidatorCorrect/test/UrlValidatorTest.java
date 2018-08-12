@@ -84,8 +84,6 @@ protected void setUp() {
     */
    public void testIsValid(Object[] testObjects, long allowAllSchemes) {
 	      UrlValidator urlVal = new UrlValidator(null, null, allowAllSchemes);
-	      String tet = RandomStringUtils.random(5,true,false);
-	      System.out.println("XXXX" + tet);
 	      Random rand = new Random();
 	      //UrlValidator urlVal = new UrlValidator(null, allowAllSchemes);
       //assertTrue(urlVal.isValid("http://www.google.com"));
@@ -104,15 +102,35 @@ protected void setUp() {
          for (int index = 0;  index < testObjects.length; index++) {
             ResultPair[] part = (ResultPair[]) testObjects[index];
             int r = rand.nextInt(part.length);
-            testBuffer.append(part[r].item);
+            if(part[r].parts > 0)
+            {
+            	testBuffer.append(part[r].p1);
+
+            	//number appended
+            	if(part[r].format == 2)
+            	{
+            		testBuffer.append(part[r].offset + rand.nextInt(part[r].range));
+            	}
+
+            	//chars appended
+            	if(part[r].format == 1)
+            	{
+            		testBuffer.append(RandomStringUtils.random(part[r].range,true,false));
+            	}
+
+            }
+            else
+            {
+            	testBuffer.append(part[r].item);
+            }
             expected &= part[r].valid;
          }
          String url = testBuffer.toString();
          boolean result = urlVal.isValid(url);
          if(result == true)
         	 System.out.println(url);
-         //if(expected != result)
-        	 //System.out.println("url: " + url + " exp: " + expected + " result : " + result);
+         if(expected != result)
+        	 System.out.println("url: " + url + " exp: " + expected + " result : " + result);
          assertEquals(url, expected, result);
          if (printStatus) {
             if (printIndex) {
@@ -225,8 +243,9 @@ protected void setUp() {
                                   new ResultPair("go.com", true),
                                   new ResultPair("go.au", true),
                                   new ResultPair("0.0.0.0", true),
-                                  new ResultPair("255.255.255.255", true),
-                                  new ResultPair("256.256.256.256", false),
+                                  new ResultPair("255.255.255.255", true, 1, "111.111.111.","",2,255,0),
+                                  new ResultPair("256.256.256.256", false, 1, "222.222.222.","",2,500,260),
+                                  //new ResultPair("256.256.256.256", false),
                                   new ResultPair("255.com", true),
                                   new ResultPair("1.2.3.4.5", false),
                                   new ResultPair("1.2.3.4.", false),
@@ -249,6 +268,8 @@ protected void setUp() {
                              new ResultPair(":65a", false)
    };
    ResultPair[] testPath = {new ResultPair("/test1", true),
+                          new ResultPair("/test", true, 1, "/aa","",1,10,0),
+                          new ResultPair("/test", false, 1, "bb","",1,10,0),
                           new ResultPair("/t123", true),
                           new ResultPair("/$23", true),
                           new ResultPair("/..", false),

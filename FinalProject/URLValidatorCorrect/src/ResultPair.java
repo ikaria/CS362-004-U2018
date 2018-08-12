@@ -27,7 +27,9 @@
       public int parts;
       public String p1;
       public String p2;
-
+      public int format; //1 = chars, 2 = number, 3 = alphanumeric
+      public int range; //num of letters or side of number
+      public int offset;
 
       public ResultPair(String item, boolean valid) {
          this.item = item;
@@ -35,11 +37,14 @@
          this.parts = 0;
       }
 
-      public ResultPair(String item, boolean valid, int parts, String p1, String p2) {
+      public ResultPair(String item, boolean valid, int parts, String p1, String p2, int format, int range, int offset) {
          this.item = item;
          this.valid = valid;  //Weather the individual part of url is valid.
          this.parts = parts;  
          this.p1 = p1;  
-         this.p1 = p2;  
+         this.p2 = p2;  
+         this.format = format;
+         this.range = range;
+         this.offset = offset;
       }
    }
